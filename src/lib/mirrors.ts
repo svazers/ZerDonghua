@@ -5,9 +5,9 @@
 // streamUrl is sometimes truncated (e.g. Dailymotion video id cut off)
 // and HTML-entity encoded (&amp;), which breaks when set as iframe.src.
 //
-// Dailymotion URLs are additionally normalized to the standard /embed/video/
-// form: custom partner players (geo.dailymotion.com/player/*.html) are
-// domain-locked to the source site and refuse playback elsewhere.
+// Dailymotion URLs are additionally canonicalized to /embed/video/<id>: the
+// source's geo.dailymotion.com/player.html form carries partner params we do
+// not need, and the canonical form redirects to the same player.
 
 export interface MirrorLike {
   name?: string;

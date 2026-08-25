@@ -191,7 +191,6 @@ export const WatchModal: React.FC<WatchModalProps> = ({
               className="w-full h-full border-0"
               allowFullScreen
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="no-referrer"
               title={streamData?.title || 'Donghua Stream'}
             />
           ) : currentMirror?.embedCode ? (
