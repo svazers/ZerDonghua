@@ -33,7 +33,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#06060b',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
+    { media: '(prefers-color-scheme: dark)', color: '#06060b' }
+  ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -41,10 +44,15 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 };
 
+const themeInit = `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}})()`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="id" className={`${inter.variable} ${outfit.variable}`}>
-      <body className="bg-[#06060b] text-white antialiased selection:bg-[#7c3aed] selection:text-white">
+    <html lang="id" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
+      <body className="bg-canvas text-ink antialiased selection:bg-accent selection:text-white">
         {children}
       </body>
     </html>

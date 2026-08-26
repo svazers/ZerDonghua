@@ -39,10 +39,10 @@ export const ZerDonghuaLogo: React.FC<ZerDonghuaLogoProps> = ({
     <div className={`flex items-center gap-2.5 sm:gap-3 group select-none ${className}`}>
       {/* Logo mark */}
       <div
-        className={`relative ${iconSizeMap[size]} rounded-2xl bg-gradient-to-br from-[#7c3aed] via-purple-600 to-[#a78bfa] p-[1.5px] shadow-[0_8px_30px_#0009] group-hover:shadow-[0_12px_35px_#000000bf] transition-all duration-300 group-hover:scale-105 shrink-0`}
+        className={`relative ${iconSizeMap[size]} rounded-2xl bg-accent p-[1.5px] shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-105 shrink-0`}
       >
         {/* Background dark shield with subtle radial gradient */}
-        <div className="w-full h-full bg-[#0a0c10] rounded-[14px] flex items-center justify-center overflow-hidden relative">
+        <div className="w-full h-full bg-surface rounded-[14px] flex items-center justify-center overflow-hidden relative">
           <Image
             src="/icon.png"
             alt="ZerDonghua"
@@ -58,23 +58,23 @@ export const ZerDonghuaLogo: React.FC<ZerDonghuaLogoProps> = ({
       <div>
         <div className="flex items-center gap-1.5">
           <span
-            className={`${titleSizeMap[size]} font-black tracking-tight text-white group-hover:text-purple-200 transition-colors leading-none`}
+            className={`${titleSizeMap[size]} font-black tracking-tight text-ink group-hover:text-accent-soft transition-colors leading-none`}
           >
             ZER
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-purple-300">
+            <span className="text-accent-soft">
               DONGHUA
             </span>
           </span>
           {showBadge && (
             <span
-              className={`${badgeSizeMap[size]} font-black uppercase rounded-md bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white tracking-widest shadow-sm shadow-[#0009] border border-white/20 leading-tight`}
+              className={`${badgeSizeMap[size]} font-black uppercase rounded-md bg-accent text-white tracking-widest shadow-sm border border-line-strong leading-tight`}
             >
               HD
             </span>
           )}
         </div>
         {showSubtitle && (
-          <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium tracking-wide mt-0.5 group-hover:text-gray-300 transition-colors">
+          <p className="text-[10px] sm:text-[11px] text-mute font-medium tracking-wide mt-0.5">
             Streaming Donghua Sub Indo
           </p>
         )}

@@ -56,30 +56,30 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-[#f05100]/20 border border-[#f05100]/30 flex items-center justify-center text-[#f05100] shadow-[0_0_12px_#f051004d] shrink-0">
-            <Flame className="w-5 h-5 fill-[#f05100]" />
+          <div className="w-9 h-9 rounded-2xl bg-warn/20 border border-warn/30 flex items-center justify-center text-warn shrink-0">
+            <Flame className="w-5 h-5 fill-warn" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Peringkat & Populer
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#f05100]/20 text-[#f05100] font-semibold border border-[#f05100]/30 flex items-center gap-1">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-warn/20 text-warn font-semibold border border-warn/30 flex items-center gap-1">
                 <Crown className="w-3 h-3" /> Top Chart
               </span>
             </h2>
-            <p className="text-xs text-slate-400">{sectionSubtitle}</p>
+            <p className="text-xs text-mute">{sectionSubtitle}</p>
           </div>
         </div>
 
         {/* Tab Switcher & Display Controls */}
         <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
           {/* Tabs */}
-          <div className="flex items-center gap-1 p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a] overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-1 p-1 bg-surface rounded-2xl border border-line overflow-x-auto no-scrollbar">
             <button
               onClick={() => setTab('today')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                 tab === 'today'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
               <Flame className="w-3.5 h-3.5" />
@@ -90,8 +90,8 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
               onClick={() => setTab('weekly')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                 tab === 'weekly'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
               <TrendingUp className="w-3.5 h-3.5" />
@@ -102,8 +102,8 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
               onClick={() => setTab('monthly')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                 tab === 'monthly'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
               <Star className="w-3.5 h-3.5" />
@@ -114,8 +114,8 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
               onClick={() => setTab('allTime')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
                 tab === 'allTime'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
               <Trophy className="w-3.5 h-3.5" />
@@ -125,13 +125,13 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
 
           {/* Toggle Slider vs Grid & Navigation Arrows */}
           <div className="flex items-center gap-1.5">
-            <div className="flex items-center p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+            <div className="flex items-center p-1 bg-surface rounded-2xl border border-line">
               <button
                 onClick={() => setViewMode('slider')}
                 className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                   viewMode === 'slider'
-                    ? 'bg-[#7c3aed] text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-accent text-white shadow'
+                    : 'text-mute hover:text-ink'
                 }`}
                 title="Slide ke samping (Carousel)"
               >
@@ -141,8 +141,8 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
                 onClick={() => setViewMode('grid')}
                 className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                   viewMode === 'grid'
-                    ? 'bg-[#7c3aed] text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-accent text-white shadow'
+                    : 'text-mute hover:text-ink'
                 }`}
                 title="Tampilan Grid"
               >
@@ -154,14 +154,14 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => handleScroll('left')}
-                  className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                   title="Geser ke kiri"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleScroll('right')}
-                  className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                   title="Geser ke kanan"
                 >
                   <ChevronRight className="w-4 h-4" />

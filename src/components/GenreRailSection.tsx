@@ -13,7 +13,7 @@ interface GenreRailSectionProps {
 }
 
 const genreTitle = (slug: string) =>
-  slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join('');
 
 export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
   genreSlug,
@@ -76,14 +76,14 @@ export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
       {/* Section Header */}
       <div className="flex items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-2xl bg-[#7c3aed]/20 border border-[#a78bfa66] flex items-center justify-center text-[#a78bfa] shadow-[0_0_12px_#a78bfa4d] shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-accent/20 border border-accent-soft/40 flex items-center justify-center text-accent-soft shrink-0">
             <Layers className="w-5 h-5" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight truncate">
+          <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight truncate">
             Genre {genreTitle(genreSlug)}
           </h2>
           {!loading && items.length > 0 && (
-            <span className="hidden sm:inline text-xs px-2.5 py-0.5 rounded-full bg-[#7c3aed]/20 text-[#a78bfa] font-semibold border border-[#a78bfa66] shrink-0">
+            <span className="hidden sm:inline text-xs px-2.5 py-0.5 rounded-full bg-accent/20 text-accent-soft font-semibold border border-accent-soft/40 shrink-0">
               {items.length} Judul
             </span>
           )}
@@ -91,13 +91,13 @@ export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
 
         {/* View Mode Toggle & Prev / Next Arrows */}
         <div className="flex items-center gap-1.5 shrink-0">
-          <div className="flex items-center p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+          <div className="flex items-center p-1 bg-surface rounded-2xl border border-line">
             <button
               onClick={() => setViewMode('slider')}
               className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                 viewMode === 'slider'
-                  ? 'bg-[#7c3aed] text-white shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-accent text-white shadow'
+                  : 'text-mute hover:text-ink'
               }`}
               title="Slide ke samping"
             >
@@ -107,8 +107,8 @@ export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-[#7c3aed] text-white shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-accent text-white shadow'
+                  : 'text-mute hover:text-ink'
               }`}
               title="Tampilan Grid"
             >
@@ -120,14 +120,14 @@ export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
             <>
               <button
                 onClick={() => handleScroll('left')}
-                className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                 title="Geser ke kiri"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleScroll('right')}
-                className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                 title="Geser ke kanan"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -143,7 +143,7 @@ export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="w-[160px] sm:w-[185px] shrink-0 aspect-[3/4.4] rounded-2xl bg-white/[0.04] border border-white/5 animate-pulse"
+              className="w-[160px] sm:w-[185px] shrink-0 aspect-[3/4.4] rounded-2xl bg-white/[0.04] border border-line animate-pulse"
             />
           ))}
         </div>
@@ -188,10 +188,10 @@ export const GenreRailSection: React.FC<GenreRailSectionProps> = ({
               <button
                 onClick={handleLoadMore}
                 disabled={loadingMore}
-                className="px-5 py-2 rounded-xl bg-[#7c3aed]/25 hover:bg-[#7c3aed]/40 active:scale-95 disabled:opacity-50 disabled:pointer-events-none border border-[#a78bfa66] text-xs font-bold text-[#c4b5fd] transition-all cursor-pointer inline-flex items-center gap-2"
+                className="px-5 py-2 rounded-xl bg-accent/25 hover:bg-accent/40 active:scale-95 disabled:opacity-50 disabled:pointer-events-none border border-accent-soft/40 text-xs font-bold text-accent-soft transition-all cursor-pointer inline-flex items-center gap-2"
               >
                 {loadingMore && (
-                  <span className="w-3.5 h-3.5 rounded-full border-2 border-[#c4b5fd] border-t-transparent animate-spin" />
+                  <span className="w-3.5 h-3.5 rounded-full border-2 border-accent-soft border-t-transparent animate-spin" />
                 )}
                 {loadingMore ? 'Memuat...' : 'Tampilkan Lebih Banyak'}
               </button>

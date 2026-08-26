@@ -237,10 +237,7 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
   };
 
   return (
-    <div className="min-h-screen bg-[#050508] text-white flex flex-col selection:bg-violet-600 selection:text-white relative">
-      {/* Background Ambient Glows (static gradients — no blur filter, cheap to repaint) */}
-      <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(40%_35%_at_25%_0%,rgba(124,58,237,0.12),transparent),radial-gradient(35%_30%_at_100%_35%,rgba(79,70,229,0.10),transparent),radial-gradient(30%_25%_at_10%_80%,rgba(168,85,247,0.08),transparent)]" />
-
+    <div className="min-h-screen bg-canvas text-ink flex flex-col selection:bg-accent selection:text-white relative">
       {/* Main Header */}
       <Header
         onOpenSearch={() => setSearchOpen(true)}
@@ -256,21 +253,21 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
       <main className="flex-1 z-10 pb-24 md:pb-0">
         {loading && !homeData ? (
           <div className="py-48 flex flex-col items-center justify-center space-y-4">
-            <div className="w-12 h-12 rounded-full border-4 border-violet-500 border-t-transparent animate-spin" />
-            <p className="text-sm font-semibold text-gray-400">
+            <div className="w-12 h-12 rounded-full border-4 border-accent border-t-transparent animate-spin" />
+            <p className="text-sm font-semibold text-mute">
               Memuat katalog ZerDonghua...
             </p>
           </div>
         ) : error && !homeData ? (
           <div className="py-32 max-w-lg mx-auto px-4 text-center space-y-4">
-            <div className="w-16 h-16 rounded-3xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center mx-auto shadow-xl shadow-rose-950/30">
+            <div className="w-16 h-16 rounded-3xl bg-bad/10 border border-bad/20 text-bad flex items-center justify-center mx-auto shadow-md">
               <AlertCircle className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-bold text-white">Gagal Memuat Data</h3>
-            <p className="text-sm text-gray-400">{error}</p>
+            <h3 className="text-xl font-bold text-ink">Gagal Memuat Data</h3>
+            <p className="text-sm text-mute">{error}</p>
             <button
               onClick={() => fetchHomeData(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-violet-600 hover:bg-violet-500 active:scale-95 text-white font-bold text-sm shadow-xl shadow-violet-950 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-accent hover:bg-accent active:scale-95 text-white font-bold text-sm shadow-md transition-all cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" />
               Coba Muat Ulang

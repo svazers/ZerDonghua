@@ -72,17 +72,17 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-[#00a544]/20 border border-[#00a544]/30 flex items-center justify-center text-[#00a544] shadow-[0_0_12px_#00a5444d] shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-ok/20 border border-ok/30 flex items-center justify-center text-ok shrink-0">
             <Calendar className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Jadwal Rilis Mingguan
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#00a544]/20 text-[#00a544] font-semibold border border-[#00a544]/30 flex items-center gap-1">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-ok/20 text-ok font-semibold border border-ok/30 flex items-center gap-1">
                 <Clock className="w-3 h-3" /> Live Schedule
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-mute">
               Waktu tayang dan jadwal siaran donghua terbaru setiap hari
             </p>
           </div>
@@ -90,13 +90,13 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
 
         {/* View Toggle & Slide Navigation */}
         <div className="flex items-center gap-2 self-start md:self-auto">
-          <div className="flex items-center p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+          <div className="flex items-center p-1 bg-surface rounded-2xl border border-line">
             <button
               onClick={() => setViewMode('slider')}
               className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                 viewMode === 'slider'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-accent text-white shadow'
+                  : 'text-mute hover:text-ink'
               }`}
               title="Slide ke samping"
             >
@@ -106,8 +106,8 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-accent text-white shadow'
+                  : 'text-mute hover:text-ink'
               }`}
               title="Tampilan Grid"
             >
@@ -119,14 +119,14 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
             <div className="flex items-center gap-1">
               <button
                 onClick={() => handleScroll('left')}
-                className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                 title="Geser ke kiri"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleScroll('right')}
-                className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                 title="Geser ke kanan"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -150,14 +150,14 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
               onClick={() => setSelectedDay(day)}
               className={`px-4 py-2 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer border ${
                 isSelected
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border-white/20 scale-105'
-                  : 'bg-[#0a0c10] hover:bg-[#0d1015] text-slate-400 hover:text-white border-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border-line-strong scale-105'
+                  : 'bg-surface hover:bg-elevated text-mute hover:text-ink border-line'
               }`}
             >
               <span>{indoName}</span>
               <span className="text-[10px] opacity-75">({count})</span>
               {isToday && (
-                <span className="ml-1 px-1.5 py-0.2 rounded text-[9px] font-black bg-[#f05100] text-white uppercase tracking-wider shadow-[0_0_8px_#f051004d]">
+                <span className="ml-1 px-1.5 py-0.2 rounded text-[9px] font-black bg-warn text-white uppercase tracking-wider">
                   Hari Ini
                 </span>
               )}
@@ -168,12 +168,12 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
 
       {/* Schedule Items List */}
       {loading ? (
-        <div className="py-16 text-center text-slate-400 rounded-3xl bg-[#0a0c10] border border-[#ffffff1a] space-y-3">
-          <div className="w-8 h-8 rounded-full border-2 border-[#a78bfa] border-t-transparent animate-spin mx-auto" />
+        <div className="py-16 text-center text-mute rounded-3xl bg-surface border border-line space-y-3">
+          <div className="w-8 h-8 rounded-full border-2 border-accent-soft border-t-transparent animate-spin mx-auto" />
           <p className="text-xs">Memuat jadwal siaran donghua...</p>
         </div>
       ) : currentItems.length === 0 ? (
-        <div className="py-12 text-center text-slate-400 rounded-3xl bg-[#0a0c10] border border-[#ffffff1a]">
+        <div className="py-12 text-center text-mute rounded-3xl bg-surface border border-line">
           <p className="text-xs font-semibold">Tidak ada jadwal siaran untuk hari ini.</p>
         </div>
       ) : viewMode === 'slider' ? (
@@ -186,11 +186,11 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
             <div
               key={item.slug || idx}
               onClick={() => onSelect(item.slug)}
-              className="w-[240px] sm:w-[270px] shrink-0 snap-start group relative rounded-2xl bg-[#0d1015] hover:bg-[#0d1015] border border-[#ffffff1a] hover:border-[#a78bfa66] p-3.5 transition-all duration-300 shadow-[0_9px_7px_#0000001a] hover:shadow-[0_24px_50px_-12px_#000000bf] flex flex-col justify-between cursor-pointer"
+              className="w-[240px] sm:w-[270px] shrink-0 snap-start group relative rounded-2xl bg-elevated hover:bg-elevated border border-line hover:border-accent-soft/40 p-3.5 transition-all duration-300 hover:shadow-lg flex flex-col justify-between cursor-pointer"
             >
               <div className="flex gap-3">
                 {/* Poster image */}
-                <div className="relative w-20 sm:w-22 aspect-[3/4] rounded-xl overflow-hidden shrink-0 bg-[#06060b] border border-[#ffffff1a]">
+                <div className="relative w-20 sm:w-22 aspect-[3/4] rounded-xl overflow-hidden shrink-0 bg-canvas border border-line">
                   <Image
                     src={item.cover}
                     alt={item.title}
@@ -201,7 +201,7 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {item.episode && (
-                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-black bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white">
+                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-black bg-accent text-white">
                       Ep {item.episode}
                     </span>
                   )}
@@ -210,30 +210,30 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
                 {/* Details */}
                 <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                   <div>
-                    <div className="flex items-center gap-1 text-[10px] font-bold text-[#00a544] mb-1">
+                    <div className="flex items-center gap-1 text-[10px] font-bold text-ok mb-1">
                       <Clock className="w-3 h-3" />
                       <span>{item.releaseTime || 'Jadwal Tayang'}</span>
                     </div>
-                    <h3 className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#a78bfa] transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-xs sm:text-sm font-semibold text-ink group-hover:text-accent-soft transition-colors line-clamp-2 leading-snug">
                       {item.title}
                     </h3>
                   </div>
 
-                  <span className="text-[10px] text-slate-400 mt-2 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00a544] animate-pulse" />
+                  <span className="text-[10px] text-mute mt-2 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ok animate-pulse" />
                     <span>Rilis {INDO_DAYS[selectedDay] || selectedDay}</span>
                   </span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-[#ffffff1a]">
+              <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-line">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onWatch(item.slug, item.title);
                   }}
-                  className="flex-1 py-1.5 px-2.5 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] hover:scale-[1.02] active:scale-95 text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 shadow-[0_8px_30px_#0009] transition-all cursor-pointer"
+                  className="flex-1 py-1.5 px-2.5 rounded-xl bg-accent hover:scale-[1.02] active:scale-95 text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
                 >
                   <Play className="w-3 h-3 fill-white" />
                   <span>Tonton</span>
@@ -243,7 +243,7 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
                     e.stopPropagation();
                     onSelect(item.slug);
                   }}
-                  className="p-1.5 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 text-slate-300 hover:text-white border border-[#ffffff1a] transition-colors cursor-pointer"
+                  className="p-1.5 rounded-xl bg-line hover:bg-line-strong active:scale-95 text-sub hover:text-ink border border-line transition-colors cursor-pointer"
                   title="Lihat Detail"
                 >
                   <Info className="w-3.5 h-3.5" />
@@ -258,10 +258,10 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
             <div
               key={item.slug || idx}
               onClick={() => onSelect(item.slug)}
-              className="group relative rounded-2xl bg-[#0d1015] hover:bg-[#0d1015] border border-[#ffffff1a] hover:border-[#a78bfa66] p-3.5 transition-all duration-300 shadow-[0_9px_7px_#0000001a] hover:shadow-[0_24px_50px_-12px_#000000bf] flex flex-col justify-between cursor-pointer"
+              className="group relative rounded-2xl bg-elevated hover:bg-elevated border border-line hover:border-accent-soft/40 p-3.5 transition-all duration-300 hover:shadow-lg flex flex-col justify-between cursor-pointer"
             >
               <div className="flex gap-3">
-                <div className="relative w-20 aspect-[3/4] rounded-xl overflow-hidden shrink-0 bg-[#06060b] border border-[#ffffff1a]">
+                <div className="relative w-20 aspect-[3/4] rounded-xl overflow-hidden shrink-0 bg-canvas border border-line">
                   <Image
                     src={item.cover}
                     alt={item.title}
@@ -272,7 +272,7 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {item.episode && (
-                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-black bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white">
+                    <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[9px] font-black bg-accent text-white">
                       Ep {item.episode}
                     </span>
                   )}
@@ -280,28 +280,28 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
 
                 <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
                   <div>
-                    <div className="flex items-center gap-1 text-[10px] font-bold text-[#00a544] mb-1">
+                    <div className="flex items-center gap-1 text-[10px] font-bold text-ok mb-1">
                       <Clock className="w-3 h-3" />
                       <span>{item.releaseTime || 'Jadwal Tayang'}</span>
                     </div>
-                    <h3 className="text-xs font-semibold text-white group-hover:text-[#a78bfa] transition-colors line-clamp-2 leading-snug">
+                    <h3 className="text-xs font-semibold text-ink group-hover:text-accent-soft transition-colors line-clamp-2 leading-snug">
                       {item.title}
                     </h3>
                   </div>
 
-                  <span className="text-[10px] text-slate-400 mt-2">
+                  <span className="text-[10px] text-mute mt-2">
                     Rilis setiap {INDO_DAYS[selectedDay] || selectedDay}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-[#ffffff1a]">
+              <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-line">
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onWatch(item.slug, item.title);
                   }}
-                  className="flex-1 py-1.5 px-2.5 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] hover:scale-[1.02] active:scale-95 text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 shadow-[0_8px_30px_#0009] transition-all cursor-pointer"
+                  className="flex-1 py-1.5 px-2.5 rounded-xl bg-accent hover:scale-[1.02] active:scale-95 text-white text-[11px] font-semibold flex items-center justify-center gap-1.5 shadow-sm transition-all cursor-pointer"
                 >
                   <Play className="w-3 h-3 fill-white" />
                   <span>Tonton</span>
@@ -311,7 +311,7 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
                     e.stopPropagation();
                     onSelect(item.slug);
                   }}
-                  className="p-1.5 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 text-slate-300 hover:text-white border border-[#ffffff1a] transition-colors cursor-pointer"
+                  className="p-1.5 rounded-xl bg-line hover:bg-line-strong active:scale-95 text-sub hover:text-ink border border-line transition-colors cursor-pointer"
                   title="Lihat Detail"
                 >
                   <Info className="w-3.5 h-3.5" />

@@ -62,17 +62,17 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-[#7c3aed]/20 border border-[#a78bfa66] flex items-center justify-center text-[#a78bfa] shadow-[0_0_12px_#a78bfa4d] shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-accent/20 border border-accent-soft/40 flex items-center justify-center text-accent-soft shrink-0">
             <Layers className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Koleksi Genre: {activeGenreObj.name}
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#7c3aed]/20 text-[#a78bfa] font-semibold border border-[#a78bfa66]">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent/20 text-accent-soft font-semibold border border-accent-soft/40">
                 {items.length} Judul
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-mute">
               Jelajahi serial donghua terbaik dalam kategori {activeGenreObj.name}
             </p>
           </div>
@@ -81,7 +81,7 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
         {/* Quick Genre Switcher & View Controls */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Quick Pill Switcher for popular genres */}
-          <div className="flex items-center gap-1 p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a] overflow-x-auto no-scrollbar max-w-full">
+          <div className="flex items-center gap-1 p-1 bg-surface rounded-2xl border border-line overflow-x-auto no-scrollbar max-w-full">
             {['action', 'cultivation', 'fantasy', 'martial-arts', 'sci-fi', 'romance', '2d'].map((gSlug) => {
               const matched = genres.find((g) => g.slug === gSlug) || { name: gSlug, slug: gSlug };
               const isActive = selectedGenre === gSlug;
@@ -94,8 +94,8 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
                   }}
                   className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap capitalize ${
                     isActive
-                      ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                      : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                      ? 'bg-accent text-white shadow-sm border border-line-strong'
+                      : 'text-mute hover:text-ink hover:bg-line'
                   }`}
                 >
                   {matched.name}
@@ -106,13 +106,13 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
 
           {/* View Mode Toggle & Arrows */}
           <div className="flex items-center gap-1.5">
-            <div className="flex items-center p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+            <div className="flex items-center p-1 bg-surface rounded-2xl border border-line">
               <button
                 onClick={() => setViewMode('slider')}
                 className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                   viewMode === 'slider'
-                    ? 'bg-[#7c3aed] text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-accent text-white shadow'
+                    : 'text-mute hover:text-ink'
                 }`}
                 title="Slide ke samping"
               >
@@ -122,8 +122,8 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
                 onClick={() => setViewMode('grid')}
                 className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                   viewMode === 'grid'
-                    ? 'bg-[#7c3aed] text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-accent text-white shadow'
+                    : 'text-mute hover:text-ink'
                 }`}
                 title="Tampilan Grid"
               >
@@ -135,14 +135,14 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => handleScroll('left')}
-                  className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                   title="Geser ke kiri"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleScroll('right')}
-                  className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                   title="Geser ke kanan"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -155,12 +155,12 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
 
       {/* Content Rendering */}
       {loading ? (
-        <div className="py-16 text-center text-gray-400 rounded-3xl bg-white/[0.02] border border-white/5 space-y-3">
+        <div className="py-16 text-center text-mute rounded-3xl bg-white/[0.02] border border-line space-y-3">
           <div className="w-8 h-8 rounded-full border-2 border-cyan-500 border-t-transparent animate-spin mx-auto" />
           <p className="text-xs">Memuat koleksi {activeGenreObj.name}...</p>
         </div>
       ) : items.length === 0 ? (
-        <div className="py-12 text-center text-gray-400 rounded-3xl bg-white/[0.02] border border-white/5 space-y-2">
+        <div className="py-12 text-center text-mute rounded-3xl bg-white/[0.02] border border-line space-y-2">
           <p className="text-sm font-semibold">Tidak ada donghua ditemukan untuk genre ini.</p>
         </div>
       ) : viewMode === 'slider' ? (
@@ -204,17 +204,17 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
             <button
               disabled={page <= 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-bold border border-white/10 transition-colors"
+              className="px-4 py-2 rounded-xl bg-ink/5 hover:bg-ink/10 disabled:opacity-30 disabled:pointer-events-none text-ink text-xs font-bold border border-line transition-colors"
             >
               Halaman Sebelumnya
             </button>
-            <span className="text-xs text-gray-400 font-semibold px-2">
+            <span className="text-xs text-mute font-semibold px-2">
               Halaman {page}
             </span>
             <button
               disabled={!hasMore}
               onClick={() => setPage((p) => p + 1)}
-              className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 disabled:opacity-30 disabled:pointer-events-none text-white text-xs font-bold shadow-lg shadow-cyan-950 transition-all"
+              className="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 disabled:opacity-30 disabled:pointer-events-none text-ink text-xs font-bold shadow-lg shadow-cyan-950 transition-all"
             >
               Halaman Selanjutnya
             </button>

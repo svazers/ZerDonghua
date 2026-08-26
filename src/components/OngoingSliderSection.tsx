@@ -37,18 +37,18 @@ export const OngoingSliderSection: React.FC<OngoingSliderSectionProps> = ({
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-[#00a544]/20 border border-[#00a544]/30 flex items-center justify-center text-[#00a544] shadow-[0_0_12px_#00a5444d] shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-ok/20 border border-ok/30 flex items-center justify-center text-ok shrink-0">
             <Radio className="w-5 h-5 animate-pulse" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Sedang Tayang
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#00a544]/20 text-[#00a544] font-semibold border border-[#00a544]/30 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00a544] animate-ping" />
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-ok/20 text-ok font-semibold border border-ok/30 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-ok animate-ping" />
                 Ongoing Series
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-mute">
               Serial donghua yang sedang berlangsung dan paling aktif diperbarui saat ini
             </p>
           </div>
@@ -56,13 +56,13 @@ export const OngoingSliderSection: React.FC<OngoingSliderSectionProps> = ({
 
         {/* View Mode Switcher & Arrows */}
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <div className="flex items-center p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+          <div className="flex items-center p-1 bg-surface rounded-2xl border border-line">
             <button
               onClick={() => setViewMode('slider')}
               className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                 viewMode === 'slider'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-accent text-white shadow'
+                  : 'text-mute hover:text-ink'
               }`}
               title="Slide ke samping (Carousel)"
             >
@@ -72,8 +72,8 @@ export const OngoingSliderSection: React.FC<OngoingSliderSectionProps> = ({
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-accent text-white shadow'
+                  : 'text-mute hover:text-ink'
               }`}
               title="Tampilan Grid"
             >
@@ -85,14 +85,14 @@ export const OngoingSliderSection: React.FC<OngoingSliderSectionProps> = ({
             <div className="flex items-center gap-1">
               <button
                 onClick={() => handleScroll('left')}
-                className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                 title="Geser ke kiri"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleScroll('right')}
-                className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                 title="Geser ke kanan"
               >
                 <ChevronRight className="w-4 h-4" />

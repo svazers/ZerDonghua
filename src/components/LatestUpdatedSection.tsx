@@ -52,17 +52,17 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-2xl bg-[#7c3aed]/20 border border-[#a78bfa66] flex items-center justify-center text-[#a78bfa] shadow-[0_0_12px_#a78bfa4d] shrink-0">
+          <div className="w-9 h-9 rounded-2xl bg-accent/20 border border-accent-soft/40 flex items-center justify-center text-accent-soft shrink-0">
             <Film className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Update Episode Terbaru
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#00a544]/20 text-[#00a544] font-semibold border border-[#00a544]/30">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-ok/20 text-ok font-semibold border border-ok/30">
                 Live Release
               </span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-mute">
               Episode donghua subtitle Indonesia terbaru yang baru saja tayang
             </p>
           </div>
@@ -71,13 +71,13 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
         {/* Filter, View Switcher & Search Controls */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Quick Filter Pills */}
-          <div className="flex items-center gap-1 p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+          <div className="flex items-center gap-1 p-1 bg-surface rounded-2xl border border-line">
             <button
               onClick={() => setFilter('all')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 filter === 'all'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
               Semua ({latestRelease.length})
@@ -86,19 +86,19 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
               onClick={() => setFilter('hot')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
                 filter === 'hot'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
-              <Flame className="w-3.5 h-3.5 text-[#f05100]" />
+              <Flame className="w-3.5 h-3.5 text-warn" />
               <span>Hot 🔥</span>
             </button>
             <button
               onClick={() => setFilter('sub')}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 filter === 'sub'
-                  ? 'bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white shadow-[0_8px_30px_#0009] border border-white/20'
-                  : 'text-slate-400 hover:text-white hover:bg-[#ffffff1a]'
+                  ? 'bg-accent text-white shadow-sm border border-line-strong'
+                  : 'text-mute hover:text-ink hover:bg-line'
               }`}
             >
               Sub Indo
@@ -112,20 +112,20 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Cari rilis terbaru..."
-              className="w-36 sm:w-44 pl-8 pr-3 py-1.5 rounded-xl bg-[#0a0c10] border border-[#ffffff1a] focus:border-[#a78bfa66] text-xs text-white placeholder-slate-500 focus:outline-none transition-all shadow-inner"
+              className="w-36 sm:w-44 pl-8 pr-3 py-1.5 rounded-xl bg-surface border border-line focus:border-accent-soft/40 text-xs text-ink placeholder-faint focus:outline-none transition-all shadow-inner"
             />
-            <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className="w-3.5 h-3.5 text-faint absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
 
           {/* View Mode Toggle & Slider Arrows */}
           <div className="flex items-center gap-1.5">
-            <div className="flex items-center p-1 bg-[#0a0c10] rounded-2xl border border-[#ffffff1a]">
+            <div className="flex items-center p-1 bg-surface rounded-2xl border border-line">
               <button
                 onClick={() => setViewMode('slider')}
                 className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                   viewMode === 'slider'
-                    ? 'bg-[#7c3aed] text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-accent text-white shadow'
+                    : 'text-mute hover:text-ink'
                 }`}
                 title="Slide ke samping"
               >
@@ -135,8 +135,8 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
                 onClick={() => setViewMode('grid')}
                 className={`p-1.5 rounded-xl transition-all cursor-pointer ${
                   viewMode === 'grid'
-                    ? 'bg-[#7c3aed] text-white shadow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-accent text-white shadow'
+                    : 'text-mute hover:text-ink'
                 }`}
                 title="Tampilan Grid"
               >
@@ -148,14 +148,14 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => handleScroll('left')}
-                  className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                   title="Geser ke kiri"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleScroll('right')}
-                  className="w-8 h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 border border-[#ffffff1a] flex items-center justify-center text-slate-300 hover:text-white transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-xl bg-line hover:bg-line-strong active:scale-95 border border-line flex items-center justify-center text-sub hover:text-ink transition-all cursor-pointer"
                   title="Geser ke kanan"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -205,14 +205,14 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
             </div>
           )
         ) : (
-          <div className="py-20 text-center text-gray-400 rounded-3xl bg-white/[0.02] border border-white/5 space-y-2">
+          <div className="py-20 text-center text-mute rounded-3xl bg-white/[0.02] border border-line space-y-2">
             <p className="text-sm font-semibold">Tidak ada episode yang sesuai filter.</p>
             <button
               onClick={() => {
                 setFilter('all');
                 setSearchTerm('');
               }}
-              className="px-4 py-1.5 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer"
+              className="px-4 py-1.5 rounded-xl bg-accent text-white text-xs font-bold cursor-pointer"
             >
               Reset Filter
             </button>

@@ -88,7 +88,7 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
         {/* Lightweight Modern Hero Banner Container */}
-        <div className="relative flex items-end min-h-[420px] sm:min-h-[480px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0d1015] border border-[#ffffff1a] shadow-[0_9px_7px_#0000001a]">
+        <div className="relative flex items-end min-h-[420px] sm:min-h-[480px] rounded-2xl sm:rounded-3xl overflow-hidden bg-elevated border border-line">
           {/* Subtle Ambient Background Lighting */}
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <Image
@@ -101,9 +101,9 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
               className="w-full h-full object-cover object-center opacity-60 sm:opacity-45 lg:opacity-25 transition-opacity duration-500"
             />
             {/* Smooth dark overlay gradients */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d1015] via-[#0d1015]/55 to-transparent sm:via-[#0d1015]/85 sm:to-[#0d1015]/60" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0d1015]/75 via-[#0d1015]/35 to-transparent sm:from-[#0d1015] sm:via-[#0d1015]/90" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#7c3aed]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-transparent sm:via-black/85 sm:to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent sm:from-black sm:via-black/90" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
           </div>
 
           {/* Banner Content */}
@@ -113,14 +113,14 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
               <div className="flex-1 min-w-0 space-y-3 sm:space-y-4">
                 {/* Badges */}
                 <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                  <span className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-xl text-[11px] sm:text-xs font-semibold bg-[#7c3aed]/20 border border-[#a78bfa66] text-[#a78bfa]">
-                    <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#a78bfa]" />
+                  <span className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1 rounded-xl text-[11px] sm:text-xs font-semibold bg-accent/20 border border-accent-soft/40 text-accent-soft">
+                    <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-accent-soft" />
                     Rekomendasi #{currentIndex + 1}
                   </span>
-                  <span className="px-2.5 py-1 rounded-xl text-[11px] sm:text-xs font-medium bg-[#ffffff1a] text-slate-300 border border-[#ffffff1a]">
+                  <span className="px-2.5 py-1 rounded-xl text-[11px] sm:text-xs font-medium bg-white/10 text-white border border-white/20">
                     3D Cultivation
                   </span>
-                  <span className="px-2.5 py-1 rounded-xl text-[11px] sm:text-xs font-semibold bg-[#00a544]/20 text-[#00a544] border border-[#00a544]/30">
+                  <span className="px-2.5 py-1 rounded-xl text-[11px] sm:text-xs font-semibold bg-ok/20 text-ok border border-ok/30">
                     Sub Indo HD
                   </span>
                 </div>
@@ -131,7 +131,7 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
                 </h1>
 
                 {/* Synopsis */}
-                <p className="text-sm sm:text-base text-slate-300 line-clamp-2 sm:line-clamp-3 max-w-2xl leading-relaxed">
+                <p className="text-sm sm:text-base text-white/80 line-clamp-2 sm:line-clamp-3 max-w-2xl leading-relaxed">
                   {current.synopsis || 'Petualangan kultivasi epik dengan grafis animasi memukau, pertempuran jurus sihir legendaris, dan alur cerita petualangan menegangkan.'}
                 </p>
 
@@ -139,7 +139,7 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
                 <div className="flex items-center gap-2 sm:gap-3 pt-1">
                   <button
                     onClick={() => onWatch(current.slug, current.title)}
-                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] hover:scale-[1.02] active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-[0_8px_30px_#0009] transition-all cursor-pointer"
+                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-accent hover:scale-[1.02] active:scale-95 text-white font-semibold text-xs sm:text-sm shadow-sm transition-all cursor-pointer"
                   >
                     <Play className="w-4 h-4 fill-white ml-0.5" />
                     <span>Nonton Sekarang</span>
@@ -147,9 +147,9 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
 
                   <button
                     onClick={() => onOpenDetail(current.slug)}
-                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 text-white font-semibold text-xs sm:text-sm border border-[#ffffff26] transition-all cursor-pointer"
+                    className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl bg-white/10 hover:bg-white/20 active:scale-95 text-white font-semibold text-xs sm:text-sm border border-white/20 transition-all cursor-pointer"
                   >
-                    <Info className="w-4 h-4 text-[#a78bfa]" />
+                    <Info className="w-4 h-4 text-accent-soft" />
                     <span>Detail</span>
                   </button>
 
@@ -157,8 +157,8 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
                     onClick={() => onToggleBookmark(currentCardItem)}
                     className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border transition-all cursor-pointer active:scale-95 shrink-0 ${
                       bookmarked
-                        ? 'bg-[#7c3aed]/30 border-[#a78bfa66] text-[#a78bfa]'
-                        : 'bg-[#ffffff1a] hover:bg-[#ffffff26] border-[#ffffff26] text-slate-300 hover:text-white'
+                        ? 'bg-accent/30 border-accent-soft/40 text-accent-soft'
+                        : 'bg-white/10 hover:bg-white/20 border-white/20 text-white'
                     }`}
                     title={bookmarked ? 'Hapus Bookmark' : 'Simpan ke Bookmark'}
                   >
@@ -171,7 +171,7 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
               <div className="hidden sm:block shrink-0">
                 <div
                   onClick={() => onOpenDetail(current.slug)}
-                  className="relative group w-20 sm:w-40 lg:w-52 xl:w-60 aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden border border-[#ffffff1a] hover:border-[#a78bfa66] shadow-[0_9px_7px_#0000001a] hover:shadow-[0_24px_50px_-12px_#000000bf] bg-[#0a0c10] cursor-pointer transition-all duration-300"
+                  className="relative group w-20 sm:w-40 lg:w-52 xl:w-60 aspect-[3/4] rounded-xl sm:rounded-2xl overflow-hidden border border-line hover:border-accent-soft/40 hover:shadow-lg bg-surface cursor-pointer transition-all duration-300"
                 >
                   <Image
                     src={current.cover}
@@ -183,10 +183,10 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent hidden sm:block" />
                   <div className="absolute bottom-3 left-3 right-3 hidden sm:flex items-center justify-between">
-                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-black/80 text-[#a78bfa] border border-[#ffffff1a]">
+                    <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-black/80 text-accent-soft border border-line">
                       Rekomendasi #{currentIndex + 1}
                     </span>
-                    <span className="text-[11px] font-medium text-slate-300">
+                    <span className="text-[11px] font-medium text-white/70">
                       {currentIndex + 1} / {recommendations.length}
                     </span>
                   </div>
@@ -195,7 +195,7 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
             </div>
 
             {/* Banner Bottom Controls */}
-            <div className="flex items-center justify-between pt-3.5 sm:pt-4 mt-4 sm:mt-5 border-t border-[#ffffff1a]">
+            <div className="flex items-center justify-between pt-3.5 sm:pt-4 mt-4 sm:mt-5 border-t border-line">
               {/* Slide Indicators */}
               <div className="flex items-center gap-1.5">
                 {recommendations.map((_, idx) => (
@@ -204,8 +204,8 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
                     onClick={() => setCurrentIndex(idx)}
                     className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                       idx === currentIndex
-                        ? 'w-6 sm:w-7 bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] shadow-[0_0_8px_#a78bfa66]'
-                        : 'w-2 bg-white/20 hover:bg-white/40'
+                        ? 'w-6 sm:w-7 bg-accent'
+                        : 'w-2 bg-white/25 hover:bg-white/50'
                     }`}
                     title={`Ke rekomendasi ${idx + 1}`}
                   />
@@ -216,14 +216,14 @@ export const SpotlightHero: React.FC<SpotlightHeroProps> = ({
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={handlePrev}
-                  className="w-7 sm:w-8 h-7 sm:h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 text-slate-300 hover:text-white border border-[#ffffff1a] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-7 sm:w-8 h-7 sm:h-8 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white border border-white/20 flex items-center justify-center transition-colors cursor-pointer"
                   title="Sebelumnya"
                 >
                   <ChevronLeft className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
                 </button>
                 <button
                   onClick={handleNext}
-                  className="w-7 sm:w-8 h-7 sm:h-8 rounded-xl bg-[#ffffff1a] hover:bg-[#ffffff26] active:scale-95 text-slate-300 hover:text-white border border-[#ffffff1a] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-7 sm:w-8 h-7 sm:h-8 rounded-xl bg-white/10 hover:bg-white/20 active:scale-95 text-white border border-white/20 flex items-center justify-center transition-colors cursor-pointer"
                   title="Selanjutnya"
                 >
                   <ChevronRight className="w-3.5 sm:w-4 h-3.5 sm:h-4" />

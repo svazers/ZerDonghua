@@ -1,31 +1,78 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --color-canvas: #06060b;
-    --color-surface-dark: #0a0c10;
-    --color-surface-elevated: #0d1015;
-    --color-surface-alt: #101019;
-    --color-primary: #7c3aed;
-    --color-primary-light: #a78bfa;
-    --color-brand-glow: #a78bfa66;
-    --color-status-orange: #f05100;
-    --color-status-green: #00a544;
-    --color-status-red: #e40014;
-    --color-text-primary: #ffffff;
-    --color-text-muted: oklch(70.4% 0.04 256.788);
-    --border-subtle: #ffffff1a;
-    --border-elevated: #ffffff26;
-  }
+@custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Clean-minimalism design tokens. Every color in the app references one of
+ * these semantic tokens; the raw values flip between :root (light) and .dark.
+ * No `dark:` prefixes are needed anywhere — toggling the .dark class on <html>
+ * re-skins the whole app.
+ */
+@theme inline {
+  --color-canvas: var(--c-canvas);
+  --color-surface: var(--c-surface);
+  --color-elevated: var(--c-elevated);
+  --color-alt: var(--c-alt);
+  --color-ink: var(--c-ink);
+  --color-sub: var(--c-sub);
+  --color-mute: var(--c-mute);
+  --color-faint: var(--c-faint);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+  --color-accent: var(--c-accent);
+  --color-accent-soft: var(--c-accent-soft);
+  --color-ok: var(--c-ok);
+  --color-warn: var(--c-warn);
+  --color-bad: var(--c-bad);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-outfit), var(--font-inter), ui-sans-serif, sans-serif;
+}
+
+:root {
+  --c-canvas: #fafafa;
+  --c-surface: #ffffff;
+  --c-elevated: #f4f4f5;
+  --c-alt: #ececf0;
+  --c-ink: #18181b;
+  --c-sub: #3f3f46;
+  --c-mute: #71717a;
+  --c-faint: #a1a1aa;
+  --c-line: #00000014;
+  --c-line-strong: #00000026;
+  --c-accent: #6d28d9;
+  --c-accent-soft: #7c3aed;
+  --c-ok: #00873a;
+  --c-warn: #e04a00;
+  --c-bad: #d10012;
+}
+
+.dark {
+  --c-canvas: #06060b;
+  --c-surface: #0a0c10;
+  --c-elevated: #0d1015;
+  --c-alt: #101019;
+  --c-ink: #ffffff;
+  --c-sub: #e4e4e7;
+  --c-mute: #a1a1aa;
+  --c-faint: #71717a;
+  --c-line: #ffffff1a;
+  --c-line-strong: #ffffff26;
+  --c-accent: #7c3aed;
+  --c-accent-soft: #a78bfa;
+  --c-ok: #00a544;
+  --c-warn: #f05100;
+  --c-bad: #e40014;
+}
+
+@layer base {
   html,
   body {
-    background-color: #06060b;
-    color: #ffffff;
+    background-color: var(--c-canvas);
+    color: var(--c-ink);
   }
 
   body {
-    font-family: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-family: var(--font-sans);
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
@@ -41,89 +88,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #06060b;
+    background: var(--c-canvas);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #0d1015;
-    border: 1px solid #ffffff1a;
+    background: var(--c-elevated);
+    border: 1px solid var(--c-line);
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #7c3aed;
+    background: var(--c-accent);
   }
-}
-
-/* Custom Design System Utility Classes */
-.bg-canvas {
-  background-color: #06060b;
-}
-
-.bg-surface-dark {
-  background-color: #0a0c10;
-}
-
-.bg-surface-elevated {
-  background-color: #0d1015;
-}
-
-.bg-surface-alt {
-  background-color: #101019;
-}
-
-.text-muted {
-  color: oklch(70.4% 0.04 256.788);
-}
-
-.border-subtle {
-  border-color: #ffffff1a;
-}
-
-.border-glow {
-  border-color: #a78bfa66;
-}
-
-.shadow-card-hover {
-  box-shadow: 0 24px 50px -12px #000000bf;
-}
-
-.shadow-focus-ring {
-  box-shadow: 0 0 0 1px #a78bfa66;
-}
-
-.shadow-ambient {
-  box-shadow: 0 8px 30px #00000099;
-}
-
-.btn-primary {
-  background: linear-gradient(to bottom right, #7c3aed, #a78bfa);
-  color: #ffffff;
-  font-weight: 600;
-  box-shadow: 0 8px 30px #00000099;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-primary:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 35px #000000bf;
-}
-
-.btn-primary:active {
-  transform: scale(0.96);
-}
-
-.btn-surface {
-  background-color: #ffffff1a;
-  border: 1px solid #ffffff26;
-  color: #ffffff;
-  transition: all 0.15s ease-in-out;
-}
-
-.btn-surface:hover {
-  background-color: #ffffff26;
-}
-
-.btn-surface:active {
-  transform: scale(0.96);
 }

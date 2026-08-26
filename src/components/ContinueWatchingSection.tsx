@@ -22,20 +22,20 @@ export const ContinueWatchingSection: React.FC<ContinueWatchingSectionProps> = (
     <section className="py-4">
       <div className="flex items-center justify-between gap-4 mb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-[#7c3aed]/20 border border-[#a78bfa66] flex items-center justify-center text-[#a78bfa] shadow-[0_0_12px_#a78bfa4d]">
+          <div className="w-8 h-8 rounded-xl bg-accent/20 border border-accent-soft/40 flex items-center justify-center text-accent-soft">
             <History className="w-4 h-4" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            <h2 className="text-lg font-bold text-ink tracking-tight flex items-center gap-2">
               Lanjutkan Menonton
             </h2>
-            <p className="text-xs text-slate-400">Tersimpan dari pemutaran terakhir Anda</p>
+            <p className="text-xs text-mute">Tersimpan dari pemutaran terakhir Anda</p>
           </div>
         </div>
 
         <button
           onClick={onClear}
-          className="text-xs text-slate-400 hover:text-red-400 flex items-center gap-1 transition-colors cursor-pointer"
+          className="text-xs text-mute hover:text-bad flex items-center gap-1 transition-colors cursor-pointer"
         >
           <Trash2 className="w-3.5 h-3.5" />
           <span>Hapus Semua</span>
@@ -46,12 +46,12 @@ export const ContinueWatchingSection: React.FC<ContinueWatchingSectionProps> = (
         {history.map((item) => (
           <div
             key={item.slug}
-            className="group relative p-3 rounded-2xl bg-[#0d1015] hover:bg-[#0d1015] border border-[#ffffff1a] hover:border-[#a78bfa66] flex items-center justify-between gap-3 transition-all shadow-[0_9px_7px_#0000001a] hover:shadow-[0_24px_50px_-12px_#000000bf] cursor-pointer"
+            className="group relative p-3 rounded-2xl bg-elevated hover:bg-elevated border border-line hover:border-accent-soft/40 flex items-center justify-between gap-3 transition-all hover:shadow-lg cursor-pointer"
             onClick={() => onResume(item)}
           >
             <div className="flex items-center gap-3 min-w-0">
               {item.cover && (
-                <div className="relative w-12 h-16 rounded-xl overflow-hidden shrink-0 bg-[#06060b] border border-[#ffffff1a]">
+                <div className="relative w-12 h-16 rounded-xl overflow-hidden shrink-0 bg-canvas border border-line">
                   <Image
                     src={item.cover}
                     alt={item.title}
@@ -68,16 +68,16 @@ export const ContinueWatchingSection: React.FC<ContinueWatchingSectionProps> = (
               )}
 
               <div className="min-w-0 space-y-1">
-                <h4 className="text-xs font-semibold text-white group-hover:text-[#a78bfa] truncate">
+                <h4 className="text-xs font-semibold text-ink group-hover:text-accent-soft truncate">
                   {item.seriesTitle || item.title}
                 </h4>
-                <p className="text-[11px] text-[#a78bfa] font-medium truncate">
+                <p className="text-[11px] text-accent-soft font-medium truncate">
                   {item.episodeNumber ? `Ep ${item.episodeNumber}` : item.title}
                 </p>
                 {/* Progress bar */}
-                <div className="w-24 h-1 bg-[#ffffff1a] rounded-full overflow-hidden">
+                <div className="w-24 h-1 bg-line rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] rounded-full"
+                    className="h-full bg-accent rounded-full"
                     style={{ width: `${Math.max(item.progressPercent || 25, 10)}%` }}
                   />
                 </div>
@@ -89,7 +89,7 @@ export const ContinueWatchingSection: React.FC<ContinueWatchingSectionProps> = (
                 e.stopPropagation();
                 onRemove(item.slug);
               }}
-              className="p-1.5 rounded-lg bg-[#ffffff1a] hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-colors border border-transparent hover:border-red-500/30"
+              className="p-1.5 rounded-lg bg-line hover:bg-bad/15 text-mute hover:text-bad transition-colors border border-transparent hover:border-bad/30"
               title="Hapus"
             >
               <Trash2 className="w-3.5 h-3.5" />

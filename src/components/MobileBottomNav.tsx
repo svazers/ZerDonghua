@@ -25,23 +25,23 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       className="fixed bottom-0 left-0 right-0 z-40 md:hidden px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-2 pointer-events-none"
     >
       {/* Floating Bottom Nav Container */}
-      <div className="max-w-md mx-auto pointer-events-auto rounded-3xl bg-[#0a0c10]/95 backdrop-blur-2xl border border-[#ffffff1a] shadow-[0_24px_50px_-12px_#000000bf] px-2 py-1.5 flex items-center justify-around">
+      <div className="max-w-md mx-auto pointer-events-auto rounded-3xl bg-surface/95 border border-line shadow-lg px-2 py-1.5 flex items-center justify-around">
         {/* Home Item */}
         <button
           onClick={onNavigateHome}
           className={`flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl transition-all cursor-pointer select-none active:scale-95 relative ${
             activeTab === 'home'
-              ? 'text-[#a78bfa] font-bold'
-              : 'text-slate-400 hover:text-white'
+              ? 'text-accent-soft font-bold'
+              : 'text-mute hover:text-ink'
           }`}
           title="Beranda"
         >
           {activeTab === 'home' && (
-            <span className="absolute -top-1 w-6 h-1 rounded-full bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] shadow-[0_0_8px_#a78bfa80]" />
+            <span className="absolute -top-1 w-6 h-1 rounded-full bg-accent" />
           )}
           <div
             className={`p-1 rounded-xl transition-all ${
-              activeTab === 'home' ? 'bg-[#7c3aed]/20 text-[#a78bfa]' : ''
+              activeTab === 'home' ? 'bg-accent/20 text-accent-soft' : ''
             }`}
           >
             <Home className="w-5 h-5" />
@@ -54,13 +54,13 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         {/* Search Item */}
         <button
           onClick={onOpenSearch}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl text-slate-400 hover:text-white transition-all cursor-pointer select-none active:scale-95 group"
+          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl text-mute hover:text-ink transition-all cursor-pointer select-none active:scale-95 group"
           title="Cari Donghua"
         >
-          <div className="p-1 rounded-xl group-hover:text-[#a78bfa] group-hover:bg-[#ffffff1a] transition-all">
+          <div className="p-1 rounded-xl group-hover:text-accent-soft group-hover:bg-line transition-all">
             <Search className="w-5 h-5" />
           </div>
-          <span className="text-[10px] tracking-tight leading-none mt-1 group-hover:text-white">
+          <span className="text-[10px] tracking-tight leading-none mt-1 group-hover:text-ink">
             Cari
           </span>
         </button>
@@ -68,13 +68,13 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         {/* Schedule Item */}
         <button
           onClick={onOpenSchedule}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl text-slate-400 hover:text-white transition-all cursor-pointer select-none active:scale-95 group"
+          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl text-mute hover:text-ink transition-all cursor-pointer select-none active:scale-95 group"
           title="Jadwal Rilis"
         >
-          <div className="p-1 rounded-xl group-hover:text-[#a78bfa] group-hover:bg-[#ffffff1a] transition-all">
+          <div className="p-1 rounded-xl group-hover:text-accent-soft group-hover:bg-line transition-all">
             <Calendar className="w-5 h-5" />
           </div>
-          <span className="text-[10px] tracking-tight leading-none mt-1 group-hover:text-white">
+          <span className="text-[10px] tracking-tight leading-none mt-1 group-hover:text-ink">
             Jadwal
           </span>
         </button>
@@ -82,18 +82,18 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
         {/* Watchlist / Bookmark Item */}
         <button
           onClick={onOpenWatchlist}
-          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl text-slate-400 hover:text-white transition-all cursor-pointer select-none active:scale-95 group relative"
+          className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-2xl text-mute hover:text-ink transition-all cursor-pointer select-none active:scale-95 group relative"
           title="Watchlist & Riwayat"
         >
-          <div className="p-1 rounded-xl group-hover:text-[#a78bfa] group-hover:bg-[#ffffff1a] transition-all relative">
+          <div className="p-1 rounded-xl group-hover:text-accent-soft group-hover:bg-line transition-all relative">
             <Bookmark className="w-5 h-5" />
             {bookmarkCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] border border-white/20 text-white text-[9px] font-black flex items-center justify-center shadow-md">
+              <span className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 rounded-full bg-accent border border-line-strong text-white text-[9px] font-black flex items-center justify-center shadow-md">
                 {bookmarkCount > 99 ? '99+' : bookmarkCount}
               </span>
             )}
           </div>
-          <span className="text-[10px] tracking-tight leading-none mt-1 group-hover:text-white">
+          <span className="text-[10px] tracking-tight leading-none mt-1 group-hover:text-ink">
             Watchlist
           </span>
         </button>

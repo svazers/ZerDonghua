@@ -86,35 +86,35 @@ export const SearchModal: React.FC<SearchModalProps> = ({
   return (
     <div
       id="search-modal"
-      className="fixed inset-0 z-50 bg-[#06060b]/90 backdrop-blur-2xl flex items-start justify-center pt-16 sm:pt-24 px-4 pb-6 overflow-y-auto animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 bg-canvas/90 flex items-start justify-center pt-16 sm:pt-24 px-4 pb-6 overflow-y-auto animate-in fade-in duration-150"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-2xl rounded-3xl bg-[#0a0c10]/95 backdrop-blur-2xl border border-[#ffffff1a] shadow-[0_24px_50px_-12px_#000000bf] overflow-hidden flex flex-col"
+        className="w-full max-w-2xl rounded-3xl bg-surface/95 border border-line shadow-lg overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="p-4 sm:p-5 border-b border-[#ffffff1a] bg-[#0a0c10] flex items-center gap-3">
-          <Search className="w-5 h-5 text-[#a78bfa] shrink-0" />
+        <div className="p-4 sm:p-5 border-b border-line bg-surface flex items-center gap-3">
+          <Search className="w-5 h-5 text-accent-soft shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Cari judul donghua (contoh: Perfect World, BTTH, Xian Ni)..."
-            className="flex-1 bg-transparent text-white placeholder-slate-500 text-sm sm:text-base focus:outline-none font-medium"
+            className="flex-1 bg-transparent text-ink placeholder-faint text-sm sm:text-base focus:outline-none font-medium"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 rounded-md text-slate-500 hover:text-white"
+              className="p-1 rounded-md text-faint hover:text-ink"
             >
               <X className="w-4 h-4" />
             </button>
           )}
           <button
             onClick={onClose}
-            className="px-2.5 py-1 rounded-lg bg-[#ffffff1a] text-slate-400 hover:text-white text-xs font-semibold"
+            className="px-2.5 py-1 rounded-lg bg-line text-mute hover:text-ink text-xs font-semibold"
           >
             ESC
           </button>
@@ -122,9 +122,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
 
         {/* Trending Searches Suggestions */}
         {!query && (
-          <div className="p-4 border-b border-[#ffffff1a] bg-[#0d1015] space-y-2">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-[#f05100]" />
+          <div className="p-4 border-b border-line bg-elevated space-y-2">
+            <span className="text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 text-warn" />
               Pencarian Populer
             </span>
             <div className="flex flex-wrap gap-2">
@@ -132,7 +132,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                 <button
                   key={k}
                   onClick={() => setQuery(k)}
-                  className="px-3 py-1.5 rounded-xl bg-[#ffffff1a] hover:bg-[#7c3aed]/20 text-slate-300 hover:text-[#a78bfa] border border-[#ffffff1a] hover:border-[#a78bfa66] text-xs transition-colors cursor-pointer backdrop-blur-sm"
+                  className="px-3 py-1.5 rounded-xl bg-line hover:bg-accent/20 text-sub hover:text-accent-soft border border-line hover:border-accent-soft/40 text-xs transition-colors cursor-pointer"
                 >
                   {k}
                 </button>
@@ -142,10 +142,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         )}
 
         {/* Results List */}
-        <div className="max-h-96 overflow-y-auto p-3 sm:p-4 divide-y divide-[#ffffff1a] space-y-1">
+        <div className="max-h-96 overflow-y-auto p-3 sm:p-4 divide-y divide-line space-y-1">
           {loading ? (
-            <div className="py-12 text-center text-slate-400 space-y-2">
-              <div className="w-6 h-6 rounded-full border-2 border-[#a78bfa] border-t-transparent animate-spin mx-auto" />
+            <div className="py-12 text-center text-mute space-y-2">
+              <div className="w-6 h-6 rounded-full border-2 border-accent-soft border-t-transparent animate-spin mx-auto" />
               <p className="text-xs">Mencari judul donghua...</p>
             </div>
           ) : results.length > 0 ? (
@@ -156,11 +156,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   onClose();
                   onSelectDetail(item.slug);
                 }}
-                className="group p-2.5 rounded-2xl hover:bg-[#0d1015] flex items-center justify-between gap-3 cursor-pointer transition-all border border-transparent hover:border-[#a78bfa66] backdrop-blur-sm"
+                className="group p-2.5 rounded-2xl hover:bg-elevated flex items-center justify-between gap-3 cursor-pointer transition-all border border-transparent hover:border-accent-soft/40"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   {item.cover && (
-                    <div className="relative w-12 h-16 rounded-xl overflow-hidden shrink-0 bg-[#06060b] border border-[#ffffff1a]">
+                    <div className="relative w-12 h-16 rounded-xl overflow-hidden shrink-0 bg-canvas border border-line">
                       <Image
                         src={item.cover}
                         alt={item.title}
@@ -174,20 +174,20 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                   )}
 
                   <div className="min-w-0 space-y-0.5">
-                    <h4 className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#a78bfa] transition-colors truncate">
+                    <h4 className="text-xs sm:text-sm font-semibold text-ink group-hover:text-accent-soft transition-colors truncate">
                       {item.title}
                     </h4>
-                    <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                    <div className="flex items-center gap-2 text-[10px] text-mute">
                       {item.type && (
-                        <span className="px-1.5 py-0.2 rounded bg-[#7c3aed]/20 text-[#a78bfa] border border-[#a78bfa66]">
+                        <span className="px-1.5 py-0.2 rounded bg-accent/20 text-accent-soft border border-accent-soft/40">
                           {item.type}
                         </span>
                       )}
                       {item.episode && (
-                        <span className="text-[#00a544] font-semibold">{item.episode}</span>
+                        <span className="text-ok font-semibold">{item.episode}</span>
                       )}
                       {item.subStatus && (
-                        <span className="text-slate-400">{item.subStatus}</span>
+                        <span className="text-mute">{item.subStatus}</span>
                       )}
                     </div>
                   </div>
@@ -200,7 +200,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
                       onClose();
                       onWatch(item.slug, item.title);
                     }}
-                    className="p-2 rounded-xl bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] text-white transition-colors shadow-[0_8px_30px_#0009]"
+                    className="p-2 rounded-xl bg-accent text-white transition-colors shadow-sm"
                     title="Nonton Sekarang"
                   >
                     <Play className="w-4 h-4 fill-white text-white ml-0.5" />
@@ -209,9 +209,9 @@ export const SearchModal: React.FC<SearchModalProps> = ({
               </div>
             ))
           ) : query ? (
-            <div className="p-8 text-center text-slate-400 text-sm space-y-2">
+            <div className="p-8 text-center text-mute text-sm space-y-2">
               <p>Tidak ada donghua ditemukan untuk "{query}"</p>
-              <p className="text-xs text-slate-500">Coba kata kunci lain atau pilih dari pencarian populer di atas.</p>
+              <p className="text-xs text-faint">Coba kata kunci lain atau pilih dari pencarian populer di atas.</p>
             </div>
           ) : null}
         </div>
