@@ -105,10 +105,10 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Action Controls */}
         <div className="flex items-center gap-2.5">
-          {/* Theme Toggle */}
+          {/* Theme Toggle (desktop only — mobile toggle lives in the drawer) */}
           <button
             onClick={toggleTheme}
-            className="p-2.5 rounded-xl bg-surface hover:bg-elevated border border-line text-sub hover:text-ink transition-colors cursor-pointer"
+            className="hidden md:block p-2.5 rounded-xl bg-surface hover:bg-elevated border border-line text-sub hover:text-ink transition-colors cursor-pointer"
             title={isDark ? 'Mode Terang' : 'Mode Gelap'}
             aria-label={isDark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'}
           >
@@ -201,6 +201,13 @@ export const Header: React.FC<HeaderProps> = ({
             className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-sub hover:text-ink hover:bg-line flex items-center gap-2"
           >
             <Calendar className="w-4 h-4 text-ok" /> Jadwal Rilis Mingguan
+          </button>
+          <button
+            onClick={toggleTheme}
+            className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-sub hover:text-ink hover:bg-line flex items-center gap-2"
+          >
+            {isDark ? <Sun className="w-4 h-4 text-warn" /> : <Moon className="w-4 h-4 text-accent-soft" />}
+            {isDark ? 'Mode Terang' : 'Mode Gelap'}
           </button>
         </div>
       )}
