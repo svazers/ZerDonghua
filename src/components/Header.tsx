@@ -56,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
             className="text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-accent-soft/40 rounded-2xl min-w-0"
             title="ZerDonghua Home"
           >
-            <ZerDonghuaLogo size="md" className="max-sm:[&>div:last-child]:hidden" />
+            <ZerDonghuaLogo size="md" showBadge={false} />
           </button>
 
           {/* Desktop Navigation Links */}
