@@ -48,15 +48,15 @@ export const Header: React.FC<HeaderProps> = ({
         isScrolled ? 'py-3 shadow-sm' : 'py-4 sm:py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">
         {/* Logo Branding */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-6 min-w-0">
           <button
             onClick={() => onNavigateSection('spotlight')}
-            className="text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-accent-soft/40 rounded-2xl"
+            className="text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-accent-soft/40 rounded-2xl min-w-0"
             title="ZerDonghua Home"
           >
-            <ZerDonghuaLogo size="md" />
+            <ZerDonghuaLogo size="md" className="max-sm:[&>div:last-child]:hidden" />
           </button>
 
           {/* Desktop Navigation Links */}
