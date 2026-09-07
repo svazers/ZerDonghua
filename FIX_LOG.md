@@ -70,3 +70,32 @@ DetailsModal, ZerDonghuaLogo`.
 `ponytail:` proxy global tanpa rate-limit per-host. Bila traffic tinggi &
 Cloudflare throttle, tambah in-memory LRU cache di `route.ts` atau naikkan
 `max-age`.
+
+---
+
+# FIX_LOG — Watch Modal streaming section expansion
+
+**Tanggal:** 2026-09-07
+**Komponen:** `src/components/WatchModal.tsx`, `src/components/DonghuaCardSmall.tsx`
+
+## Root Cause
+Watch modal hanya dapat server-selector + prev/next. Tidak ada rekomendasi, related,
+latest, popular, genre, atau footer — terlalu polos; tidak ada info poster-related.
+
+## Fix
+- `WatchModal`: lazy-fetch `donghuaApi.getHome()` (memoized) untuk latestRelease,
+  donghuaPopular (weekly/monthly/allTime), genres.
+- 5 section baru di bottom rail:
+  1. **Rekomendasi** (`streamData.recommended`, dari episode API) — poster, horizontal scroll
+  2. **Episode Terkait** (`streamData.relatedEpisodes`) — poster kecil, scrollable
+  3. **Episode Terbaru** (`homeData.latestRelease`) — list teks tanpa poster (per request)
+  4. **Populer** (`donghuaPopular.weekly/monthly/allTime`) — `DonghuaCardSmall` poster kecil
+  5. **Genre tags** (`homeData.genres`) — static, informational
+- **Footer**: credit + data source.
+- `DonghuaCardSmall`: komponen baru, poster 100x140px, pakai `SafeImage`→`/api/img` proxy.
+
+## Verified
+- `tsc --noEmit` clean
+- API episode (?action=episode) return: recommended 5, relatedEpisodes 1, streams 3 (Dailymotion/Dtube/Okru)
+- API home: latestRelease 20, donghuaPopular 10/10/10, genres 26
+- Dev server HTTP 200, home page SSR render OK
