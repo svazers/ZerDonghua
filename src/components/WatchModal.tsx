@@ -116,12 +116,11 @@ export const WatchModal: React.FC<WatchModalProps> = ({
 
   return (
     <div
-      id="watch-modal-backdrop"
-      className="fixed inset-0 z-50 bg-canvas/95 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto animate-in fade-in duration-200"
-      onClick={onClose}
+      id="watch-view"
+      className="fixed inset-0 z-50 bg-canvas overflow-y-auto flex flex-col text-sub animate-in fade-in duration-200"
     >
       <div
-        className={`relative w-full max-w-[95vw] sm:max-w-2xl md:max-w-5xl ${theaterMode ? "max-w-7xl" : ""} max-h-[90vh] rounded-3xl bg-surface/95 border border-line shadow-lg overflow-hidden flex flex-col my-4 sm:my-auto transition-all duration-300 text-sub`}
+        className={`relative w-full ${theaterMode ? "max-w-7xl" : "max-w-5xl"} mx-auto flex flex-col min-h-full bg-surface sm:border-x sm:border-line shadow-2xl transition-all duration-300`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Bar */}
@@ -244,7 +243,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
         </div>
 
         {/* Server Mirrors & Navigation Controls */}
-        <div className="p-3 sm:p-5 bg-surface border-t border-line space-y-3 sm:space-y-4 overflow-y-auto max-h-[40vh] sm:max-h-[45vh] pb-6 sm:pb-5">
+        <div className="p-3 sm:p-5 bg-surface border-t border-line space-y-4 sm:space-y-6 pb-12">
           {/* Server Selector */}
           {streamData?.mirrors && streamData.mirrors.length > 0 && (
             <div className="space-y-2">
