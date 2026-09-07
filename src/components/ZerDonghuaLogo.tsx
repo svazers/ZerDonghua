@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 
 interface ZerDonghuaLogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';

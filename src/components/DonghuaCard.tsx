@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { Play, Flame, Bookmark, Check } from 'lucide-react';
 import { DonghuaCardItem } from '../types';
 

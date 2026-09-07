@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { Play, Info, ChevronLeft, ChevronRight, Sparkles, Bookmark, Check } from 'lucide-react';
 import { DonghuaRecommendation, DonghuaCardItem } from '../types';
 

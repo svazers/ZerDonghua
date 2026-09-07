@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { Sparkles, Play, Bookmark, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { DonghuaRecommendation, DonghuaCardItem, MAX_VISIBLE_CARDS } from '../types';
 

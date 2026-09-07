@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { Search, X, Flame, Play, Info } from 'lucide-react';
 import { DonghuaCardItem } from '../types';
 import { donghuaApi } from '../services/donghuaApi';

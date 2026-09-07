@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { Calendar, Clock, X, Play, Info } from 'lucide-react';
 import { donghuaApi } from '../services/donghuaApi';
 import { DonghuaScheduleItem } from '../types';

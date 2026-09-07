@@ -10,7 +10,7 @@ import {
   ExternalLink,
   ChevronRight
 } from 'lucide-react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { DonghuaDetail, DonghuaCardItem } from '../types';
 import { donghuaApi } from '../services/donghuaApi';
 

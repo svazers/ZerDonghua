@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Image from 'next/image';
+import { SafeImage as Image } from './SafeImage';
 import { Bookmark, History, Trash2, Play, X, Clock } from 'lucide-react';
 import { BookmarkEntry, WatchHistoryEntry } from '../types';
 
