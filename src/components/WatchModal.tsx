@@ -11,10 +11,13 @@ import {
   ChevronLeft,
   ChevronRight,
   Maximize2,
-  Info
+  Info,
+  Flame
 } from 'lucide-react';
-import { DonghuaStreamData } from '../types';
+import { DonghuaStreamData, DonghuaHomeData } from '../types';
 import { donghuaApi } from '../services/donghuaApi';
+import { SafeImage as Image } from './SafeImage';
+import { DonghuaCardSmall } from './DonghuaCardSmall';
 
 type MirrorLike = { streamUrl?: string | null; embedCode?: string };
 
@@ -52,6 +55,14 @@ export const WatchModal: React.FC<WatchModalProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [selectedMirrorIndex, setSelectedMirrorIndex] = useState<number>(0);
   const [theaterMode, setTheaterMode] = useState<boolean>(false);
+  const [homeData, setHomeData] = useState<DonghuaHomeData | null>(null);
+
+  // Lazy-load home data once for the "Latest / Populer / Genre" rails.
+  // Memoized client-side so it won't refetch if already cached.
+  useEffect(() => {
+    if (homeData) return;
+    donghuaApi.getHome().then(setHomeData).catch(() => {});
+  }, []);
 
   const selectFirstPlayable = (data: DonghuaStreamData | null) => {
     const mirrors = data?.mirrors ?? [];
@@ -99,6 +110,9 @@ export const WatchModal: React.FC<WatchModalProps> = ({
     allMirrors[selectedMirrorIndex] && !isMirrorDead(allMirrors[selectedMirrorIndex])
       ? allMirrors[selectedMirrorIndex]
       : playableMirrors[0];
+
+  const seriesSlug =
+    streamData?.series?.slug || slug.replace(/-episode-\d+.*$/i, '');
 
   return (
     <div
@@ -340,27 +354,146 @@ export const WatchModal: React.FC<WatchModalProps> = ({
             )}
           </div>
 
-          {/* Related / Other Episodes Quick List */}
-          {streamData?.relatedEpisodes && streamData.relatedEpisodes.length > 0 && (
-            <div className="space-y-2 pt-2 border-t border-line">
-              <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-accent-soft" />
-                Episode Terkait Lainnya
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-1.5 sm:gap-2">
-                {streamData.relatedEpisodes.map((ep) => (
-                  <button
-                    key={ep.slug}
-                    onClick={() => onPlayEpisode(ep.slug, ep.title)}
-                    className="p-2 sm:p-2.5 rounded-xl bg-elevated hover:bg-elevated active:bg-accent/20 border border-line hover:border-accent-soft/40 text-left flex items-center gap-2 transition-all cursor-pointer"
-                  >
-                    <Play className="w-3.5 h-3.5 text-accent-soft shrink-0" />
-                    <span className="text-[11px] sm:text-xs font-semibold text-sub truncate">{ep.title}</span>
-                  </button>
-                ))}
-              </div>
+          {/* Rekomendasi Series - dengan poster */}
+{streamData?.recommended && streamData.recommended.length > 0 && (
+  <div className="space-y-2 pt-2 border-t border-line">
+    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
+      <Flame className="w-3.5 h-3.5 text-accent-soft" />
+      <span>Rekomendasi</span>
+    </span>
+    <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
+      {streamData.recommended.slice(0, 8).map((r) => (
+        <div key={r.slug} className="min-w-[100px] sm:min-w-[110px] w-[100px] sm:w-[110px] shrink-0">
+          <button
+            onClick={() => onOpenDetail(r.slug)}
+            className="w-full text-left rounded-xl overflow-hidden bg-elevated border border-line hover:border-accent-soft/40 transition-all cursor-pointer active:scale-95"
+          >
+            <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas">
+              <Image src={r.cover} alt={r.title} fill loading="lazy" decoding="async" sizes="110px" className="object-cover" />
             </div>
-          )}
+            <div className="p-1.5">
+              <span title={r.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{r.title}</span>
+            </div>
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+          {/* Episode Terkait - dengan poster */}
+{streamData?.relatedEpisodes && streamData.relatedEpisodes.length > 0 && (
+  <div className="space-y-2 pt-2 border-t border-line">
+    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
+      <Layers className="w-3.5 h-3.5 text-accent-soft" />
+      <span>Episode Terkait</span>
+    </span>
+    <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
+      {streamData.relatedEpisodes.map((ep) => (
+        <button
+          key={ep.slug}
+          onClick={() => onPlayEpisode(ep.slug, ep.title)}
+          className="relative min-w-[90px] w-[90px] sm:w-[100px] shrink-0 flex flex-col rounded-xl bg-elevated hover:bg-line border border-line hover:border-accent-soft/40 transition-all cursor-pointer active:scale-95 p-2 text-left"
+        >
+          <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas mb-1">
+            <Image src={ep.cover} alt={ep.title} fill loading="lazy" decoding="async" sizes="100px" className="object-cover" />
+          </div>
+          <span title={ep.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{ep.title.replace(/\s*Episode\s*\d+.*/i, '').trim() || ep.title}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
+          {/* Episode Terbaru - tanpa poster (list teks saja) */}
+{homeData?.latestRelease && homeData.latestRelease.length > 0 && (
+  <div className="space-y-2 pt-2 border-t border-line">
+    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
+      <Play className="w-3.5 h-3.5 text-accent-soft" />
+      <span>Episode Terbaru</span>
+    </span>
+    <div className="flex flex-col gap-1.5">
+      {homeData.latestRelease.slice(0, 6).map((it) => (
+        <button
+          key={it.slug}
+          onClick={() => onPlayEpisode(it.slug, it.title)}
+          className="flex items-center gap-2 rounded-lg sm:rounded-xl bg-elevated hover:bg-line border border-line hover:border-accent-soft/30 px-2.5 py-2 text-left transition-all cursor-pointer active:scale-95"
+        >
+          <span className="text-[10px] sm:text-xs font-semibold text-accent-soft w-10 sm:w-12 shrink-0 text-right">EP</span>
+          <span title={it.title} className="text-[11px] sm:text-xs font-semibold text-sub line-clamp-1 flex-1">{it.title}</span>
+          {it.episode && (<span className="text-[9px] sm:text-[10px] text-mute bg-line px-1.5 py-0.25 rounded shrink-0">{it.episode}</span>)}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
+          {/* Populer - weekly/monthly/all-time dengan poster kecil */}
+{homeData?.donghuaPopular && (
+  <div className="space-y-3 pt-2 border-t border-line">
+    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
+      <Sparkles className="w-3.5 h-3.5 text-accent-soft" />
+      <span>Populer</span>
+    </span>
+    {(homeData.donghuaPopular.weekly || []).length > 0 && (
+      <div>
+        <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">Mingguan</h4>
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-0.5 sm:-mx-1">
+          {homeData.donghuaPopular.weekly.slice(0, 8).map((it) => (
+            <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
+          ))}
+        </div>
+      </div>
+    )}
+    {(homeData.donghuaPopular.monthly || []).length > 0 && (
+      <div>
+        <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">Bulanan</h4>
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-0.5 sm:-mx-1">
+          {homeData.donghuaPopular.monthly.slice(0, 8).map((it) => (
+            <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
+          ))}
+        </div>
+      </div>
+    )}
+    {(homeData.donghuaPopular.allTime || []).length > 0 && (
+      <div>
+        <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">All-Time</h4>
+        <div className="flex gap-2 overflow-x-auto pb-1 -mx-0.5 sm:-mx-1">
+          {homeData.donghuaPopular.allTime.slice(0, 8).map((it) => (
+            <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+)}
+
+          {/* Genre tags - static, no click (informational) */}
+{homeData?.genres && homeData.genres.length > 0 && (
+  <div className="pt-2 border-t border-line">
+    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5 mb-2">
+      <Info className="w-3.5 h-3.5 text-accent-soft" />
+      <span>Genre</span>
+    </span>
+    <div className="flex flex-wrap gap-1.5">
+      {homeData.genres.slice(0, 16).map((g) => (
+        <span
+          key={g.slug}
+          className="px-2.5 py-1 rounded-lg bg-line text-[9px] sm:text-[10px] font-semibold text-mute border border-line"
+        >
+          {g.name}
+        </span>
+      ))}
+    </div>
+  </div>
+)}
+
+          {/* Footer */}
+<div className="pt-3 border-t border-line text-center">
+  <span className="text-[10px] sm:text-[11px] text-faint">
+    Stream via <span className="text-accent-soft font-semibold">ZerDonghua</span> · Poster & data dari anichin.cafe / donghub.vip
+  </span>
+</div>
         </div>
       </div>
     </div>
