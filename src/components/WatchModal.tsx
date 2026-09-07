@@ -121,9 +121,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       onClick={onClose}
     >
       <div
-        className={`relative w-full ${
-          theaterMode ? 'max-w-7xl' : 'max-w-5xl'
-        } max-h-[95vh] rounded-3xl bg-surface/95 border border-line shadow-lg overflow-hidden flex flex-col my-auto transition-all duration-300 text-sub`}
+        className={`relative w-full max-w-[95vw] sm:max-w-2xl md:max-w-5xl ${theaterMode ? "max-w-7xl" : ""} max-h-[90vh] rounded-3xl bg-surface/95 border border-line shadow-lg overflow-hidden flex flex-col my-4 sm:my-auto transition-all duration-300 text-sub`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Bar */}
@@ -246,7 +244,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
         </div>
 
         {/* Server Mirrors & Navigation Controls */}
-        <div className="p-3 sm:p-5 bg-surface border-t border-line space-y-3 sm:space-y-4 overflow-y-auto max-h-64 pb-6 sm:pb-5">
+        <div className="p-3 sm:p-5 bg-surface border-t border-line space-y-3 sm:space-y-4 overflow-y-auto max-h-[40vh] sm:max-h-[45vh] pb-6 sm:pb-5">
           {/* Server Selector */}
           {streamData?.mirrors && streamData.mirrors.length > 0 && (
             <div className="space-y-2">
