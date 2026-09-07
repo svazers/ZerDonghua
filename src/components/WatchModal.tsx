@@ -351,6 +351,30 @@ export const WatchModal: React.FC<WatchModalProps> = ({
             )}
           </div>
 
+          {/* Episode Terkait - dengan poster */}
+{streamData?.relatedEpisodes && streamData.relatedEpisodes.length > 0 && (
+  <div className="space-y-2 pt-2 border-t border-line">
+    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
+      <Layers className="w-3.5 h-3.5 text-accent-soft" />
+      <span>Episode Terkait</span>
+    </span>
+    <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
+      {streamData.relatedEpisodes.map((ep) => (
+        <button
+          key={ep.slug}
+          onClick={() => onPlayEpisode(ep.slug, ep.title)}
+          className="relative min-w-[90px] w-[90px] sm:w-[100px] shrink-0 flex flex-col rounded-xl bg-elevated hover:bg-line border border-line hover:border-accent-soft/40 transition-all cursor-pointer active:scale-95 p-2 text-left"
+        >
+          <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas mb-1">
+            <Image src={ep.cover} alt={ep.title} fill loading="lazy" decoding="async" sizes="100px" className="object-cover" />
+          </div>
+          <span title={ep.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{ep.title.replace(/\s*Episode\s*\d+.*/i, '').trim() || ep.title}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+)}
+
           {/* Rekomendasi Series - dengan poster */}
 {streamData?.recommended && streamData.recommended.length > 0 && (
   <div className="space-y-2 pt-2 border-t border-line">
@@ -373,30 +397,6 @@ export const WatchModal: React.FC<WatchModalProps> = ({
             </div>
           </button>
         </div>
-      ))}
-    </div>
-  </div>
-)}
-
-          {/* Episode Terkait - dengan poster */}
-{streamData?.relatedEpisodes && streamData.relatedEpisodes.length > 0 && (
-  <div className="space-y-2 pt-2 border-t border-line">
-    <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
-      <Layers className="w-3.5 h-3.5 text-accent-soft" />
-      <span>Episode Terkait</span>
-    </span>
-    <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
-      {streamData.relatedEpisodes.map((ep) => (
-        <button
-          key={ep.slug}
-          onClick={() => onPlayEpisode(ep.slug, ep.title)}
-          className="relative min-w-[90px] w-[90px] sm:w-[100px] shrink-0 flex flex-col rounded-xl bg-elevated hover:bg-line border border-line hover:border-accent-soft/40 transition-all cursor-pointer active:scale-95 p-2 text-left"
-        >
-          <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas mb-1">
-            <Image src={ep.cover} alt={ep.title} fill loading="lazy" decoding="async" sizes="100px" className="object-cover" />
-          </div>
-          <span title={ep.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{ep.title.replace(/\s*Episode\s*\d+.*/i, '').trim() || ep.title}</span>
-        </button>
       ))}
     </div>
   </div>
