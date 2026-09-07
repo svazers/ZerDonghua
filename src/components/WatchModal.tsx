@@ -21,10 +21,9 @@ import { DonghuaCardSmall } from './DonghuaCardSmall';
 
 type MirrorLike = { streamUrl?: string | null; embedCode?: string };
 
-// A mirror is unusable when it has no stream URL and its embed code is just a
-// "Video Not Available" placeholder returned by dead sources (e.g. OKRU/Dtube).
+// A mirror is usable when it has a stream URL (preferred) or usable embed code.
 const isMirrorDead = (m?: MirrorLike | null): boolean =>
-  !m || (!m.streamUrl && (!m.embedCode || /video not available/i.test(m.embedCode)));
+  !m || (!m.streamUrl && !m.embedCode);
 
 interface WatchModalProps {
   slug: string;
@@ -106,10 +105,9 @@ export const WatchModal: React.FC<WatchModalProps> = ({
 
   const allMirrors = streamData?.mirrors ?? [];
   const playableMirrors = allMirrors.filter((m) => !isMirrorDead(m));
-  const currentMirror =
-    allMirrors[selectedMirrorIndex] && !isMirrorDead(allMirrors[selectedMirrorIndex])
-      ? allMirrors[selectedMirrorIndex]
-      : playableMirrors[0];
+  // Always prefer the first playable mirror; fall back to any mirror (even if
+  // dead by heuristic) so the iframe still renders and the user can pick.
+  const currentMirror = playableMirrors[0] || allMirrors[0];
 
   const seriesSlug =
     streamData?.series?.slug || slug.replace(/-episode-\d+.*$/i, '');
