@@ -11,7 +11,7 @@ interface SmallCardProps {
 // ponytail: compact card used in the watch modal "populer" rail; reuses SafeImage
 // + /api/img proxy so Cloudflare Referer-403 doesn't blank posters.
 export const DonghuaCardSmall: React.FC<SmallCardProps> = ({ item, onWatch }) => (
-  <div className="relative flex items-center gap-2 rounded-lg sm:rounded-xl bg-elevated hover:bg-line active:bg-line transition-all border border-line hover:border-accent-soft/30 overflow-hidden shrink-0">
+  <div className="relative flex items-center gap-2 rounded-lg sm:rounded-xl bg-elevated hover:bg-line active:bg-line transition-all border border-line hover:border-accent-soft/30 overflow-hidden shrink-0 w-full">
     <div className="relative aspect-[3/4] w-10 h-14 sm:w-11 sm:h-16 rounded-none sm:rounded-l-xl overflow-hidden bg-canvas border-r border-line shrink-0">
       <Image
         src={item.cover}
