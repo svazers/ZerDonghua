@@ -483,11 +483,41 @@ export const WatchModal: React.FC<WatchModalProps> = ({
   </div>
 )}
 
-          {/* Footer */}
-<div className="pt-3 border-t border-line text-center">
-  <span className="text-[10px] sm:text-[11px] text-faint">
-    Stream via <span className="text-accent-soft font-semibold">ZerDonghua</span> · Poster & data dari anichin.cafe / donghub.vip
-  </span>
+          {/* Footer - same as Home */}
+<div className="mt-8 border-t border-line bg-canvas text-mute pt-8 pb-4 px-4 sm:px-6">
+  <div className="max-w-5xl mx-auto space-y-6">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="md:col-span-2 space-y-3">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-xl bg-accent/20 border border-accent-soft/40 flex items-center justify-center text-accent-soft">
+            <Film className="w-4 h-4" />
+          </div>
+          <span className="text-sm font-bold text-ink">ZerDonghua</span>
+        </div>
+        <p className="text-xs text-mute max-w-md leading-relaxed">
+          Platform portal streaming donghua (Chinese anime) 3D dan 2D subtitle Indonesia terlengkap. Update tercepat setiap hari dengan kualitas video HD & multi-server player.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <h4 className="text-xs font-bold text-ink uppercase tracking-wider">Navigasi</h4>
+        <ul className="space-y-1.5 text-xs">
+          <li><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-accent-soft transition-colors cursor-pointer">Spotlight</button></li>
+          <li><button onClick={onClose} className="hover:text-accent-soft transition-colors cursor-pointer">Home</button></li>
+        </ul>
+      </div>
+
+      <div className="space-y-2">
+        <h4 className="text-xs font-bold text-ink uppercase tracking-wider">Info</h4>
+        <p className="text-[11px] text-faint">Stream via ZerDonghua · Data dari anichin.cafe / donghub.vip</p>
+      </div>
+    </div>
+
+    <div className="pt-4 border-t border-line flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-faint">
+      <p>© {new Date().getFullYear()} ZerDonghua Streaming.</p>
+      <p>Dibuat untuk pecinta Donghua Indonesia</p>
+    </div>
+  </div>
 </div>
         </div>
       </div>
