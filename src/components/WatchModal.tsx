@@ -111,9 +111,10 @@ export const WatchModal: React.FC<WatchModalProps> = ({
 
   const allMirrors = streamData?.mirrors ?? [];
   const playableMirrors = allMirrors.filter((m) => !isMirrorDead(m));
-  // Always prefer the first playable mirror; fall back to any mirror (even if
-  // dead by heuristic) so the iframe still renders and the user can pick.
-  const currentMirror = playableMirrors[0] || allMirrors[0];
+  // Use the user-selected mirror if available and playable, otherwise fall back
+  // to the first playable mirror. This ensures clicking a server button
+  // actually switches the iframe source.
+  const currentMirror = allMirrors[selectedMirrorIndex] || playableMirrors[0] || allMirrors[0];
 
   const seriesSlug =
     streamData?.series?.slug || slug.replace(/-episode-\d+.*$/i, '');
