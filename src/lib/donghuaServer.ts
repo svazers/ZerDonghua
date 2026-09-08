@@ -212,14 +212,9 @@ export async function getDonghua(
 
       if (result && result.mirrors && Array.isArray(result.mirrors)) {
         result.mirrors = normalizeMirrors(result.mirrors);
-        const SERVER_ORDER = ['dtube', 'okru', 'dailymotion'];
-        result.mirrors.sort((a: any, b: any) => {
-          const rank = (m: any) => {
-            const idx = SERVER_ORDER.findIndex((k) => (m.name || '').toLowerCase().includes(k));
-            return idx === -1 ? SERVER_ORDER.length : idx;
-          };
-          return rank(a) - rank(b);
-        });
+        // normalizeMirrors() sorts ad-free mirrors first, so the default player is
+        // guaranteed ad-free. (No SERVER_ORDER sort — it would conflict and demote
+        // anichin.stream/Premium below ad-bearing servers.)
       }
       break;
     }
