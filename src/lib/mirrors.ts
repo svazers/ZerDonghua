@@ -16,7 +16,7 @@ export interface MirrorLike {
 }
 
 export function normalizeMirrors<T extends MirrorLike>(mirrors: T[]): T[] {
-  return (mirrors || []).map((m: any) => {
+  const normalized = (mirrors || []).map((m: any) => {
     let streamUrl = m.streamUrl || '';
     if (m.embedCode) {
       const srcMatch = m.embedCode.match(/src=["']([^"']+)["']/i);
@@ -34,4 +34,13 @@ export function normalizeMirrors<T extends MirrorLike>(mirrors: T[]): T[] {
 
     return { ...m, streamUrl };
   });
+
+  // Sort ad-free mirrors first. Anichin labels ad-bearing servers with "[Ads]".
+  normalized.sort((a, b) => {
+    const aHasAds = /\[ads\]/i.test((a.name || '').toString());
+    const bHasAds = /\[ads\]/i.test((b.name || '').toString());
+    return (aHasAds ? 1 : -1) - (bHasAds ? 1 : -1);
+  });
+
+  return normalized;
 }
