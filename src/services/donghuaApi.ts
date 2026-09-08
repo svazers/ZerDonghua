@@ -63,8 +63,9 @@ async function fetchWithDeduplication<T>(
   return promise;
 }
 
-const REMOTE_DIRECT_API = 'https://api.alfisy.my.id/api/anime/donghub';
-
+// Only talks to the local /api/donghua server route.
+// All upstream fetching (anichin.cafe) + static fallback lives server-side in
+// donghuaServer.ts — the client never hits remote APIs directly.
 async function safeFetchDonghua(params: Record<string, string>): Promise<any> {
   const searchParams = new URLSearchParams();
   for (const [k, v] of Object.entries(params)) {
@@ -74,37 +75,15 @@ async function safeFetchDonghua(params: Record<string, string>): Promise<any> {
   }
   const queryString = searchParams.toString();
 
-  // 1. Try local Express / Vercel serverless /api/donghua endpoint
-  try {
-    const res = await fetch(`/api/donghua?${queryString}`);
-    if (res.ok) {
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        const json = await res.json();
-        if (json && json.status !== false && json.data) {
-          return json.data;
-        }
-      }
-    }
-  } catch (err) {
-    console.warn('Local /api/donghua fetch failed, trying direct remote fallback:', err);
-  }
-
-  // 2. Direct fallback to remote API (critical for Vercel/Static deployments or coldstarts)
-  try {
-    const res = await fetch(`${REMOTE_DIRECT_API}?${queryString}`, {
-      headers: {
-        'Accept': 'application/json, text/plain, */*'
-      }
-    });
-    if (res.ok) {
+  const res = await fetch(`/api/donghua?${queryString}`);
+  if (res.ok) {
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
       const json = await res.json();
       if (json && json.status !== false && json.data) {
         return json.data;
       }
     }
-  } catch (directErr) {
-    console.warn('Direct remote API fetch failed:', directErr);
   }
 
   throw new Error(`Failed to load data for action: ${params.action || 'unknown'}`);
@@ -223,8 +202,6 @@ export const donghuaApi = {
       `donghua_episode_${cleanSlug}`,
       async () => {
         const data = await safeFetchDonghua({ action: 'episode', slug: cleanSlug });
-        // The direct-remote fallback bypasses the server route, so mirrors must
-        // be normalized here as well (Dailymotion domain-locked player URLs).
         if (data && Array.isArray(data.mirrors)) {
           data.mirrors = normalizeMirrors(data.mirrors);
         }

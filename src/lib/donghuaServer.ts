@@ -1,4 +1,3 @@
-import { DonghubScraper } from '../../server/donghubScraper';
 import { AnichinScraper } from '../../server/anichinScraper';
 import {
   FALLBACK_HOME,
@@ -8,9 +7,7 @@ import {
 } from '../../server/donghuaFallback';
 import { normalizeMirrors } from './mirrors';
 
-const scraper = new DonghubScraper();
 const anichin = new AnichinScraper();
-const REMOTE_API_BASE = 'https://api.alfisy.my.id/api/anime/donghub';
 
 // Anichin returns url/thumbnail instead of link/cover, and titles are doubled.
 // Normalize to the schema the frontend expects: link, cover, slug, seriesTitle.
@@ -21,8 +18,7 @@ function normalizeAnichinCard(item: any): any {
   const rawTitle = (item.title || '').replace(/(.+?)\s*\1/, '$1').trim();
   const slug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
   const seriesTitle = item.seriesTitle || rawTitle.replace(/\s*Episode\s*\d+.*/i, '').trim();
-  // Anichin episode status embedded in title, e.g. "Episode 157 Subtitle Indonesia"
-  const subStatus = item.subStatus || 'Subtitle Indonesia';
+  const subStatus = item.subStatus || 'Sub Indo';
   const episode = item.episode || '';
   const rankNum = item.rank != null ? Number(item.rank) : undefined;
   return {
@@ -97,9 +93,7 @@ function normalizeAnichinSchedule(data: Record<string, any[]>): Record<string, a
     out[day] = (items || []).map((item: any) => {
       const link = item.url || item.link || '';
       const cover = item.thumbnail || item.cover || '';
-      const slug =
-        (item.slug as string) ||
-        link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+      const slug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
       return {
         ...item,
         link,
@@ -111,7 +105,7 @@ function normalizeAnichinSchedule(data: Record<string, any[]>): Record<string, a
   return out;
 }
 
-// In-memory cache so we don't hammer the upstream API on every request.
+// In-memory cache so we don't hammer anichin on every request.
 const cache = new Map<string, { timestamp: number; data: any }>();
 const CACHE_TTL_MS = 2 * 60 * 1000;
 
@@ -127,32 +121,16 @@ function setCached(key: string, data: any) {
   cache.set(key, { timestamp: Date.now(), data });
 }
 
-async function fetchFromRemoteApi(params: Record<string, string>): Promise<any> {
-  const url = new URL(REMOTE_API_BASE);
-  for (const [key, value] of Object.entries(params)) {
-    if (value !== undefined && value !== null) {
-      url.searchParams.set(key, value);
-    }
-  }
+// Helper: strip URL to slug and optionally strip episode suffix for series resolution.
+function toSlug(slugOrUrl: string): string {
+  return slugOrUrl.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+}
 
-  const response = await fetch(url.toString(), {
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)',
-      Accept: 'application/json, text/plain, */*',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Remote API returned HTTP ${response.status}`);
-  }
-
-  const json = await response.json();
-  if (!json || json.status === false) {
-    throw new Error(json?.message || 'Remote API returned failure status');
-  }
-
-  return json.data;
+function toSeriesSlug(slug: string): string {
+  return slug
+    .replace(/-episode-\d+.*$/i, '')
+    .replace(/-subtitle-indonesia.*$/i, '')
+    .replace(/-sub-indo.*$/i, '');
 }
 
 export async function getDonghua(
@@ -171,66 +149,8 @@ export async function getDonghua(
         const anichinData = await anichin.getAnichinHome();
         result = normalizeAnichinHome(anichinData);
       } catch (anichinErr) {
-        console.warn('anichin getHome failed, trying remote API:', anichinErr);
-        try {
-          result = await fetchFromRemoteApi({ action: 'home' });
-          if (result && result.donghuaBaru && Array.isArray(result.donghuaBaru)) {
-            const coverMap = new Map<string, string>();
-            if (result.latestRelease && Array.isArray(result.latestRelease)) {
-              for (const lr of result.latestRelease) {
-                if (lr.slug && lr.cover) coverMap.set(lr.slug, lr.cover);
-                if (lr.title && lr.cover) coverMap.set(lr.title.toLowerCase().trim(), lr.cover);
-                if (lr.seriesTitle && lr.cover)
-                  coverMap.set(lr.seriesTitle.toLowerCase().trim(), lr.cover);
-              }
-            }
-            if (result.recommendations && Array.isArray(result.recommendations)) {
-              for (const rec of result.recommendations) {
-                if (rec.slug && rec.cover) coverMap.set(rec.slug, rec.cover);
-                if (rec.title && rec.cover) coverMap.set(rec.title.toLowerCase().trim(), rec.cover);
-              }
-            }
-            if (result.popularToday && Array.isArray(result.popularToday)) {
-              for (const pop of result.popularToday) {
-                if (pop.slug && pop.cover) coverMap.set(pop.slug, pop.cover);
-                if (pop.title && pop.cover) coverMap.set(pop.title.toLowerCase().trim(), pop.cover);
-              }
-            }
-
-            result.donghuaBaru = result.donghuaBaru.map((item: any) => {
-              let cover = item.cover || '';
-              if (!cover && item.slug && coverMap.has(item.slug)) {
-                cover = coverMap.get(item.slug)!;
-              }
-              if (!cover && item.title) {
-                const titleLower = item.title.toLowerCase().trim();
-                for (const [key, val] of coverMap.entries()) {
-                  if (titleLower.includes(key) || key.includes(titleLower)) {
-                    cover = val;
-                    break;
-                  }
-                }
-              }
-              return {
-                ...item,
-                cover:
-                  cover || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&q=80',
-                type: '3D Ongoing',
-                status: 'Ongoing',
-                subStatus: 'Sub Indo',
-                hot: true,
-              };
-            });
-          }
-        } catch (apiErr) {
-          console.warn('Remote API getHome failed, trying donghub scraper:', apiErr);
-          try {
-            result = await scraper.getHome();
-          } catch (scrapeErr) {
-            console.warn('donghub scraper getHome failed, using static fallback:', scrapeErr);
-            result = FALLBACK_HOME;
-          }
-        }
+        console.warn('anichin getHome failed, using static fallback:', anichinErr);
+        result = FALLBACK_HOME;
       }
       break;
     }
@@ -239,127 +159,63 @@ export async function getDonghua(
         const anichinSchedule = await anichin.getAnichinSchedule();
         result = normalizeAnichinSchedule(anichinSchedule);
       } catch (anichinErr) {
-        console.warn('anichin schedule failed, trying remote API:', anichinErr);
-        try {
-          result = await fetchFromRemoteApi({ action: 'schedule' });
-        } catch (apiErr) {
-          try {
-            result = await scraper.getSchedule();
-          } catch (scrapeErr) {
-            result = FALLBACK_SCHEDULE;
-          }
-        }
+        console.warn('anichin schedule failed, using static fallback:', anichinErr);
+        result = FALLBACK_SCHEDULE;
       }
       break;
     }
     case 'detail': {
       const slug = query.slug || '';
       if (!slug) throw new Error('Parameter slug diperlukan untuk action detail');
-      const cleanSlug = slug.replace(/^https?:\/\/[^/]+\/|(?:seri\/)?/, '').replace(/\/+$/, '');
+      const cleanSlug = toSlug(slug);
 
       try {
         const anichinDetail = await anichin.getAnichinDetail(cleanSlug);
         result = normalizeAnichinDetail(anichinDetail);
-      } catch (anichinErr) {
-        console.warn('anichin detail failed, trying remote API:', anichinErr);
-        try {
-          result = await fetchFromRemoteApi({ action: 'detail', slug: cleanSlug });
-          if (!result || !result.episodes || result.episodes.length === 0) {
-            let seriesSlugResolved: string | null = null;
-            try {
-              const epData = await fetchFromRemoteApi({ action: 'episode', slug: cleanSlug });
-              if (epData?.series?.slug) {
-                seriesSlugResolved = epData.series.slug;
-              } else if (epData?.series?.link) {
-                seriesSlugResolved = epData.series.link
-                  .replace(/^https?:\/\/.*?\/(?:seri\/)?/, '')
-                  .replace(/\/+$/, '');
-              }
-            } catch {
-              /* ignore */
-            }
-
-            if (!seriesSlugResolved || seriesSlugResolved === cleanSlug) {
-              const stripped = cleanSlug
-                .replace(/-episode-\d+.*$/i, '')
-                .replace(/-subtitle-indonesia.*$/i, '')
-                .replace(/-sub-indo.*$/i, '');
-              if (stripped && stripped !== cleanSlug) {
-                seriesSlugResolved = stripped;
-              }
-            }
-
-            if (seriesSlugResolved && seriesSlugResolved !== cleanSlug) {
-              try {
-                const seriesDetail = await fetchFromRemoteApi({
-                  action: 'detail',
-                  slug: seriesSlugResolved,
-                });
-                if (seriesDetail && seriesDetail.episodes && seriesDetail.episodes.length > 0) {
-                  result = seriesDetail;
-                }
-              } catch (seriesErr) {
-                console.warn(`Could not fetch detail for resolved series ${seriesSlugResolved}:`, seriesErr);
-              }
-            }
-          }
-        } catch (apiErr) {
-          console.warn('Remote API detail failed, trying donghub scraper:', apiErr);
-          try {
-            result = await scraper.getDetail(cleanSlug);
-          } catch (scrapeErr) {
-            result = getFallbackDetail(cleanSlug);
+        if (!result.episodes || result.episodes.length === 0) {
+          // Episode slug passed but no episodes — try resolving to series
+          const seriesSlug = toSeriesSlug(cleanSlug);
+          if (seriesSlug && seriesSlug !== cleanSlug) {
+            const seriesDetail = await anichin.getAnichinDetail(seriesSlug);
+            result = normalizeAnichinDetail(seriesDetail);
           }
         }
+      } catch (anichinErr) {
+        console.warn('anichin detail failed, using static fallback:', anichinErr);
+        result = getFallbackDetail(cleanSlug);
       }
       break;
     }
     case 'episode': {
       const slug = query.slug || '';
       if (!slug) throw new Error('Parameter slug diperlukan untuk action episode');
-      const cleanSlug = slug.replace(/^https?:\/\/[^/]+\/|(?:seri\/)?/, '').replace(/\/+$/, '');
+      const cleanSlug = toSlug(slug);
 
       try {
         result = await anichin.getAnichinStream(cleanSlug);
         if (!result.mirrors || result.mirrors.length === 0) throw new Error('anichin stream empty');
       } catch (anichinErr) {
-        console.warn('anichin stream failed, trying remote API:', anichinErr);
+        console.warn('anichin stream failed, trying series detail for episode resolution:', anichinErr);
         try {
-          result = await fetchFromRemoteApi({ action: 'episode', slug: cleanSlug });
-          if (!result || !result.mirrors || result.mirrors.length === 0) {
-            try {
-              const detailData = await fetchFromRemoteApi({ action: 'detail', slug: cleanSlug });
-              if (detailData && detailData.episodes && detailData.episodes.length > 0) {
-                const targetEp = detailData.episodes[0];
-                const epSlug = targetEp.slug || targetEp.link || '';
-                if (epSlug) {
-                  result = await fetchFromRemoteApi({ action: 'episode', slug: epSlug });
-                }
-              }
-            } catch (resolveErr) {
-              console.warn('Could not auto-resolve series to episode:', resolveErr);
-            }
+          const seriesSlug = toSeriesSlug(cleanSlug);
+          if (seriesSlug && seriesSlug !== cleanSlug) {
+            result = await anichin.getAnichinStream(`${seriesSlug}-episode-${cleanSlug.match(/episode-(\d+)/i)?.[1] || 1}-subtitle-indonesia`);
+            if (!result.mirrors || result.mirrors.length === 0) throw new Error('anichin stream empty');
+          } else {
+            throw new Error('Cannot resolve series from episode slug');
           }
-        } catch (apiErr) {
-          console.warn('Remote API episode failed, trying donghub scraper:', apiErr);
-          try {
-            result = await scraper.getEpisode(slug);
-          } catch (scrapeErr) {
-            result = getFallbackEpisode(cleanSlug);
-          }
+        } catch (resolveErr) {
+          console.warn('Could not resolve episode, using fallback:', resolveErr);
+          result = getFallbackEpisode(cleanSlug);
         }
       }
 
       if (result && result.mirrors && Array.isArray(result.mirrors)) {
         result.mirrors = normalizeMirrors(result.mirrors);
-        // Preferred server order: Dtube (lightest) first, then OKRU, then Dailymotion.
-        // Dtube becomes the default selected mirror in the watch modal.
         const SERVER_ORDER = ['dtube', 'okru', 'dailymotion'];
         result.mirrors.sort((a: any, b: any) => {
           const rank = (m: any) => {
-            const idx = SERVER_ORDER.findIndex((k) =>
-              (m.name || '').toLowerCase().includes(k)
-            );
+            const idx = SERVER_ORDER.findIndex((k) => (m.name || '').toLowerCase().includes(k));
             return idx === -1 ? SERVER_ORDER.length : idx;
           };
           return rank(a) - rank(b);
@@ -374,25 +230,20 @@ export async function getDonghua(
       try {
         const anichinResult = await anichin.getAnichinSearch(queryStr, Number(page));
         result = normalizeAnichinSearch(anichinResult);
-      } catch (anichinErr) {
-        console.warn('anichin search failed, trying remote API:', anichinErr);
-        try {
-          result = await fetchFromRemoteApi({ action: 'search', query: queryStr, page });
-        } catch (apiErr) {
-          try {
-            result = await scraper.search(queryStr, Number(page));
-          } catch (scrapeErr) {
-            const filtered = FALLBACK_HOME.popularToday.filter(
-              (item: any) =>
-                item.title.toLowerCase().includes(queryStr.toLowerCase()) ||
-                item.seriesTitle?.toLowerCase().includes(queryStr.toLowerCase())
-            );
-            result = {
-              results: filtered,
-              pagination: { currentPage: 1, totalPages: 1, hasNextPage: false },
-            };
-          }
+        if (!result.results || result.results.length === 0) {
+          throw new Error('anichin search empty');
         }
+      } catch (anichinErr) {
+        console.warn('anichin search failed, using static fallback:', anichinErr);
+        const filtered = FALLBACK_HOME.popularToday.filter(
+          (item: any) =>
+            item.title.toLowerCase().includes(queryStr.toLowerCase()) ||
+            item.seriesTitle?.toLowerCase().includes(queryStr.toLowerCase())
+        );
+        result = {
+          results: filtered,
+          pagination: { currentPage: 1, totalPages: 1, hasNextPage: false },
+        };
       }
       break;
     }
@@ -404,25 +255,17 @@ export async function getDonghua(
       try {
         const anichinResult = await anichin.getAnichinGenrePage(genre, Number(page));
         result = normalizeAnichinSearch(anichinResult);
-        if (!result.results.length) {
+        if (!result.results || result.results.length === 0) {
           const searchResult = await anichin.getAnichinSearch(genre, Number(page));
           result = normalizeAnichinSearch(searchResult);
-          if (!result.results.length) throw new Error('anichin genre empty');
+          if (!result.results || result.results.length === 0) throw new Error('anichin genre empty');
         }
       } catch (anichinErr) {
-        console.warn('anichin genre failed, trying remote API:', anichinErr);
-        try {
-          result = await fetchFromRemoteApi({ action: 'genre', genre, page });
-        } catch (apiErr) {
-          try {
-            result = await scraper.getDonghuaByGenre(genre, Number(page));
-          } catch (scrapeErr) {
-            result = {
-              results: FALLBACK_HOME.popularToday,
-              pagination: { currentPage: 1, totalPages: 1, hasNextPage: false },
-            };
-          }
-        }
+        console.warn('anichin genre failed, using static fallback:', anichinErr);
+        result = {
+          results: FALLBACK_HOME.popularToday,
+          pagination: { currentPage: 1, totalPages: 1, hasNextPage: false },
+        };
       }
       break;
     }
@@ -431,16 +274,8 @@ export async function getDonghua(
         result = await anichin.getAnichinGenres();
         if (!result || result.length === 0) throw new Error('anichin genres empty');
       } catch (anichinErr) {
-        console.warn('anichin genres failed, trying remote API:', anichinErr);
-        try {
-          result = await fetchFromRemoteApi({ action: 'genres' });
-        } catch (apiErr) {
-          try {
-            result = await scraper.getGenres();
-          } catch (scrapeErr) {
-            result = FALLBACK_HOME.genres;
-          }
-        }
+        console.warn('anichin genres failed, using static fallback:', anichinErr);
+        result = FALLBACK_HOME.genres;
       }
       break;
     }

@@ -532,7 +532,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
 
       <div className="space-y-2">
         <h4 className="text-xs font-bold text-ink uppercase tracking-wider">Info</h4>
-        <p className="text-[11px] text-faint">Stream via ZerDonghua · Data dari anichin.cafe / donghub.vip</p>
+        <p className="text-[11px] text-faint">Stream via ZerDonghua · Data dari anichin.cafe</p>
       </div>
     </div>
 
