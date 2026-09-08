@@ -361,9 +361,14 @@ export class AnichinScraper extends DonghubScraper {
     });
 
     const hasNextPage = $('.pagination .next, .hpage .r').length > 0;
+    const totalPages = $('.pagination a')
+      .map((_, el) => $(el).text().trim())
+      .get()
+      .filter((t) => /^\d+$/.test(t))
+      .reduce((max, t) => Math.max(max, Number(t)), Number(page));
     return {
       results,
-      pagination: { currentPage: Number(page), totalPages: Number(page), hasNextPage },
+      pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) },
     };
   }
 
@@ -390,7 +395,11 @@ export class AnichinScraper extends DonghubScraper {
       const c = this.parseCard($, el);
       if (c) results.push(c);
     });
-    const hasNextPage = $('.pagination .next, .hpage .r').length > 0;
-    return { results, pagination: { currentPage: Number(page), totalPages: Number(page), hasNextPage } };
+    const totalPages = $('.pagination a')
+      .map((_, el) => $(el).text().trim())
+      .get()
+      .filter((t) => /^\d+$/.test(t))
+      .reduce((max, t) => Math.max(max, Number(t)), Number(page));
+    return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
   }
 }
