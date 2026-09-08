@@ -42,26 +42,28 @@ export class AnichinScraper extends DonghubScraper {
     return await this.fetchHtml(url);
   }
 
+  private parseCard($: any, el: any) {
+    const a = $(el).find('a');
+    const link = a.attr('href') || '';
+    const rawTitle =
+      $(el).find('.tt h2, .tt').first().text().trim() ||
+      $(el).find('.title').text().trim();
+    const title = rawTitle.split('\n')[0].replace(/\t+/g, ' ').trim();
+    const episode = $(el).find('.bt .epx').text().trim();
+    const type = $(el).find('.typez').text().trim();
+    const thumbnail =
+      $(el).find('img').attr('src') ||
+      $(el).find('img').attr('data-src') ||
+      null;
+    if (!link || !title) return null;
+    return { title, episode, type, thumbnail, url: link };
+  }
+
   async getAnichinHome(): Promise<AnichinHome> {
     const html = await this.fetchAnichinHtml(`${BASE_URL}/`);
     const $ = cheerio.load(html);
 
-    const parseCard = (el: any) => {
-      const a = $(el).find('a');
-      const link = a.attr('href') || '';
-      const rawTitle =
-        $(el).find('.tt h2, .tt').first().text().trim() ||
-        $(el).find('.title').text().trim();
-      const title = rawTitle.split('\n')[0].replace(/\t+/g, ' ').trim();
-      const episode = $(el).find('.bt .epx').text().trim();
-      const type = $(el).find('.typez').text().trim();
-      const thumbnail =
-        $(el).find('img').attr('src') ||
-        $(el).find('img').attr('data-src') ||
-        null;
-      if (!link || !title) return null;
-      return { title, episode, type, thumbnail, url: link };
-    };
+    const parseCard = (el: any) => this.parseCard($, el);
 
     const popularToday: any[] = [];
     $('.releases.hothome').parent().find('.bsx').each((_, el) => {
@@ -315,5 +317,20 @@ export class AnichinScraper extends DonghubScraper {
       genres.push({ name, link, slug: this.getSlug(link) });
     });
     return genres;
+  }
+
+  async getAnichinGenrePage(genreSlug: string, page = 1): Promise<{ results: any[]; pagination: any }> {
+    const url = page > 1
+      ? `${BASE_URL}/genres/${genreSlug}/page/${page}`
+      : `${BASE_URL}/genres/${genreSlug}/`;
+    const html = await this.fetchAnichinHtml(url);
+    const $ = cheerio.load(html);
+    const results: any[] = [];
+    $('.listupd .bsx, .animpost').each((_, el) => {
+      const c = this.parseCard($, el);
+      if (c) results.push(c);
+    });
+    const hasNextPage = $('.pagination .next, .hpage .r').length > 0;
+    return { results, pagination: { currentPage: Number(page), totalPages: Number(page), hasNextPage } };
   }
 }

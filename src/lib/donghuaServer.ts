@@ -18,18 +18,30 @@ function normalizeAnichinCard(item: any): any {
   if (!item) return item;
   const link = item.url || item.link || '';
   const cover = item.thumbnail || item.cover || '';
-  const title = (item.title || '').replace(/(.+?)\s*\1/, '$1').trim();
-  const slug =
-    (item.slug as string) ||
-    link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
-  const seriesTitle = item.seriesTitle || title.replace(/\s*Episode\s*\d+.*/i, '').trim();
+  const rawTitle = (item.title || '').replace(/(.+?)\s*\1/, '$1').trim();
+  const slug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+  const seriesTitle = item.seriesTitle || rawTitle.replace(/\s*Episode\s*\d+.*/i, '').trim();
+  // Anichin episode status embedded in title, e.g. "Episode 157 Subtitle Indonesia"
+  const subStatus = item.subStatus || 'Subtitle Indonesia';
+  const episode = item.episode || '';
+  const rankNum = item.rank != null ? Number(item.rank) : undefined;
   return {
     ...item,
-    title,
+    title: rawTitle,
     link,
     cover,
     slug,
     seriesTitle,
+    episode,
+    subStatus,
+    type: item.type || '3D',
+    status: item.status || 'Ongoing',
+    hot: typeof item.hot === 'boolean' ? item.hot : !!item.rank,
+    rating: item.rating || null,
+    rank: rankNum,
+    genres: Array.isArray(item.genres) && item.genres.length > 0
+      ? item.genres.map((g: any) => typeof g === 'string' ? { name: g, link: '', slug: '' } : g)
+      : [],
   };
 }
 
@@ -388,11 +400,15 @@ export async function getDonghua(
       const genre = query.genre || '';
       const page = String(query.page || 1);
       if (!genre) throw new Error('Parameter genre diperlukan untuk action genre');
-      // Anichin has no genre category pages; fall back to search by genre name.
+      // Try Anichin's genre page first, then search as fallback within anichin.
       try {
-        const anichinResult = await anichin.getAnichinSearch(genre, Number(page));
+        const anichinResult = await anichin.getAnichinGenrePage(genre, Number(page));
         result = normalizeAnichinSearch(anichinResult);
-        if (!result.results.length) throw new Error('anichin genre search empty');
+        if (!result.results.length) {
+          const searchResult = await anichin.getAnichinSearch(genre, Number(page));
+          result = normalizeAnichinSearch(searchResult);
+          if (!result.results.length) throw new Error('anichin genre empty');
+        }
       } catch (anichinErr) {
         console.warn('anichin genre failed, trying remote API:', anichinErr);
         try {
