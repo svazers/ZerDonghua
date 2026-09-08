@@ -362,17 +362,29 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       <Layers className="w-3.5 h-3.5 text-accent-soft" />
       <span>Episode Terkait</span>
     </span>
-    <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
+    <div className="grid grid-cols-1 gap-2">
       {relatedEpisodes.map((ep) => (
         <button
           key={ep.slug}
           onClick={() => onPlayEpisode(ep.slug, ep.title)}
-          className="relative min-w-[90px] w-[90px] sm:w-[100px] shrink-0 flex flex-col rounded-xl bg-elevated hover:bg-line border border-line hover:border-accent-soft/40 transition-all cursor-pointer active:scale-95 p-2 text-left"
+          className="relative flex items-center gap-2 rounded-xl bg-elevated hover:bg-line border border-line hover:border-accent-soft/40 transition-all cursor-pointer active:scale-95 p-2 text-left w-full"
         >
-          <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas mb-1">
-            <Image src={ep.cover} alt={ep.title} fill loading="lazy" decoding="async" sizes="100px" className="object-cover" />
+          <div className="relative aspect-[3/4] w-14 h-20 sm:w-16 sm:h-22 shrink-0 rounded-lg overflow-hidden bg-canvas border-r border-line">
+            <Image src={ep.cover} alt={ep.title} fill loading="lazy" decoding="async" sizes="64px" className="object-cover" />
           </div>
-          <span title={ep.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{ep.title}</span>
+          <div className="flex-1 min-w-0">
+            <span title={ep.title} className="text-[11px] sm:text-xs font-semibold text-sub line-clamp-2 block">{ep.title}</span>
+            {ep.episode && (
+              <span className="text-[10px] text-mute bg-line px-1.5 py-0.25 rounded shrink-0">
+                {ep.episode}
+              </span>
+            )}
+            {ep.postedBy && (
+              <span className="text-[9px] sm:text-[10px] text-faint block mt-0.5">
+                {ep.postedBy} • {ep.released}
+              </span>
+            )}
+          </div>
         </button>
       ))}
     </div>
