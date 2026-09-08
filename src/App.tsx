@@ -376,7 +376,7 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
                   )}
 
                   {/* Rail terpisah per genre — slider kartu + panah prev/next */}
-                  {['action', 'cultivation', 'fantasy', 'martial-arts'].map((slug) => (
+                  {['action', 'cultivation', 'fantasy', 'isekai'].map((slug) => (
                     <Suspense key={slug} fallback={<div className="h-48" />}>
                       <GenreRailSection
                         genreSlug={slug}

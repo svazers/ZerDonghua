@@ -104,7 +104,7 @@ Endpoint backend internal terpadu berada di `/api/donghua` (Next.js Route Handle
 
 Contoh:
 ```
-GET /api/donghua?action=search&query=martial+arts&page=2
+GET /api/donghua?action=search&query=isekai&page=2
 ```
 
 ---

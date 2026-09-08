@@ -302,7 +302,7 @@ export const FALLBACK_HOME = {
         link: "https://donghub.vip/renegade-immortal/",
         slug: "renegade-immortal",
         cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
-        genres: [{ name: "Martial Arts", link: "", slug: "martial-arts" }, { name: "Cultivation", link: "", slug: "cultivation" }],
+        genres: [{ name: "Isekai", link: "", slug: "isekai" }, { name: "Cultivation", link: "", slug: "cultivation" }],
         rating: "9.4"
       },
       {
@@ -369,7 +369,7 @@ export const FALLBACK_HOME = {
     { name: "Action", link: "https://donghub.vip/genres/action/", slug: "action" },
     { name: "Cultivation", link: "https://donghub.vip/genres/cultivation/", slug: "cultivation" },
     { name: "Fantasy", link: "https://donghub.vip/genres/fantasy/", slug: "fantasy" },
-    { name: "Martial Arts", link: "https://donghub.vip/genres/martial-arts/", slug: "martial-arts" },
+    { name: "Isekai", link: "https://donghub.vip/genres/isekai/", slug: "isekai" },
     { name: "Adventure", link: "https://donghub.vip/genres/adventure/", slug: "adventure" },
     { name: "Romance", link: "https://donghub.vip/genres/romance/", slug: "romance" },
     { name: "Harem", link: "https://donghub.vip/genres/harem/", slug: "harem" },
@@ -497,7 +497,7 @@ export function getFallbackDetail(slug: string) {
       { name: "Action", link: "", slug: "action" },
       { name: "Cultivation", link: "", slug: "cultivation" },
       { name: "Fantasy", link: "", slug: "fantasy" },
-      { name: "Martial Arts", link: "", slug: "martial-arts" }
+      { name: "Isekai", link: "", slug: "isekai" }
     ],
     episodes: Array.from({ length: 12 }).map((_, i) => ({
       title: `Episode ${i + 1} Sub Indo`,

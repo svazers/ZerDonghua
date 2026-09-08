@@ -82,7 +82,7 @@ export const HomeGenreShowcase: React.FC<HomeGenreShowcaseProps> = ({
         <div className="flex flex-wrap items-center gap-2">
           {/* Quick Pill Switcher for popular genres */}
           <div className="flex items-center gap-1 p-1 bg-surface rounded-2xl border border-line overflow-x-auto no-scrollbar max-w-full">
-            {['action', 'cultivation', 'fantasy', 'martial-arts', 'sci-fi', 'romance', '2d'].map((gSlug) => {
+            {['action', 'cultivation', 'fantasy', 'isekai', 'sci-fi', 'romance', '2d'].map((gSlug) => {
               const matched = genres.find((g) => g.slug === gSlug) || { name: gSlug, slug: gSlug };
               const isActive = selectedGenre === gSlug;
               return (
