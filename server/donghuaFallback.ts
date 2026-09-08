@@ -4,35 +4,35 @@ export const FALLBACK_HOME = {
       title: "Battle Through the Heavens Season 5 (Fights Break Sphere)",
       link: "https://donghub.vip/battle-through-the-heavens-season-5/",
       slug: "battle-through-the-heavens-season-5",
-      cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       synopsis: "Xiao Yan kembali ke Akademi Jia Nan untuk mengasah kekuatannya, menantang para tetua, dan merebut Api Surgawi 'Fallen Heart Flame' untuk membalas dendam klannya dan menyelamatkan Gurunya, Yao Lao."
     },
     {
       title: "Perfect World (Wanmei Shijie)",
       link: "https://donghub.vip/perfect-world/",
       slug: "perfect-world",
-      cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1200&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       synopsis: "Shi Hao, pemuda jenius yang terlahir dengan Tulang Tertinggi yang dicuri di masa kecilnya, bangkit kembali di Desa Batu untuk mendominasi Delapan Wilayah dan melawan klan-klan kuno agung."
     },
     {
       title: "Renegade Immortal (Xian Ni)",
       link: "https://donghub.vip/renegade-immortal/",
       slug: "renegade-immortal",
-      cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       synopsis: "Wang Lin adalah pemuda biasa yang berusaha masuk ke sekte kultivasi. Dengan tekad baja dan manik pembangkang surga, ia menempuh jalan kultivasi iblis yang penuh pertumpahan darah demi takdirnya."
     },
     {
       title: "Soul Land 2: The Peerless Tang Clan (Douluo Dalu II)",
       link: "https://donghub.vip/soul-land-2-the-peerless-tang-clan/",
       slug: "soul-land-2-the-peerless-tang-clan",
-      cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       synopsis: "Sepuluh ribu tahun setelah Tang San mendirikan Sekte Tang, kejayaan sekte mulai memudar. Huo Yuhao, seorang anak haram dari Duke Mansion dengan Martial Soul Mata Roh, bangkit di Akademi Shrek."
     },
     {
       title: "Swallowed Star Season 4 (Tunshi Xingkong)",
       link: "https://donghub.vip/swallowed-star-season-4/",
       slug: "swallowed-star-season-4",
-      cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       synopsis: "Bumi pulih dari invasi monster virus RR. Luo Feng memimpin pertarungan planet ke ranah luar angkasa kosmik galaksi untuk melindungi umat manusia dari ancaman alien semesta."
     }
   ],
@@ -42,7 +42,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Battle Through the Heavens Season 5",
       link: "https://donghub.vip/battle-through-the-heavens-season-5-episode-136-sub-indo/",
       slug: "battle-through-the-heavens-season-5-episode-136-sub-indo",
-      cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 136",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -54,7 +54,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Perfect World",
       link: "https://donghub.vip/perfect-world-episode-202-sub-indo/",
       slug: "perfect-world-episode-202-sub-indo",
-      cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 202",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -66,7 +66,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Renegade Immortal (Xian Ni)",
       link: "https://donghub.vip/renegade-immortal-episode-76-sub-indo/",
       slug: "renegade-immortal-episode-76-sub-indo",
-      cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 76",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -78,7 +78,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Soul Land 2: The Peerless Tang Clan",
       link: "https://donghub.vip/soul-land-2-episode-90-sub-indo/",
       slug: "soul-land-2-episode-90-sub-indo",
-      cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 90",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -90,7 +90,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Throne of Seal (Shen Yin Wangzuo)",
       link: "https://donghub.vip/throne-of-seal-episode-148-sub-indo/",
       slug: "throne-of-seal-episode-148-sub-indo",
-      cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 148",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -102,7 +102,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "A Record of a Mortal's Journey to Immortality",
       link: "https://donghub.vip/a-record-of-a-mortals-journey-to-immortality-s3-episode-128/",
       slug: "a-record-of-a-mortals-journey-to-immortality-s3-episode-128",
-      cover: "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 128",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -114,7 +114,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Shrouding the Heavens (Zhe Tian)",
       link: "https://donghub.vip/shrouding-the-heavens-episode-98-sub-indo/",
       slug: "shrouding-the-heavens-episode-98-sub-indo",
-      cover: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 98",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -126,7 +126,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Martial Universe (Wu Dong Qian Kun)",
       link: "https://donghub.vip/martial-universe-season-4-episode-12-sub-indo/",
       slug: "martial-universe-season-4-episode-12-sub-indo",
-      cover: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 12",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -140,7 +140,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "The Great Ruler (Da Zhu Zai)",
       link: "https://donghub.vip/the-great-ruler-episode-86-sub-indo/",
       slug: "the-great-ruler-episode-86-sub-indo",
-      cover: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 86",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -152,7 +152,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Against the Gods (Ni Tian Xie Shen)",
       link: "https://donghub.vip/against-the-gods-season-2-episode-38-sub-indo/",
       slug: "against-the-gods-season-2-episode-38-sub-indo",
-      cover: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 38",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -164,7 +164,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "100,000 Years of Qi Refining (Lian Qi Shi Wan Nian)",
       link: "https://donghub.vip/100000-years-of-qi-refining-episode-210-sub-indo/",
       slug: "100000-years-of-qi-refining-episode-210-sub-indo",
-      cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 210",
       subStatus: "Sub Indo",
       type: "Short 3D",
@@ -176,7 +176,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Tales of Demons and Gods (Yao Shen Ji)",
       link: "https://donghub.vip/tales-of-demons-and-gods-season-8-episode-48/",
       slug: "tales-of-demons-and-gods-season-8-episode-48",
-      cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 48",
       subStatus: "Sub Indo",
       type: "Short 3D",
@@ -188,7 +188,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Stellar Transformation (Xing Chen Bian)",
       link: "https://donghub.vip/stellar-transformation-season-6-episode-18-sub-indo/",
       slug: "stellar-transformation-season-6-episode-18-sub-indo",
-      cover: "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 18",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -200,7 +200,7 @@ export const FALLBACK_HOME = {
       seriesTitle: "Lord Xue Ying (Xue Ying Ling Zhu)",
       link: "https://donghub.vip/lord-xue-ying-season-3-episode-26-sub-indo/",
       slug: "lord-xue-ying-season-3-episode-26-sub-indo",
-      cover: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 26",
       subStatus: "Sub Indo",
       type: "3D Donghua",
@@ -213,7 +213,7 @@ export const FALLBACK_HOME = {
       title: "Battle Through the Heavens Season 5",
       link: "https://donghub.vip/battle-through-the-heavens-season-5/",
       slug: "battle-through-the-heavens-season-5",
-      cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 136",
       type: "3D Ongoing",
       status: "Ongoing",
@@ -224,7 +224,7 @@ export const FALLBACK_HOME = {
       title: "Perfect World",
       link: "https://donghub.vip/perfect-world/",
       slug: "perfect-world",
-      cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 202",
       type: "3D Ongoing",
       status: "Ongoing",
@@ -235,7 +235,7 @@ export const FALLBACK_HOME = {
       title: "Renegade Immortal",
       link: "https://donghub.vip/renegade-immortal/",
       slug: "renegade-immortal",
-      cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 76",
       type: "3D Ongoing",
       status: "Ongoing",
@@ -246,7 +246,7 @@ export const FALLBACK_HOME = {
       title: "Soul Land 2: The Peerless Tang Clan",
       link: "https://donghub.vip/soul-land-2-the-peerless-tang-clan/",
       slug: "soul-land-2-the-peerless-tang-clan",
-      cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 90",
       type: "3D Ongoing",
       status: "Ongoing",
@@ -257,7 +257,7 @@ export const FALLBACK_HOME = {
       title: "Throne of Seal",
       link: "https://donghub.vip/throne-of-seal/",
       slug: "throne-of-seal",
-      cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 148",
       type: "3D Ongoing",
       status: "Ongoing",
@@ -268,7 +268,7 @@ export const FALLBACK_HOME = {
       title: "Swallowed Star Season 4",
       link: "https://donghub.vip/swallowed-star-season-4/",
       slug: "swallowed-star-season-4",
-      cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       episode: "Ep 142",
       type: "3D Ongoing",
       status: "Ongoing",
@@ -283,7 +283,7 @@ export const FALLBACK_HOME = {
         title: "Battle Through the Heavens Season 5",
         link: "https://donghub.vip/battle-through-the-heavens-season-5/",
         slug: "battle-through-the-heavens-season-5",
-        cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Action", link: "", slug: "action" }, { name: "Cultivation", link: "", slug: "cultivation" }, { name: "Fantasy", link: "", slug: "fantasy" }],
         rating: "9.6"
       },
@@ -292,7 +292,7 @@ export const FALLBACK_HOME = {
         title: "Perfect World",
         link: "https://donghub.vip/perfect-world/",
         slug: "perfect-world",
-        cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Action", link: "", slug: "action" }, { name: "Fantasy", link: "", slug: "fantasy" }],
         rating: "9.5"
       },
@@ -301,7 +301,7 @@ export const FALLBACK_HOME = {
         title: "Renegade Immortal (Xian Ni)",
         link: "https://donghub.vip/renegade-immortal/",
         slug: "renegade-immortal",
-        cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Isekai", link: "", slug: "isekai" }, { name: "Cultivation", link: "", slug: "cultivation" }],
         rating: "9.4"
       },
@@ -310,7 +310,7 @@ export const FALLBACK_HOME = {
         title: "Soul Land 2",
         link: "https://donghub.vip/soul-land-2-the-peerless-tang-clan/",
         slug: "soul-land-2-the-peerless-tang-clan",
-        cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Action", link: "", slug: "action" }, { name: "Romance", link: "", slug: "romance" }],
         rating: "9.3"
       },
@@ -319,7 +319,7 @@ export const FALLBACK_HOME = {
         title: "Throne of Seal",
         link: "https://donghub.vip/throne-of-seal/",
         slug: "throne-of-seal",
-        cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Fantasy", link: "", slug: "fantasy" }, { name: "Magic", link: "", slug: "magic" }],
         rating: "9.2"
       }
@@ -330,7 +330,7 @@ export const FALLBACK_HOME = {
         title: "Perfect World",
         link: "https://donghub.vip/perfect-world/",
         slug: "perfect-world",
-        cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Action", link: "", slug: "action" }],
         rating: "9.5"
       },
@@ -339,7 +339,7 @@ export const FALLBACK_HOME = {
         title: "Battle Through the Heavens Season 5",
         link: "https://donghub.vip/battle-through-the-heavens-season-5/",
         slug: "battle-through-the-heavens-season-5",
-        cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Action", link: "", slug: "action" }],
         rating: "9.6"
       }
@@ -350,7 +350,7 @@ export const FALLBACK_HOME = {
         title: "Soul Land (Douluo Dalu)",
         link: "https://donghub.vip/soul-land/",
         slug: "soul-land",
-        cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Action", link: "", slug: "action" }, { name: "Fantasy", link: "", slug: "fantasy" }],
         rating: "9.7"
       },
@@ -359,7 +359,7 @@ export const FALLBACK_HOME = {
         title: "Battle Through the Heavens",
         link: "https://donghub.vip/battle-through-the-heavens/",
         slug: "battle-through-the-heavens",
-        cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         genres: [{ name: "Cultivation", link: "", slug: "cultivation" }],
         rating: "9.6"
       }
@@ -388,7 +388,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Soul Land 2: The Peerless Tang Clan",
       link: "https://donghub.vip/soul-land-2-the-peerless-tang-clan/",
       slug: "soul-land-2-the-peerless-tang-clan",
-      cover: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 90"
     },
@@ -396,7 +396,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "100.000 Years of Qi Refining",
       link: "https://donghub.vip/100000-years-of-qi-refining/",
       slug: "100000-years-of-qi-refining",
-      cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "11:30 WIB",
       episode: "Ep 210"
     }
@@ -406,7 +406,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Renegade Immortal (Xian Ni)",
       link: "https://donghub.vip/renegade-immortal/",
       slug: "renegade-immortal",
-      cover: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 76"
     }
@@ -416,7 +416,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Throne of Seal (Shen Yin Wangzuo)",
       link: "https://donghub.vip/throne-of-seal/",
       slug: "throne-of-seal",
-      cover: "https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 148"
     }
@@ -426,7 +426,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Shrouding the Heavens (Zhe Tian)",
       link: "https://donghub.vip/shrouding-the-heavens/",
       slug: "shrouding-the-heavens",
-      cover: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 98"
     }
@@ -436,7 +436,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Perfect World (Wanmei Shijie)",
       link: "https://donghub.vip/perfect-world/",
       slug: "perfect-world",
-      cover: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 202"
     }
@@ -446,7 +446,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "A Record of a Mortal's Journey to Immortality",
       link: "https://donghub.vip/a-record-of-a-mortals-journey-to-immortality-s3/",
       slug: "a-record-of-a-mortals-journey-to-immortality-s3",
-      cover: "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 128"
     },
@@ -454,7 +454,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "The Great Ruler",
       link: "https://donghub.vip/the-great-ruler/",
       slug: "the-great-ruler",
-      cover: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "11:00 WIB",
       episode: "Ep 86"
     }
@@ -464,7 +464,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Battle Through the Heavens Season 5",
       link: "https://donghub.vip/battle-through-the-heavens-season-5/",
       slug: "battle-through-the-heavens-season-5",
-      cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 136"
     },
@@ -472,7 +472,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
       title: "Swallowed Star Season 4",
       link: "https://donghub.vip/swallowed-star-season-4/",
       slug: "swallowed-star-season-4",
-      cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80",
+      cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
       releaseTime: "10:00 WIB",
       episode: "Ep 142"
     }
@@ -482,7 +482,7 @@ export const FALLBACK_SCHEDULE: Record<string, any[]> = {
 export function getFallbackDetail(slug: string) {
   return {
     title: slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-    cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop&q=80",
+    cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
     synopsis: "Petualangan kultivasi epik dunia donghua dengan animasi 3D memukau, pertarungan kekuatan spiritual dahsyat, serta teknik bela diri legendaris.",
     metadata: {
       "Status": "Ongoing",
@@ -544,7 +544,7 @@ export function getFallbackEpisode(slug: string) {
         title: "Episode Terbaru Sub Indo",
         link: "",
         slug: slug,
-        cover: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop&q=80",
+        cover: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwZi5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxYjFiMjMiLz48dGV4dCB4PSI1MCUiIHk9IjUzJSIgZm9udC1zaXplPSIxMiIgZm9udC1mYW1pbHk9Ik1vbm9zY3BlLHNucy1zZXJpZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzYyNjI2OSI+Tm8gQ292ZXI8L3RleHQ+PC9zdmc+",
         postedBy: "Donghub VIP",
         released: "Baru saja"
       }
