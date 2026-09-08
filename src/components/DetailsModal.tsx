@@ -139,7 +139,7 @@ export const DetailsModal: React.FC<DetailsModalProps> = ({
               {/* Header Info */}
               <div className="flex flex-row gap-3.5 sm:gap-6 items-start">
                 {detail.cover && (
-                  <div className="relative w-24 sm:w-40 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-line shrink-0 mt-0 bg-canvas z-10">
+                  <div className="relative w-24 sm:w-40 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-line shrink-0 -mt-4 sm:-mt-6 bg-canvas z-10">
                     <Image
                       src={detail.cover}
                       alt={detail.title}
