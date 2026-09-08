@@ -114,8 +114,7 @@ export const DetailsModal: React.FC<DetailsModalProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/40" />
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(124,58,237,0.3),transparent_70%)]" />
 
-              {/* Badges */}
-              <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <div className="absolute top-3 left-4 right-4 sm:top-4 sm:left-6 sm:right-6 flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {detail.metadata?.['Status'] && (
                   <span className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-xs font-semibold bg-ok/20 text-ok border border-ok/30">
                     {detail.metadata['Status']}
@@ -139,7 +138,7 @@ export const DetailsModal: React.FC<DetailsModalProps> = ({
               {/* Header Info */}
               <div className="flex flex-row gap-3.5 sm:gap-6 items-start">
                 {detail.cover && (
-                  <div className="relative w-24 sm:w-40 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-line shrink-0 -mt-4 sm:-mt-6 bg-canvas z-10">
+                  <div className="relative w-24 sm:w-40 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg border border-line shrink-0 -mt-12 sm:-mt-16 bg-canvas z-10">
                     <Image
                       src={detail.cover}
                       alt={detail.title}
