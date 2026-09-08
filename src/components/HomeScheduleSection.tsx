@@ -78,9 +78,6 @@ export const HomeScheduleSection: React.FC<HomeScheduleSectionProps> = ({
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Jadwal Rilis Mingguan
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-ok/20 text-ok font-semibold border border-ok/30 flex items-center gap-1">
-                <Clock className="w-3 h-3" /> Live Schedule
-              </span>
             </h2>
             <p className="text-xs text-mute">
               Waktu tayang dan jadwal siaran donghua terbaru setiap hari

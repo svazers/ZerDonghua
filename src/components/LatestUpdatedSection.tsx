@@ -58,9 +58,6 @@ export const LatestUpdatedSection: React.FC<LatestUpdatedSectionProps> = ({
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-ink tracking-tight flex items-center gap-2">
               Episode Terbaru
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-ok/20 text-ok font-semibold border border-ok/30">
-                Live Releases
-              </span>
             </h2>
             <p className="text-xs text-mute">
               Episode donghua subtitle Indonesia terbaru yang baru saja tayang

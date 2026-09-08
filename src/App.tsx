@@ -336,7 +336,7 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
                     />
                   )}
 
-                  {/* In-Page Interactive Daily Release Schedule (Live Schedule) */}
+                  {/* In-Page Interactive Daily Release Schedule */}
                   <HomeScheduleSection
                     onSelect={handleOpenDetail}
                     onWatch={handleWatch}
