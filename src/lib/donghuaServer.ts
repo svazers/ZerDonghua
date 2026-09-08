@@ -12,6 +12,49 @@ const scraper = new DonghubScraper();
 const anichin = new AnichinScraper();
 const REMOTE_API_BASE = 'https://api.alfisy.my.id/api/anime/donghub';
 
+// Anichin returns url/thumbnail instead of link/cover, and titles are doubled.
+// Normalize to the schema the frontend expects: link, cover, slug, seriesTitle.
+function normalizeAnichinCard(item: any): any {
+  if (!item) return item;
+  const link = item.url || item.link || '';
+  const cover = item.thumbnail || item.cover || '';
+  const title = (item.title || '').replace(/(.+?)\s*\1/, '$1').trim();
+  const slug =
+    (item.slug as string) ||
+    link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+  const seriesTitle = item.seriesTitle || title.replace(/\s*Episode\s*\d+.*/i, '').trim();
+  return {
+    ...item,
+    title,
+    link,
+    cover,
+    slug,
+    seriesTitle,
+  };
+}
+
+function normalizeAnichinHome(anichinData: any): any {
+  return {
+    recommendations: (anichinData.recommendation || []).map(normalizeAnichinCard),
+    popularToday: (anichinData.popularToday || []).map(normalizeAnichinCard),
+    latestRelease: (anichinData.latest || []).map(normalizeAnichinCard),
+    donghuaBaru: (anichinData.popularToday || []).map(normalizeAnichinCard),
+    donghuaPopular: {
+      weekly: (anichinData.leaderboard?.weekly || []).map(normalizeAnichinCard),
+      monthly: (anichinData.leaderboard?.monthly || []).map(normalizeAnichinCard),
+      allTime: (anichinData.leaderboard?.alltime || []).map(normalizeAnichinCard),
+    },
+    genres: [],
+  };
+}
+
+function normalizeAnichinSearch(data: any): any {
+  return {
+    results: (data.results || []).map(normalizeAnichinCard),
+    pagination: data.pagination,
+  };
+}
+
 // In-memory cache so we don't hammer the upstream API on every request.
 const cache = new Map<string, { timestamp: number; data: any }>();
 const CACHE_TTL_MS = 2 * 60 * 1000;
@@ -70,17 +113,7 @@ export async function getDonghua(
     case 'home': {
       try {
         const anichinData = await anichin.getAnichinHome();
-        result = {
-          recommendations: anichinData.recommendation,
-          popularToday: anichinData.popularToday,
-          latestRelease: anichinData.latest,
-          donghuaPopular: {
-            weekly: anichinData.leaderboard.weekly,
-            monthly: anichinData.leaderboard.monthly,
-            allTime: anichinData.leaderboard.alltime,
-          },
-          genres: [],
-        };
+        result = normalizeAnichinHome(anichinData);
       } catch (anichinErr) {
         console.warn('anichin getHome failed, trying remote API:', anichinErr);
         try {
@@ -278,10 +311,7 @@ export async function getDonghua(
       if (!queryStr) throw new Error('Parameter query diperlukan untuk action search');
       try {
         const anichinResult = await anichin.getAnichinSearch(queryStr, Number(page));
-        result = {
-          results: anichinResult.results || [],
-          pagination: anichinResult.pagination,
-        };
+        result = normalizeAnichinSearch(anichinResult);
       } catch (anichinErr) {
         console.warn('anichin search failed, trying remote API:', anichinErr);
         try {

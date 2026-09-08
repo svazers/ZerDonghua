@@ -25,16 +25,21 @@ function decodeBase64(str: string): string {
 export class AnichinScraper extends DonghubScraper {
   constructor() {
     super();
-    // Override baseUrl to target anichin instead of donghub
+    // Override baseUrl and headers to target anichin.
+    // Must reset headers with anichin Referer, not inherit donghub's.
     this.baseUrl = BASE_URL;
+    this.headers = {
+      'User-Agent': USER_AGENT,
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+      Referer: 'https://anichin.cafe/',
+    };
   }
 
   private async fetchAnichinHtml(url: string): Promise<string> {
-    const res = await fetch(url, { headers: this.headers });
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} fetching ${url}`);
-    }
-    return await res.text();
+    // Reuse DonghubScraper's spoofing + proxy-fallback via fetchHtml,
+    // but with Anichin-specific headers already set above.
+    return await this.fetchHtml(url);
   }
 
   async getAnichinHome(): Promise<AnichinHome> {
