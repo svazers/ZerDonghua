@@ -99,3 +99,29 @@ latest, popular, genre, atau footer — terlalu polos; tidak ada info poster-rel
 - API episode (?action=episode) return: recommended 5, relatedEpisodes 1, streams 3 (Dailymotion/Dtube/Okru)
 - API home: latestRelease 20, donghuaPopular 10/10/10, genres 26
 - Dev server HTTP 200, home page SSR render OK
+
+---
+
+# FIX_LOG — Watch Modal section layout fixes
+
+**Komponen:** `src/components/WatchModal.tsx`, `src/components/DonghuaCardSmall.tsx`
+
+## Root Cause
+- Player container pakai `aspect-video` → tinggi terbatas, video pendek.
+- Footer di modal simpel (text centre) — diminta sama seperti Home.
+- `relatedEpisodes` dari API ada di root `data.relatedEpisodes`, tapi kode baca `streamData?.relatedEpisodes` (undefined) → episode terkait ga muncul.
+- `currentMirror` hardcode `playableMirrors[0]` → klik server ganti state tapi iframe ga ikut update.
+- Popular sections scroll horizontal → diminta grid vertikal.
+
+## Fixes
+- `aspect-video` → `min-h-[50vh] sm:min-h-[60vh]`.
+- Footer diganti full layout (grid 4 kolom, navigasi, info, copyright).
+- `relatedEpisodes` dipisah ke state sendiri, set saat fetch episode; section pakai state tersebut.
+- `currentMirror = allMirrors[selectedMirrorIndex] || playableMirrors[0] || allMirrors[0]`.
+- Popular: 3 tab (Weekly/Monthly/All-Time) + list vertikal full-width card.
+- Related episodes: layout list vertikal, pakai `ep.title`, `ep.episode`, `ep.postedBy`, `ep.released`.
+
+## Verified
+- `npm run build` sukses (type error `Film` → `Play` di footer diperbaiki).
+- Server switch: click "Dtube" / "OKRU" → iframe berubah.
+- Related episodes muncul setelah fetch.

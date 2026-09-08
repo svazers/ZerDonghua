@@ -99,7 +99,7 @@ export const DetailsModal: React.FC<DetailsModalProps> = ({
         ) : detail ? (
           <div className="overflow-y-auto max-h-[92vh] sm:max-h-[90vh] pb-6">
             {/* Top Banner / Backdrop Area */}
-            <div className="relative h-36 sm:h-64 w-full overflow-hidden bg-canvas">
+            <div className="relative h-44 sm:h-56 md:h-64 w-full overflow-hidden bg-canvas">
               {detail.cover && (
                 <Image
                   src={detail.cover}
