@@ -216,7 +216,10 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
       setWatchSlug(itemOrSlug);
       setWatchTitle(title);
     } else {
-      setWatchSlug(itemOrSlug.slug);
+      // Use item.link (episode URL) for direct watch, NOT item.slug which is
+      // the series slug (used for detail modal). Episode links let the watch
+      // modal resolve the correct stream + prev/next navigation.
+      setWatchSlug(itemOrSlug.link || itemOrSlug.slug);
       setWatchTitle(itemOrSlug.title);
     }
   };

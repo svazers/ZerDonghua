@@ -16,7 +16,12 @@ function normalizeAnichinCard(item: any): any {
   const link = item.url || item.link || '';
   const cover = item.thumbnail || item.cover || '';
   const rawTitle = (item.title || '').replace(/(.+?)\s*\1/, '$1').trim();
-  const slug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+  const rawSlug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+  // Slug must resolve to the SERIES detail page (strip episode/suffix), so
+  // open-detail → /api/donghua?action=detail works. Episode slug preserved
+  // separately for direct episode link/watch if the frontend needs it.
+  const slug = toSeriesSlug(rawSlug);
+  const episodeSlug = rawSlug;
   const seriesTitle = item.seriesTitle || rawTitle.replace(/\s*Episode\s*\d+.*/i, '').trim();
   const subStatus = item.subStatus || 'Sub Indo';
   const episode = item.episode || '';

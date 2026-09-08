@@ -2,13 +2,13 @@ import React from 'react';
 
 /**
  * Lightweight image component that replaces next/image.
- * donghub.vip images sit behind Cloudflare which 403s requests lacking a
- * same-site Referer, so we proxy them through /api/img (which injects the
- * Referer server-side). Keeps real covers instead of placeholders.
- * onError still falls back to a placeholder if the proxy fails.
+ * anichin.cafe images sit behind Cloudflare which 403s requests lacking a
+ * same-site Referer, so we proxy them through /api/img (server-side). Keeps
+ * real covers instead of placeholders. onError falls back to a dark SVG.
  */
+// Dark-themed SVG data URI placeholder — clearly a placeholder, not a random photo.
 const PLACEHOLDER =
-  'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&auto=format&fit=crop&q=80';
+  'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwOi8vd3d3Lncub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PHRleHQgeD0iNTAlIiB5PSI1MyUiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtZmFtaWx5PSJNb25vc3BlY3QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM2MjYyNjkiPk5vIENvdmVyPC90ZXh0Pjwvc3ZnPg==';
 
 const PROXIED_HOSTS = ['donghub.vip', 'img.donghub.vip', 'cdn.donghub.vip', 'anichin.cafe'];
 
