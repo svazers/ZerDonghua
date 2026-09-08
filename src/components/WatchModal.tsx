@@ -371,7 +371,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
           <div className="relative aspect-[3/4] w-full rounded-lg overflow-hidden bg-canvas mb-1">
             <Image src={ep.cover} alt={ep.title} fill loading="lazy" decoding="async" sizes="100px" className="object-cover" />
           </div>
-          <span title={ep.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{ep.title.replace(/\s*Episode\s*\d+.*/i, '').trim() || ep.title}</span>
+          <span title={ep.title} className="text-[10px] sm:text-xs font-semibold text-sub line-clamp-2">{ep.title}</span>
         </button>
       ))}
     </div>
@@ -495,7 +495,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       <div className="md:col-span-2 space-y-3">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-xl bg-accent/20 border border-accent-soft/40 flex items-center justify-center text-accent-soft">
-            <Film className="w-4 h-4" />
+            <Play className="w-4 h-4" />
           </div>
           <span className="text-sm font-bold text-ink">ZerDonghua</span>
         </div>
