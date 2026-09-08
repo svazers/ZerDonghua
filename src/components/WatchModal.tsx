@@ -438,7 +438,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
     {(homeData.donghuaPopular.weekly || []).length > 0 && (
       <div>
         <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">Mingguan</h4>
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-0.5 sm:-mx-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {homeData.donghuaPopular.weekly.slice(0, 8).map((it) => (
             <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
           ))}
@@ -448,7 +448,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
     {(homeData.donghuaPopular.monthly || []).length > 0 && (
       <div>
         <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">Bulanan</h4>
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-0.5 sm:-mx-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {homeData.donghuaPopular.monthly.slice(0, 8).map((it) => (
             <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
           ))}
@@ -458,7 +458,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
     {(homeData.donghuaPopular.allTime || []).length > 0 && (
       <div>
         <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">All-Time</h4>
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-0.5 sm:-mx-1">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {homeData.donghuaPopular.allTime.slice(0, 8).map((it) => (
             <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
           ))}
