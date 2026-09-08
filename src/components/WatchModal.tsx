@@ -439,7 +439,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
     
     {/* Tabs Selector */}
     <div className="flex p-1 bg-line rounded-xl w-fit mb-3">
-      {['weekly', 'monthly', 'allTime'].map((tab) => (
+      {(['weekly', 'monthly', 'allTime'] as const).map((tab) => (
         <button
           key={tab}
           onClick={() => setPopularTab(tab)}
