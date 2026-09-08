@@ -55,6 +55,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
   const [selectedMirrorIndex, setSelectedMirrorIndex] = useState<number>(0);
   const [theaterMode, setTheaterMode] = useState<boolean>(false);
   const [homeData, setHomeData] = useState<DonghuaHomeData | null>(null);
+  const [relatedEpisodes, setRelatedEpisodes] = useState<any[]>([]);
 
   // Lazy-load home data once for the "Latest / Populer / Genre" rails.
   // Memoized client-side so it won't refetch if already cached.
@@ -78,6 +79,10 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       .getEpisode(slug)
       .then((data) => {
         setStreamData(data);
+        // API returns relatedEpisodes at root level, not inside streamData
+        if (data && (data as any).relatedEpisodes) {
+          setRelatedEpisodes((data as any).relatedEpisodes);
+        }
         selectFirstPlayable(data);
         if (data) {
           // Extract episode number
@@ -89,7 +94,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
             seriesSlug: data.series?.slug || slug.replace(/-episode-\d+.*/i, ''),
             title: data.title,
             seriesTitle: data.series?.name || data.title.replace(/Episode \d+.*/i, '').trim(),
-            cover: data.relatedEpisodes?.[0]?.cover || data.recommended?.[0]?.cover || '',
+            cover: (data as any).relatedEpisodes?.[0]?.cover || data.recommended?.[0]?.cover || '',
             episodeNumber: epNum
           });
         }
@@ -350,14 +355,14 @@ export const WatchModal: React.FC<WatchModalProps> = ({
           </div>
 
           {/* Episode Terkait - dengan poster */}
-{streamData?.relatedEpisodes && streamData.relatedEpisodes.length > 0 && (
+{relatedEpisodes && relatedEpisodes.length > 0 && (
   <div className="space-y-2 pt-2 border-t border-line">
     <span className="text-[11px] sm:text-xs font-bold text-mute uppercase tracking-wider flex items-center gap-1.5">
       <Layers className="w-3.5 h-3.5 text-accent-soft" />
       <span>Episode Terkait</span>
     </span>
     <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
-      {streamData.relatedEpisodes.map((ep) => (
+      {relatedEpisodes.map((ep) => (
         <button
           key={ep.slug}
           onClick={() => onPlayEpisode(ep.slug, ep.title)}
