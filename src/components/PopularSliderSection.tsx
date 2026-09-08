@@ -72,55 +72,57 @@ export const PopularSliderSection: React.FC<PopularSliderSectionProps> = ({
 
         {/* Tab Switcher & Display Controls */}
         <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
-          {/* Tabs */}
-          <div className="flex items-center gap-1 p-1 bg-surface rounded-2xl border border-line overflow-x-auto no-scrollbar">
-            <button
-              onClick={() => setTab('today')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                tab === 'today'
-                  ? 'bg-accent text-white shadow-sm border border-line-strong'
-                  : 'text-mute hover:text-ink hover:bg-line'
-              }`}
-            >
-              <Flame className="w-3.5 h-3.5" />
-              <span>Hari Ini ({popularToday?.length || 0})</span>
-            </button>
+          {/* Tabs: horizontal scroll on mobile so 4 badges fit, grid on sm+ */}
+          <div className="flex items-center gap-1 p-1 bg-surface rounded-2xl border border-line overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 mb-4 sm:mb-0">
+            <div className="flex items-center gap-1 whitespace-nowrap">
+              <button
+                onClick={() => setTab('today')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  tab === 'today'
+                    ? 'bg-accent text-white shadow-sm border border-line-strong'
+                    : 'text-mute hover:text-ink hover:bg-line'
+                }`}
+              >
+                <Flame className="w-3.5 h-3.5" />
+                <span>Hari Ini ({popularToday?.length || 0})</span>
+              </button>
 
-            <button
-              onClick={() => setTab('weekly')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                tab === 'weekly'
-                  ? 'bg-accent text-white shadow-sm border border-line-strong'
-                  : 'text-mute hover:text-ink hover:bg-line'
-              }`}
-            >
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>Mingguan ({donghuaPopular?.weekly?.length || 0})</span>
-            </button>
+              <button
+                onClick={() => setTab('weekly')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  tab === 'weekly'
+                    ? 'bg-accent text-white shadow-sm border border-line-strong'
+                    : 'text-mute hover:text-ink hover:bg-line'
+                }`}
+              >
+                <TrendingUp className="w-3.5 h-3.5" />
+                <span>Mingguan ({donghuaPopular?.weekly?.length || 0})</span>
+              </button>
 
-            <button
-              onClick={() => setTab('monthly')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                tab === 'monthly'
-                  ? 'bg-accent text-white shadow-sm border border-line-strong'
-                  : 'text-mute hover:text-ink hover:bg-line'
-              }`}
-            >
-              <Star className="w-3.5 h-3.5" />
-              <span>Bulanan ({donghuaPopular?.monthly?.length || 0})</span>
-            </button>
+              <button
+                onClick={() => setTab('monthly')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  tab === 'monthly'
+                    ? 'bg-accent text-white shadow-sm border border-line-strong'
+                    : 'text-mute hover:text-ink hover:bg-line'
+                }`}
+              >
+                <Star className="w-3.5 h-3.5" />
+                <span>Bulanan ({donghuaPopular?.monthly?.length || 0})</span>
+              </button>
 
-            <button
-              onClick={() => setTab('allTime')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
-                tab === 'allTime'
-                  ? 'bg-accent text-white shadow-sm border border-line-strong'
-                  : 'text-mute hover:text-ink hover:bg-line'
-              }`}
-            >
-              <Trophy className="w-3.5 h-3.5" />
-              <span>All-Time ({donghuaPopular?.allTime?.length || 0})</span>
-            </button>
+              <button
+                onClick={() => setTab('allTime')}
+                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                  tab === 'allTime'
+                    ? 'bg-accent text-white shadow-sm border border-line-strong'
+                    : 'text-mute hover:text-ink hover:bg-line'
+                }`}
+              >
+                <Trophy className="w-3.5 h-3.5" />
+                <span>All-Time ({donghuaPopular?.allTime?.length || 0})</span>
+              </button>
+            </div>
           </div>
 
           {/* Toggle Slider vs Grid & Navigation Arrows */}
