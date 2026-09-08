@@ -167,7 +167,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
         </div>
 
         {/* Video Player Container */}
-        <div className="relative w-full bg-canvas aspect-video flex items-center justify-center overflow-hidden">
+        <div className="relative w-full bg-canvas min-h-[50vh] sm:min-h-[60vh] flex items-center justify-center overflow-hidden">
           {loading ? (
             <div className="text-center space-y-3">
               <div className="w-10 h-10 rounded-full border-3 border-accent-soft border-t-transparent animate-spin mx-auto" />
