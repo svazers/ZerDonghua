@@ -83,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({
               Genre Donghua
             </h4>
             <div className="flex flex-wrap gap-1.5">
-              {genres.slice(0, 8).map((g) => (
+              {genres.map((g) => (
                 <button
                   key={g.slug || g.name}
                   onClick={() => onSelectGenre(g.slug)}

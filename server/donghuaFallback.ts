@@ -507,7 +507,7 @@ export function getFallbackDetail(slug: string) {
       date: "Terbaru",
       subStatus: "Sub Indo"
     })),
-    recommended: FALLBACK_HOME.popularToday.slice(0, 4)
+    recommended: FALLBACK_HOME.popularToday
   };
 }
 
@@ -549,6 +549,6 @@ export function getFallbackEpisode(slug: string) {
         released: "Baru saja"
       }
     ],
-    recommended: FALLBACK_HOME.popularToday.slice(0, 4)
+    recommended: FALLBACK_HOME.popularToday
   };
 }

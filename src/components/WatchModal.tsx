@@ -400,7 +400,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       <span>Rekomendasi</span>
     </span>
     <div className="flex gap-2 overflow-x-auto pb-1.5 -mx-0.5 sm:-mx-1">
-      {streamData.recommended.slice(0, 8).map((r) => (
+      {streamData.recommended.map((r) => (
         <div key={r.slug} className="min-w-[100px] sm:min-w-[110px] w-[100px] sm:w-[110px] shrink-0">
           <button
             onClick={() => onOpenDetail(r.slug)}
@@ -427,7 +427,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       <span>Episode Terbaru</span>
     </span>
     <div className="flex flex-col gap-1.5">
-      {homeData.latestRelease.slice(0, 6).map((it) => (
+      {homeData.latestRelease.map((it) => (
         <button
           key={it.slug}
           onClick={() => onPlayEpisode(it.slug, it.title)}
@@ -475,7 +475,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
         <div className="grid grid-cols-1 gap-2">
           {(popularTab === 'weekly' ? homeData.donghuaPopular.weekly :
             popularTab === 'monthly' ? homeData.donghuaPopular.monthly :
-            homeData.donghuaPopular.allTime)?.slice(0, 8).map((it, idx) => (
+            homeData.donghuaPopular.allTime || []).map((it, idx) => (
             <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
           ))}
         </div>
@@ -494,7 +494,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       <span>Genre</span>
     </span>
     <div className="flex flex-wrap gap-1.5">
-      {homeData.genres.slice(0, 16).map((g) => (
+      {homeData.genres.map((g) => (
         <span
           key={g.slug}
           className="px-2.5 py-1 rounded-lg bg-line text-[9px] sm:text-[10px] font-semibold text-mute border border-line"

@@ -66,10 +66,24 @@ export class AnichinScraper extends DonghubScraper {
 
     const parseCard = (el: any) => this.parseCard($, el);
 
+    // Popular Today: fetch the full trending list (`.listupd` renders all
+    // currently-trending cards, not just the 5 that anichin hard-caps inside
+    // the `.hothome` "Hot Home" micro-section — so we pull every `.bsx` in the
+    // main release list to avoid a 5-item cap, then de-duplicate against the
+    // Latest Release list so the Popular rail stays a distinct set.
+    const latestSlugs: string[] = [];
+    $('.releases:contains("Latest Release")')
+      .closest('.bixbox')
+      .find('.bsx')
+      .each((_, el) => {
+        const c = parseCard(el);
+        if (c?.url) latestSlugs.push(c.url);
+      });
+
     const popularToday: any[] = [];
-    $('.releases.hothome').parent().find('.bsx').each((_, el) => {
+    $('.listupd .bsx').each((_, el) => {
       const c = parseCard(el);
-      if (c) popularToday.push(c);
+      if (c && !latestSlugs.includes(c.url)) popularToday.push(c);
     });
 
     const latest: any[] = [];
