@@ -22,7 +22,11 @@ export const DonghuaCardSmall: React.FC<SmallCardProps> = ({ item, onWatch }) =>
         sizes="56px"
         className="object-cover"
       />
-    </div>
+      {item.rank && (
+        <span className="absolute top-0.5 left-0.5 w-4 h-4 rounded-sm bg-accent text-white text-[8px] font-black flex items-center justify-center leading-none">
+          #{item.rank}
+        </span>
+      )}</div>
     <span
       title={item.title}
       className="flex-1 min-w-0 text-[10px] sm:text-xs font-semibold text-sub line-clamp-2 cursor-pointer"
@@ -30,6 +34,9 @@ export const DonghuaCardSmall: React.FC<SmallCardProps> = ({ item, onWatch }) =>
     >
       {item.title}
     </span>
+    {item.rating ? (
+      <span className="mx-1.5 text-[8px] sm:text-[9px] text-warn font-bold">★ {item.rating}</span>
+    ) : null}
     <button
       onClick={() => onWatch(item)}
       className="m-1.5 sm:m-2 w-7 h-7 rounded-md bg-accent text-white flex items-center justify-center text-xs shrink-0 active:scale-90"
