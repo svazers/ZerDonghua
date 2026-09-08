@@ -52,6 +52,8 @@ function normalizeAnichinHome(anichinData: any): any {
       monthly: (anichinData.leaderboard?.monthly || []).map(normalizeAnichinCard),
       allTime: (anichinData.leaderboard?.alltime || []).map(normalizeAnichinCard),
     },
+    // genres populated by the 'home' case via getCachedGenres() — anichin
+    // returns genres from a separate endpoint, not on the home page payload.
     genres: [],
   };
 }
@@ -121,7 +123,18 @@ function setCached(key: string, data: any) {
   cache.set(key, { timestamp: Date.now(), data });
 }
 
-// Helper: strip URL to slug and optionally strip episode suffix for series resolution.
+// In-memory shared genre list, fetched lazily from anichin.
+// Avoids passing undefined genres to callers that don't need it.
+let cachedGenres: any = null;
+async function getCachedGenres(): Promise<any> {
+  if (cachedGenres) return cachedGenres;
+  try {
+    cachedGenres = await anichin.getAnichinGenres();
+  } catch (e) {
+    cachedGenres = FALLBACK_HOME.genres;
+  }
+  return cachedGenres;
+}
 function toSlug(slugOrUrl: string): string {
   return slugOrUrl.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
 }
@@ -148,8 +161,13 @@ export async function getDonghua(
       try {
         const anichinData = await anichin.getAnichinHome();
         result = normalizeAnichinHome(anichinData);
+        // Ensure genres list is populated on home (anichin returns genres separately)
+        result.genres = (await getCachedGenres()).map((g: any) => ({
+          name: g.name || '',
+          link: g.link || '',
+          slug: g.slug || (g.link || '').replace(/^https?:\/\/[^/]+\/genres\//, '').replace(/\/$/, ''),
+        }));
       } catch (anichinErr) {
-        console.warn('anichin getHome failed, using static fallback:', anichinErr);
         result = FALLBACK_HOME;
       }
       break;
