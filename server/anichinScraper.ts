@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio';
 import { DonghubScraper, Mirror, DonghuaEpisode } from './donghubScraper';
+import { DonghuaStreamData } from '../src/types';
 
 export interface AnichinHome {
   popularToday: any[];
@@ -121,7 +122,7 @@ export class AnichinScraper extends DonghubScraper {
             $(el).find('img').attr('src') ||
             $(el).find('img').attr('data-src') ||
             null;
-          const rating = $(el).find('.numscore').first().text().trim() || null;
+          const rating = $(el).find('.numscore').text().trim() || null;
           const genres: string[] = [];
           $(el).find('.leftseries span a').each((_, g) => {
             genres.push($(g).text().trim());
@@ -230,7 +231,7 @@ export class AnichinScraper extends DonghubScraper {
     return { title, thumbnail, synopsis, rating, genres, metadata, episodes, url: cleanUrl };
   }
 
-  async getAnichinStream(episodeUrl: string): Promise<Partial<DonghuaEpisode>> {
+  async getAnichinStream(episodeUrl: string): Promise<Partial<DonghuaStreamData>> {
     if (!episodeUrl) {
       throw new Error('URL episode diperlukan');
     }
@@ -270,7 +271,66 @@ export class AnichinScraper extends DonghubScraper {
       });
     }
 
-    return { title, mirrors };
+    // Derive series slug from episode slug:
+    // "tales-of-herding-gods-episode-1-subtitle-indonesia" -> "tales-of-herding-gods"
+    const seriesSlug = episodeUrl
+      .replace(/^https?:\/\/[^/]+\//, '')
+      .replace(/\/+$/, '')
+      .replace(/-episode-\d+.*$/i, '')
+      .replace(/-subtitle-indonesia.*$/i, '')
+      .replace(/-sub-indo.*$/i, '');
+
+    let series: any = null;
+    let prev: string | null = null;
+    let next: string | null = null;
+    let relatedEpisodes: any[] = [];
+    let recommended: any[] = [];
+
+    if (seriesSlug && seriesSlug !== episodeUrl) {
+      try {
+        const detail = await this.getAnichinDetail(seriesSlug);
+        const epList = (detail.episodes || []).map((ep: any) => ({
+          slug: ep.slug || ep.url?.replace(/^https?:\/\/[^/]+\//, '').replace(/\/+$/, ''),
+          title: ep.title,
+          episodeNumber: ep.number,
+          date: ep.date,
+        }));
+
+        if (epList.length > 0) {
+          // Find current episode index for prev/next
+          const currentSlugNorm = episodeUrl.replace(/^https?:\/\/[^/]+\//, '').replace(/\/+$/, '');
+          const idx = epList.findIndex(
+            (ep: any) => ep.slug === currentSlugNorm || ep.slug === episodeUrl
+          );
+          if (idx >= 0) {
+            if (idx > 0) prev = epList[idx - 1].slug;
+            if (idx < epList.length - 1) next = epList[idx + 1].slug;
+          }
+          // Related episodes (siblings in the list, excluding current)
+          relatedEpisodes = epList
+            .filter((_: any, i: number) => i !== idx)
+            .slice(Math.max(0, (idx || 0) - 2), (idx || 0) + 3)
+            .map((ep: any) => ({
+              ...ep,
+              title: ep.title || '',
+              cover: detail.thumbnail || '',
+              postedBy: '',
+              released: ep.date || '',
+            }));
+        }
+
+        series = {
+          name: detail.title,
+          link: detail.url || `${BASE_URL}/seri/${seriesSlug}/`,
+          slug: seriesSlug,
+        };
+        recommended = []; // anichin detail has no recommendations section
+      } catch (detailErr) {
+        // non-fatal: stream still usable without series context
+      }
+    }
+
+    return { title, mirrors, series, prev, next, relatedEpisodes, recommended };
   }
 
   async getAnichinSearch(query: string, page = 1): Promise<{ results: any[]; pagination: any }> {
