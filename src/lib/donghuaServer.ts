@@ -1,4 +1,5 @@
 import { DonghubScraper } from '../../server/donghubScraper';
+import { AnichinScraper } from '../../server/anichinScraper';
 import {
   FALLBACK_HOME,
   FALLBACK_SCHEDULE,
@@ -8,6 +9,7 @@ import {
 import { normalizeMirrors } from './mirrors';
 
 const scraper = new DonghubScraper();
+const anichin = new AnichinScraper();
 const REMOTE_API_BASE = 'https://api.alfisy.my.id/api/anime/donghub';
 
 // In-memory cache so we don't hammer the upstream API on every request.
@@ -117,12 +119,28 @@ export async function getDonghua(
           });
         }
       } catch (apiErr) {
-        console.warn('Remote API getHome failed, falling back to local scraper:', apiErr);
+        console.warn('Remote API getHome failed, falling back to scraper:', apiErr);
         try {
           result = await scraper.getHome();
         } catch (scrapeErr) {
-          console.warn('Local scraper getHome failed, using static fallback:', scrapeErr);
-          result = FALLBACK_HOME;
+          console.warn('donghub scraper getHome failed, trying anichin:', scrapeErr);
+          try {
+            const anichinData = await anichin.getAnichinHome();
+            result = {
+              recommendations: anichinData.recommendation,
+              popularToday: anichinData.popularToday,
+              latestRelease: anichinData.latest,
+              donghuaPopular: {
+                weekly: anichinData.leaderboard.weekly,
+                monthly: anichinData.leaderboard.monthly,
+                allTime: anichinData.leaderboard.alltime,
+              },
+              genres: [],
+            };
+          } catch (anichinErr) {
+            console.warn('anichin getHome failed, using static fallback:', anichinErr);
+            result = FALLBACK_HOME;
+          }
         }
       }
       break;
@@ -134,7 +152,11 @@ export async function getDonghua(
         try {
           result = await scraper.getSchedule();
         } catch (scrapeErr) {
-          result = FALLBACK_SCHEDULE;
+          try {
+            result = await anichin.getAnichinSchedule();
+          } catch (anichinErr) {
+            result = FALLBACK_SCHEDULE;
+          }
         }
       }
       break;
@@ -189,7 +211,11 @@ export async function getDonghua(
         try {
           result = await scraper.getDetail(cleanSlug);
         } catch (scrapeErr) {
-          result = getFallbackDetail(cleanSlug);
+          try {
+            result = await anichin.getAnichinDetail(cleanSlug);
+          } catch (anichinErr) {
+            result = getFallbackDetail(cleanSlug);
+          }
         }
       }
       break;
@@ -219,7 +245,11 @@ export async function getDonghua(
         try {
           result = await scraper.getEpisode(slug);
         } catch (scrapeErr) {
-          result = getFallbackEpisode(slug);
+          try {
+            result = await anichin.getAnichinStream(slug);
+          } catch (anichinErr) {
+            result = getFallbackEpisode(slug);
+          }
         }
       }
 
