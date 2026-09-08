@@ -10,7 +10,7 @@ import React from 'react';
 const PLACEHOLDER =
   'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&auto=format&fit=crop&q=80';
 
-const PROXIED_HOSTS = ['donghub.vip', 'img.donghub.vip', 'cdn.donghub.vip'];
+const PROXIED_HOSTS = ['donghub.vip', 'img.donghub.vip', 'cdn.donghub.vip', 'anichin.cafe'];
 
 function resolveSrc(src: string): string {
   if (!src) return src;

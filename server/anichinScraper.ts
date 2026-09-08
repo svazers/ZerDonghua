@@ -265,4 +265,50 @@ export class AnichinScraper extends DonghubScraper {
 
     return { title, mirrors };
   }
+
+  async getAnichinSearch(query: string, page = 1): Promise<{ results: any[]; pagination: any }> {
+    if (!query) throw new Error('Query diperlukan');
+    const url =
+      page > 1
+        ? `${BASE_URL}/page/${page}/?s=${encodeURIComponent(query)}`
+        : `${BASE_URL}/?s=${encodeURIComponent(query)}`;
+    const html = await this.fetchAnichinHtml(url);
+    const $ = cheerio.load(html);
+    const results: any[] = [];
+
+    $('.listupd .bsx, .animpost').each((_, el) => {
+      const a = $(el).find('a').first();
+      const link = a.attr('href') || '';
+      const rawTitle =
+        $(el).find('.tt h2, .tt, .title, h4').first().text().trim();
+      const title = rawTitle.split('\n')[0].replace(/\t+/g, ' ').trim();
+      const status = $(el).find('.bt .epx, .status').text().trim();
+      const type = $(el).find('.typez').text().trim();
+      const thumbnail =
+        $(el).find('img').attr('src') ||
+        $(el).find('img').attr('data-src') ||
+        null;
+      if (link && title) {
+        results.push({ title, status, type, thumbnail, url: link });
+      }
+    });
+
+    const hasNextPage = $('.pagination .next, .hpage .r').length > 0;
+    return {
+      results,
+      pagination: { currentPage: Number(page), totalPages: Number(page), hasNextPage },
+    };
+  }
+
+  async getAnichinGenres(): Promise<any[]> {
+    const html = await this.fetchAnichinHtml(`${BASE_URL}/`);
+    const $ = cheerio.load(html);
+    const genres: any[] = [];
+    $('ul.genre li a').each((_, el) => {
+      const name = $(el).text().trim();
+      const link = $(el).attr('href') || '';
+      genres.push({ name, link, slug: this.getSlug(link) });
+    });
+    return genres;
+  }
 }

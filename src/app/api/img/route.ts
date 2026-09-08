@@ -6,6 +6,7 @@ const ALLOWED_HOSTS = new Set([
   'cdn.donghub.vip',
   'i0.wp.com',
   'images.weserv.nl',
+  'anichin.cafe',
 ]);
 
 export async function GET(req: NextRequest) {

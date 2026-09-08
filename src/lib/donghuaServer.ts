@@ -69,76 +69,76 @@ export async function getDonghua(
   switch (action) {
     case 'home': {
       try {
-        result = await fetchFromRemoteApi({ action: 'home' });
-        if (result && result.donghuaBaru && Array.isArray(result.donghuaBaru)) {
-          const coverMap = new Map<string, string>();
-          if (result.latestRelease && Array.isArray(result.latestRelease)) {
-            for (const lr of result.latestRelease) {
-              if (lr.slug && lr.cover) coverMap.set(lr.slug, lr.cover);
-              if (lr.title && lr.cover) coverMap.set(lr.title.toLowerCase().trim(), lr.cover);
-              if (lr.seriesTitle && lr.cover)
-                coverMap.set(lr.seriesTitle.toLowerCase().trim(), lr.cover);
-            }
-          }
-          if (result.recommendations && Array.isArray(result.recommendations)) {
-            for (const rec of result.recommendations) {
-              if (rec.slug && rec.cover) coverMap.set(rec.slug, rec.cover);
-              if (rec.title && rec.cover) coverMap.set(rec.title.toLowerCase().trim(), rec.cover);
-            }
-          }
-          if (result.popularToday && Array.isArray(result.popularToday)) {
-            for (const pop of result.popularToday) {
-              if (pop.slug && pop.cover) coverMap.set(pop.slug, pop.cover);
-              if (pop.title && pop.cover) coverMap.set(pop.title.toLowerCase().trim(), pop.cover);
-            }
-          }
-
-          result.donghuaBaru = result.donghuaBaru.map((item: any) => {
-            let cover = item.cover || '';
-            if (!cover && item.slug && coverMap.has(item.slug)) {
-              cover = coverMap.get(item.slug)!;
-            }
-            if (!cover && item.title) {
-              const titleLower = item.title.toLowerCase().trim();
-              for (const [key, val] of coverMap.entries()) {
-                if (titleLower.includes(key) || key.includes(titleLower)) {
-                  cover = val;
-                  break;
-                }
+        const anichinData = await anichin.getAnichinHome();
+        result = {
+          recommendations: anichinData.recommendation,
+          popularToday: anichinData.popularToday,
+          latestRelease: anichinData.latest,
+          donghuaPopular: {
+            weekly: anichinData.leaderboard.weekly,
+            monthly: anichinData.leaderboard.monthly,
+            allTime: anichinData.leaderboard.alltime,
+          },
+          genres: [],
+        };
+      } catch (anichinErr) {
+        console.warn('anichin getHome failed, trying remote API:', anichinErr);
+        try {
+          result = await fetchFromRemoteApi({ action: 'home' });
+          if (result && result.donghuaBaru && Array.isArray(result.donghuaBaru)) {
+            const coverMap = new Map<string, string>();
+            if (result.latestRelease && Array.isArray(result.latestRelease)) {
+              for (const lr of result.latestRelease) {
+                if (lr.slug && lr.cover) coverMap.set(lr.slug, lr.cover);
+                if (lr.title && lr.cover) coverMap.set(lr.title.toLowerCase().trim(), lr.cover);
+                if (lr.seriesTitle && lr.cover)
+                  coverMap.set(lr.seriesTitle.toLowerCase().trim(), lr.cover);
               }
             }
-            return {
-              ...item,
-              cover:
-                cover || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&q=80',
-              type: '3D Ongoing',
-              status: 'Ongoing',
-              subStatus: 'Sub Indo',
-              hot: true,
-            };
-          });
-        }
-      } catch (apiErr) {
-        console.warn('Remote API getHome failed, falling back to scraper:', apiErr);
-        try {
-          result = await scraper.getHome();
-        } catch (scrapeErr) {
-          console.warn('donghub scraper getHome failed, trying anichin:', scrapeErr);
+            if (result.recommendations && Array.isArray(result.recommendations)) {
+              for (const rec of result.recommendations) {
+                if (rec.slug && rec.cover) coverMap.set(rec.slug, rec.cover);
+                if (rec.title && rec.cover) coverMap.set(rec.title.toLowerCase().trim(), rec.cover);
+              }
+            }
+            if (result.popularToday && Array.isArray(result.popularToday)) {
+              for (const pop of result.popularToday) {
+                if (pop.slug && pop.cover) coverMap.set(pop.slug, pop.cover);
+                if (pop.title && pop.cover) coverMap.set(pop.title.toLowerCase().trim(), pop.cover);
+              }
+            }
+
+            result.donghuaBaru = result.donghuaBaru.map((item: any) => {
+              let cover = item.cover || '';
+              if (!cover && item.slug && coverMap.has(item.slug)) {
+                cover = coverMap.get(item.slug)!;
+              }
+              if (!cover && item.title) {
+                const titleLower = item.title.toLowerCase().trim();
+                for (const [key, val] of coverMap.entries()) {
+                  if (titleLower.includes(key) || key.includes(titleLower)) {
+                    cover = val;
+                    break;
+                  }
+                }
+              }
+              return {
+                ...item,
+                cover:
+                  cover || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&q=80',
+                type: '3D Ongoing',
+                status: 'Ongoing',
+                subStatus: 'Sub Indo',
+                hot: true,
+              };
+            });
+          }
+        } catch (apiErr) {
+          console.warn('Remote API getHome failed, trying donghub scraper:', apiErr);
           try {
-            const anichinData = await anichin.getAnichinHome();
-            result = {
-              recommendations: anichinData.recommendation,
-              popularToday: anichinData.popularToday,
-              latestRelease: anichinData.latest,
-              donghuaPopular: {
-                weekly: anichinData.leaderboard.weekly,
-                monthly: anichinData.leaderboard.monthly,
-                allTime: anichinData.leaderboard.alltime,
-              },
-              genres: [],
-            };
-          } catch (anichinErr) {
-            console.warn('anichin getHome failed, using static fallback:', anichinErr);
+            result = await scraper.getHome();
+          } catch (scrapeErr) {
+            console.warn('donghub scraper getHome failed, using static fallback:', scrapeErr);
             result = FALLBACK_HOME;
           }
         }
@@ -147,14 +147,15 @@ export async function getDonghua(
     }
     case 'schedule': {
       try {
-        result = await fetchFromRemoteApi({ action: 'schedule' });
-      } catch (apiErr) {
+        result = await anichin.getAnichinSchedule();
+      } catch (anichinErr) {
+        console.warn('anichin schedule failed, trying remote API:', anichinErr);
         try {
-          result = await scraper.getSchedule();
-        } catch (scrapeErr) {
+          result = await fetchFromRemoteApi({ action: 'schedule' });
+        } catch (apiErr) {
           try {
-            result = await anichin.getAnichinSchedule();
-          } catch (anichinErr) {
+            result = await scraper.getSchedule();
+          } catch (scrapeErr) {
             result = FALLBACK_SCHEDULE;
           }
         }
@@ -209,11 +210,11 @@ export async function getDonghua(
         }
       } catch (apiErr) {
         try {
-          result = await scraper.getDetail(cleanSlug);
-        } catch (scrapeErr) {
+          result = await anichin.getAnichinDetail(cleanSlug);
+        } catch (anichinErr) {
           try {
-            result = await anichin.getAnichinDetail(cleanSlug);
-          } catch (anichinErr) {
+            result = await scraper.getDetail(cleanSlug);
+          } catch (scrapeErr) {
             result = getFallbackDetail(cleanSlug);
           }
         }
@@ -243,11 +244,11 @@ export async function getDonghua(
         }
       } catch (apiErr) {
         try {
-          result = await scraper.getEpisode(slug);
-        } catch (scrapeErr) {
+          result = await anichin.getAnichinStream(slug);
+        } catch (anichinErr) {
           try {
-            result = await anichin.getAnichinStream(slug);
-          } catch (anichinErr) {
+            result = await scraper.getEpisode(slug);
+          } catch (scrapeErr) {
             result = getFallbackEpisode(slug);
           }
         }
@@ -276,20 +277,29 @@ export async function getDonghua(
       const page = String(query.page || 1);
       if (!queryStr) throw new Error('Parameter query diperlukan untuk action search');
       try {
-        result = await fetchFromRemoteApi({ action: 'search', query: queryStr, page });
-      } catch (apiErr) {
+        const anichinResult = await anichin.getAnichinSearch(queryStr, Number(page));
+        result = {
+          results: anichinResult.results || [],
+          pagination: anichinResult.pagination,
+        };
+      } catch (anichinErr) {
+        console.warn('anichin search failed, trying remote API:', anichinErr);
         try {
-          result = await scraper.search(queryStr, Number(page));
-        } catch (scrapeErr) {
-          const filtered = FALLBACK_HOME.popularToday.filter(
-            (item: any) =>
-              item.title.toLowerCase().includes(queryStr.toLowerCase()) ||
-              item.seriesTitle.toLowerCase().includes(queryStr.toLowerCase())
-          );
-          result = {
-            results: filtered,
-            pagination: { currentPage: 1, totalPages: 1, hasNextPage: false },
-          };
+          result = await fetchFromRemoteApi({ action: 'search', query: queryStr, page });
+        } catch (apiErr) {
+          try {
+            result = await scraper.search(queryStr, Number(page));
+          } catch (scrapeErr) {
+            const filtered = FALLBACK_HOME.popularToday.filter(
+              (item: any) =>
+                item.title.toLowerCase().includes(queryStr.toLowerCase()) ||
+                item.seriesTitle?.toLowerCase().includes(queryStr.toLowerCase())
+            );
+            result = {
+              results: filtered,
+              pagination: { currentPage: 1, totalPages: 1, hasNextPage: false },
+            };
+          }
         }
       }
       break;
@@ -298,6 +308,7 @@ export async function getDonghua(
       const genre = query.genre || '';
       const page = String(query.page || 1);
       if (!genre) throw new Error('Parameter genre diperlukan untuk action genre');
+      // Anichin doesn't have per-genre pages; try remote API → donghub scraper → fallback
       try {
         result = await fetchFromRemoteApi({ action: 'genre', genre, page });
       } catch (apiErr) {
@@ -314,12 +325,18 @@ export async function getDonghua(
     }
     case 'genres': {
       try {
-        result = await fetchFromRemoteApi({ action: 'genres' });
-      } catch (apiErr) {
+        result = await anichin.getAnichinGenres();
+        if (!result || result.length === 0) throw new Error('anichin genres empty');
+      } catch (anichinErr) {
+        console.warn('anichin genres failed, trying remote API:', anichinErr);
         try {
-          result = await scraper.getGenres();
-        } catch (scrapeErr) {
-          result = FALLBACK_HOME.genres;
+          result = await fetchFromRemoteApi({ action: 'genres' });
+        } catch (apiErr) {
+          try {
+            result = await scraper.getGenres();
+          } catch (scrapeErr) {
+            result = FALLBACK_HOME.genres;
+          }
         }
       }
       break;
