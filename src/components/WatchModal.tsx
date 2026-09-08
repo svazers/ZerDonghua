@@ -56,6 +56,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
   const [theaterMode, setTheaterMode] = useState<boolean>(false);
   const [homeData, setHomeData] = useState<DonghuaHomeData | null>(null);
   const [relatedEpisodes, setRelatedEpisodes] = useState<any[]>([]);
+  const [popularTab, setPopularTab] = useState<'weekly' | 'monthly' | 'allTime'>('weekly');
 
   // Lazy-load home data once for the "Latest / Populer / Genre" rails.
   // Memoized client-side so it won't refetch if already cached.
@@ -435,36 +436,40 @@ export const WatchModal: React.FC<WatchModalProps> = ({
       <Sparkles className="w-3.5 h-3.5 text-accent-soft" />
       <span>Populer</span>
     </span>
-    {(homeData.donghuaPopular.weekly || []).length > 0 && (
-      <div>
-        <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">Mingguan</h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {homeData.donghuaPopular.weekly.slice(0, 8).map((it) => (
+    
+    {/* Tabs Selector */}
+    <div className="flex p-1 bg-line rounded-xl w-fit mb-3">
+      {['weekly', 'monthly', 'allTime'].map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setPopularTab(tab)}
+          className={`px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold transition-all ${
+            popularTab === tab 
+              ? 'bg-elevated text-ink shadow-sm' 
+              : 'text-mute hover:text-sub'
+          }`}
+        >
+          {tab === 'weekly' ? 'Weekly' : tab === 'monthly' ? 'Monthly' : 'All'}
+        </button>
+      ))}
+    </div>
+
+    {/* Active Tab Content */}
+    <div className="space-y-2">
+      {(popularTab === 'weekly' && homeData.donghuaPopular.weekly) ||
+       (popularTab === 'monthly' && homeData.donghuaPopular.monthly) ||
+       (popularTab === 'allTime' && homeData.donghuaPopular.allTime) ? (
+        <div className="grid grid-cols-1 gap-2">
+          {(popularTab === 'weekly' ? homeData.donghuaPopular.weekly :
+            popularTab === 'monthly' ? homeData.donghuaPopular.monthly :
+            homeData.donghuaPopular.allTime)?.slice(0, 8).map((it, idx) => (
             <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
           ))}
         </div>
-      </div>
-    )}
-    {(homeData.donghuaPopular.monthly || []).length > 0 && (
-      <div>
-        <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">Bulanan</h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {homeData.donghuaPopular.monthly.slice(0, 8).map((it) => (
-            <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
-          ))}
-        </div>
-      </div>
-    )}
-    {(homeData.donghuaPopular.allTime || []).length > 0 && (
-      <div>
-        <h4 className="text-[10px] sm:text-[11px] text-mute uppercase font-bold mb-1.5 ml-0.5">All-Time</h4>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          {homeData.donghuaPopular.allTime.slice(0, 8).map((it) => (
-            <DonghuaCardSmall key={it.slug} item={it} onWatch={(i) => onOpenDetail(i.slug)} />
-          ))}
-        </div>
-      </div>
-    )}
+      ) : (
+        <p className="text-xs text-faint text-center py-4">Tidak ada data untuk periode ini.</p>
+      )}
+    </div>
   </div>
 )}
 
