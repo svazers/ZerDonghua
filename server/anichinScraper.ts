@@ -328,8 +328,10 @@ export class AnichinScraper extends DonghubScraper {
             (ep: any) => ep.slug === currentSlugNorm || ep.slug === episodeUrl
           );
           if (idx >= 0) {
-            if (idx > 0) prev = epList[idx - 1].slug;
-            if (idx < epList.length - 1) next = epList[idx + 1].slug;
+            // anichin lists episodes newest-first, so idx-1 is the NEWER
+            // (next to watch) episode and idx+1 is the older (previous).
+            if (idx < epList.length - 1) prev = epList[idx + 1].slug;
+            if (idx > 0) next = epList[idx - 1].slug;
           }
           // Related episodes (siblings in the list, excluding current)
           relatedEpisodes = epList
