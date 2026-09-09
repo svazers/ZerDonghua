@@ -40,7 +40,14 @@ export class AnichinScraper extends DonghubScraper {
   private async fetchAnichinHtml(url: string): Promise<string> {
     // Reuse DonghubScraper's spoofing + proxy-fallback via fetchHtml,
     // but with Anichin-specific headers already set above.
-    return await this.fetchHtml(url);
+    const html = await this.fetchHtml(url);
+    // Strip the cbox.ws chat widget ("Diskusi dan lapor Error disini") that
+    // anichin injects into every page's sidebar. It must never reach our
+    // frontend, where its iframe can be mistaken for a player mirror.
+    const $ = cheerio.load(html);
+    $('h3:contains("Diskusi dan lapor Error disini")').closest('.section').remove();
+    $('iframe[src*="cbox.ws"]').remove();
+    return $.html();
   }
 
   private parseCard($: any, el: any) {
@@ -262,7 +269,10 @@ export class AnichinScraper extends DonghubScraper {
     }
 
     const defaultIframe =
-      $('.player-embed iframe, .video-content iframe, iframe').first().attr('src') || null;
+      $('.player-embed iframe, .video-content iframe, iframe')
+        .filter((_, el) => !/cbox\.ws/i.test($(el).attr('src') || ''))
+        .first()
+        .attr('src') || null;
 
     const mirrors: Mirror[] = [];
     $('select.mirror option, .mirror option').each((_, el) => {
@@ -272,7 +282,8 @@ export class AnichinScraper extends DonghubScraper {
       const decoded = decodeBase64(rawVal);
       const matchSrc = decoded.match(/src=["']([^"']+)["']/i);
       const iframeSrc = matchSrc ? matchSrc[1] : decoded.startsWith('http') ? decoded : null;
-      if (iframeSrc) {
+      // Never surface anichin's chat widget as a video mirror.
+      if (iframeSrc && !/cbox\.ws/i.test(iframeSrc)) {
         mirrors.push({ name, embedCode: decoded, streamUrl: iframeSrc });
       }
     });
@@ -399,23 +410,21 @@ export class AnichinScraper extends DonghubScraper {
   }
 
   async getAnichinGenrePage(genreSlug: string, page = 1): Promise<{ results: any[]; pagination: any }> {
-      const url = page > 1
-        ? `${BASE_URL}/genres/${genreSlug}/page/${page}`
-        : `${BASE_URL}/genres/${genreSlug}/`;
-      const html = await this.fetchAnichinHtml(url);
-      const $ = cheerio.load(html);
-      // Remove chatbox iframe from cbox.ws (common on anichin pages)
-      $('iframe[src*="cbox.ws"]').remove();
-      const results: any[] = [];
-      $('.listupd .bsx, .animpost').each((_, el) => {
-        const c = this.parseCard($, el);
-        if (c) results.push(c);
-      });
-      const totalPages = $('.pagination a')
-        .map((_, el) => $(el).text().trim())
-        .get()
-        .filter((t) => /^\\d+$/.test(t))
-        .reduce((max, t) => Math.max(max, Number(t)), Number(page));
-      return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
-    }
+        const url = page > 1
+          ? `${BASE_URL}/genres/${genreSlug}/page/${page}`
+          : `${BASE_URL}/genres/${genreSlug}/`;
+        const html = await this.fetchAnichinHtml(url);
+        const $ = cheerio.load(html);
+        const results: any[] = [];
+        $('.listupd .bsx, .animpost').each((_, el) => {
+          const c = this.parseCard($, el);
+          if (c) results.push(c);
+        });
+        const totalPages = $('.pagination a')
+          .map((_, el) => $(el).text().trim())
+          .get()
+          .filter((t) => /^\\d+$/.test(t))
+          .reduce((max, t) => Math.max(max, Number(t)), Number(page));
+        return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
+      }
 }

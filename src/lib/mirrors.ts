@@ -16,7 +16,13 @@ export interface MirrorLike {
 }
 
 export function normalizeMirrors<T extends MirrorLike>(mirrors: T[]): T[] {
-  const normalized = (mirrors || []).map((m: any) => {
+  const normalized = (mirrors || [])
+    // Keep only actual video embeds — drop chat widgets, trackers, ads.
+    .filter((m: any) => {
+      const src = String(m.streamUrl || '') + String(m.embedCode || '');
+      return !/cbox\.ws|disqus|facebook\.com\/plugins|addthis/i.test(src);
+    })
+    .map((m: any) => {
     let streamUrl = m.streamUrl || '';
     if (m.embedCode) {
       const srcMatch = m.embedCode.match(/src=["']([^"']+)["']/i);
