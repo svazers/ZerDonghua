@@ -399,21 +399,23 @@ export class AnichinScraper extends DonghubScraper {
   }
 
   async getAnichinGenrePage(genreSlug: string, page = 1): Promise<{ results: any[]; pagination: any }> {
-    const url = page > 1
-      ? `${BASE_URL}/genres/${genreSlug}/page/${page}`
-      : `${BASE_URL}/genres/${genreSlug}/`;
-    const html = await this.fetchAnichinHtml(url);
-    const $ = cheerio.load(html);
-    const results: any[] = [];
-    $('.listupd .bsx, .animpost').each((_, el) => {
-      const c = this.parseCard($, el);
-      if (c) results.push(c);
-    });
-    const totalPages = $('.pagination a')
-      .map((_, el) => $(el).text().trim())
-      .get()
-      .filter((t) => /^\d+$/.test(t))
-      .reduce((max, t) => Math.max(max, Number(t)), Number(page));
-    return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
-  }
+      const url = page > 1
+        ? `${BASE_URL}/genres/${genreSlug}/page/${page}`
+        : `${BASE_URL}/genres/${genreSlug}/`;
+      const html = await this.fetchAnichinHtml(url);
+      const $ = cheerio.load(html);
+      // Remove chatbox iframe from cbox.ws (common on anichin pages)
+      $('iframe[src*="cbox.ws"]').remove();
+      const results: any[] = [];
+      $('.listupd .bsx, .animpost').each((_, el) => {
+        const c = this.parseCard($, el);
+        if (c) results.push(c);
+      });
+      const totalPages = $('.pagination a')
+        .map((_, el) => $(el).text().trim())
+        .get()
+        .filter((t) => /^\\d+$/.test(t))
+        .reduce((max, t) => Math.max(max, Number(t)), Number(page));
+      return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
+    }
 }
