@@ -64,7 +64,7 @@ async function fetchWithDeduplication<T>(
 }
 
 // Only talks to the local /api/donghua server route.
-// All upstream fetching (anichin.cafe) + static fallback lives server-side in
+// All upstream fetching (anichin.moe) + static fallback lives server-side in
 // donghuaServer.ts — the client never hits remote APIs directly.
 async function safeFetchDonghua(params: Record<string, string>): Promise<any> {
   const searchParams = new URLSearchParams();

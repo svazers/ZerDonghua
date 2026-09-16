@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const ALLOWED_HOSTS = new Set([
-  'donghub.vip',
-  'img.donghub.vip',
-  'cdn.donghub.vip',
   'i0.wp.com',
+  'i1.wp.com',
+  'i2.wp.com',
+  'i3.wp.com',
   'images.weserv.nl',
-  'anichin.cafe',
+  'anichin.moe',
 ]);
 
 export async function GET(req: NextRequest) {

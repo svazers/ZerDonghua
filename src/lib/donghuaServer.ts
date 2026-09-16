@@ -16,7 +16,7 @@ function normalizeAnichinCard(item: any): any {
   const link = item.url || item.link || '';
   const cover = item.thumbnail || item.cover || '';
   const rawTitle = (item.title || '').replace(/(.+?)\s*\1/, '$1').trim();
-  const rawSlug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+  const rawSlug = (item.slug as string) || link.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '').replace(/^\/+/, '');
   // Slug must resolve to the SERIES detail page (strip episode/suffix), so
   // open-detail → /api/donghua?action=detail works. Episode slug preserved
   // separately for direct episode link/watch if the frontend needs it.
@@ -141,7 +141,7 @@ async function getCachedGenres(): Promise<any> {
   return cachedGenres;
 }
 function toSlug(slugOrUrl: string): string {
-  return slugOrUrl.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '');
+  return slugOrUrl.replace(/^https?:\/\/[^/]+\/(?:seri\/)?/, '').replace(/\/+$/, '').replace(/^\/+/, '');
 }
 
 function toSeriesSlug(slug: string): string {

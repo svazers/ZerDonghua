@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Lightweight image component that replaces next/image.
- * anichin.cafe images sit behind Cloudflare which 403s requests lacking a
+ * anichin.moe images sit behind Cloudflare which 403s requests lacking a
  * same-site Referer, so we proxy them through /api/img (server-side). Keeps
  * real covers instead of placeholders. onError falls back to a dark SVG.
  */
@@ -10,7 +10,7 @@ import React from 'react';
 const PLACEHOLDER =
   'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjU2MCIgdmlld0JveD0iMCAwIDQwMCA1NjAiIHhtbG5zPSJodHRwOi8vd3d3Lncub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMWExYTFhIi8+PHRleHQgeD0iNTAlIiB5PSI1MyUiIGZvbnQtc2l6ZT0iMTIiIGZvbnQtZmFtaWx5PSJNb25vc3BlY3QiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM2MjYyNjkiPk5vIENvdmVyPC90ZXh0Pjwvc3ZnPg==';
 
-const PROXIED_HOSTS = ['donghub.vip', 'img.donghub.vip', 'cdn.donghub.vip', 'anichin.cafe'];
+const PROXIED_HOSTS = ['anichin.moe', 'i0.wp.com', 'i1.wp.com', 'i2.wp.com', 'i3.wp.com'];
 
 function resolveSrc(src: string): string {
   if (!src) return src;

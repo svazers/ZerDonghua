@@ -9,7 +9,7 @@ export interface AnichinHome {
   leaderboard: { weekly: any[]; monthly: any[]; alltime: any[] };
 }
 
-const BASE_URL = 'https://anichin.cafe';
+const BASE_URL = 'https://anichin.moe';
 const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
 
@@ -33,7 +33,7 @@ export class AnichinScraper extends DonghubScraper {
       'User-Agent': USER_AGENT,
       Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
       'Accept-Language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
-      Referer: 'https://anichin.cafe/',
+      Referer: 'https://anichin.moe/',
     };
   }
 
@@ -47,7 +47,9 @@ export class AnichinScraper extends DonghubScraper {
     const $ = cheerio.load(html);
     $('h3:contains("Diskusi dan lapor Error disini")').closest('.section').remove();
     $('iframe[src*="cbox.ws"]').remove();
-    return $.html();
+    // anichin.moe emits root-relative href/src ("/slug/") — absolutize them at
+    // the single fetch chokepoint so every downstream link/URL is absolute.
+    return $.html().replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_URL}/`);
   }
 
   private parseCard($: any, el: any) {
@@ -79,7 +81,7 @@ export class AnichinScraper extends DonghubScraper {
     // main release list to avoid a 5-item cap, then de-duplicate against the
     // Latest Release list so the Popular rail stays a distinct set.
     const latestSlugs: string[] = [];
-    $('.releases:contains("Latest Release")')
+    $('.releases:contains("Rilisan Terbaru")')
       .closest('.bixbox')
       .find('.bsx')
       .each((_, el) => {
@@ -94,7 +96,7 @@ export class AnichinScraper extends DonghubScraper {
     });
 
     const latest: any[] = [];
-    $('.releases:contains("Latest Release")')
+    $('.releases:contains("Rilisan Terbaru")')
       .closest('.bixbox')
       .find('.bsx')
       .each((_, el) => {
@@ -103,7 +105,7 @@ export class AnichinScraper extends DonghubScraper {
       });
 
     const recommendation: any[] = [];
-    $('.releases:contains("Recommendation")')
+    $('.releases:contains("Rekomendasi")')
       .closest('.bixbox')
       .find('.bsx')
       .each((_, el) => {
@@ -203,7 +205,7 @@ export class AnichinScraper extends DonghubScraper {
     }
     const cleanUrl = urlOrSlug.startsWith('http')
       ? urlOrSlug.trim()
-      : `${BASE_URL}/seri/${urlOrSlug.replace(/^\/+|\/+$/g, '')}/`;
+      : `${BASE_URL}/${urlOrSlug.replace(/^\/+|\/+$/g, '')}/`;
 
     const html = await this.fetchAnichinHtml(cleanUrl);
     const $ = cheerio.load(html);
@@ -248,6 +250,14 @@ export class AnichinScraper extends DonghubScraper {
         episodes.push({ number: epNum, title: epTitle, date: epDate, url: epLink });
       }
     });
+
+    // Movie pages have no .eplister — the player is embedded on the page
+    // itself. Expose it as a single episode so the watch flow works.
+    // Must NOT apply to episode pages (they have a player too, but callers
+    // resolve those to their series via the empty-episodes path).
+    if (episodes.length === 0 && !/-episode-\d+/i.test(cleanUrl) && $('.player-embed iframe').length > 0) {
+      episodes.push({ number: '', title: `${title} — Nonton Film`, date: '', url: cleanUrl });
+    }
 
     return { title, thumbnail, synopsis, rating, genres, metadata, episodes, url: cleanUrl };
   }
@@ -315,7 +325,7 @@ export class AnichinScraper extends DonghubScraper {
       try {
         const detail = await this.getAnichinDetail(seriesSlug);
         const epList = (detail.episodes || []).map((ep: any) => ({
-          slug: ep.slug || ep.url?.replace(/^https?:\/\/[^/]+\//, '').replace(/\/+$/, ''),
+          slug: (ep.slug || ep.url || '').replace(/^https?:\/\/[^/]+\//, '').replace(/\/+$/, '').replace(/^\/+/, ''),
           title: ep.title,
           episodeNumber: ep.number,
           date: ep.date,
@@ -348,7 +358,7 @@ export class AnichinScraper extends DonghubScraper {
 
         series = {
           name: detail.title,
-          link: detail.url || `${BASE_URL}/seri/${seriesSlug}/`,
+          link: detail.url || `${BASE_URL}/${seriesSlug}/`,
           slug: seriesSlug,
         };
         recommended = []; // anichin detail has no recommendations section
@@ -400,15 +410,18 @@ export class AnichinScraper extends DonghubScraper {
   }
 
   async getAnichinGenres(): Promise<any[]> {
-    const html = await this.fetchAnichinHtml(`${BASE_URL}/`);
+    const html = await this.fetchAnichinHtml(`${BASE_URL}/genres/`);
     const $ = cheerio.load(html);
-    const genres: any[] = [];
-    $('ul.genre li a').each((_, el) => {
+    const seen = new Map<string, any>();
+    $('a[href*="/genres/"]').each((_, el) => {
+      const href = $(el).attr('href') || '';
+      const slug = href.replace(/.*\/genres\//, '').replace(/\/+$/, '');
       const name = $(el).text().trim();
-      const link = $(el).attr('href') || '';
-      genres.push({ name, link, slug: this.getSlug(link) });
+      if (slug && name && !seen.has(slug)) {
+        seen.set(slug, { name, link: `${BASE_URL}/genres/${slug}/`, slug });
+      }
     });
-    return genres;
+    return [...seen.values()];
   }
 
   async getAnichinGenrePage(genreSlug: string, page = 1): Promise<{ results: any[]; pagination: any }> {
@@ -425,8 +438,8 @@ export class AnichinScraper extends DonghubScraper {
         const totalPages = $('.pagination a')
           .map((_, el) => $(el).text().trim())
           .get()
-          .filter((t) => /^\\d+$/.test(t))
-          .reduce((max, t) => Math.max(max, Number(t)), Number(page));
-        return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
+          .filter((t) => /^\d+$/.test(t))
+                  .reduce((max, t) => Math.max(max, Number(t)), Number(page));
+                  return { results, pagination: { currentPage: Number(page), totalPages, hasNextPage: totalPages > Number(page) } };
       }
 }

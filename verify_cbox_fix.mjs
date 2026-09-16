@@ -4,7 +4,7 @@ const a = new AnichinScraper();
 
 (async () => {
   // Genre page: chat widget must be gone from the HTML the server parses
-  const html = await a.fetchAnichinHtml('https://anichin.cafe/genres/isekai/');
+  const html = await a.fetchAnichinHtml('https://anichin.moe/genres/isekai/');
   console.log('genre page cbox refs:', (html.match(/cbox/gi) || []).length);
   console.log('genre page "Diskusi" refs:', (html.match(/Diskusi dan lapor/gi) || []).length);
 
