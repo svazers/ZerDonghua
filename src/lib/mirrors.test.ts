@@ -32,6 +32,20 @@ test('mirror non-Dailymotion tidak disentuh', () => {
   assert.equal(o.streamUrl, 'https://morencius.com/embed/1zdo1hd9outw');
 });
 
+// Regresi: 'Dailymotion' tanpa tag [ADS] pernah jadi default player sehingga
+// watermark Dailymotion kelihatan. Tier: server bersih > DM-branded > [Ads].
+test('server non-Dailymotion menang atas mirror berlabel/anichin-player', () => {
+  const out = normalizeMirrors([
+    { name: 'Dailymotion', streamUrl: 'https://www.dailymotion.com/embed/video/abc' },
+    { name: 'Page Player', streamUrl: 'https://anichin-player.web.id/index.php?video=x' },
+    { name: 'Streamruby [ADS]', streamUrl: 'https://rubyvidhub.com/embed-1.html' },
+    { name: 'OK.ru', streamUrl: 'https://ok.ru/videoembed/123' },
+  ]);
+  assert.equal(out[0].name, 'OK.ru');
+  assert.equal(out[out.length - 1].name, 'Streamruby [ADS]');
+  assert.ok(/Dailymotion|Page Player/.test(out[1].name));
+});
+
 // Regresi: referrerPolicy="no-referrer" membuat http_referer kosong, dan gate
 // PV5_BLOCK_EMPTY_EMBEDDER di player Dailymotion membalasnya dengan
 // PLAYER_ERR_EMPTY_EMBEDDER ("Video ini tidak dapat diputar di situs ini").

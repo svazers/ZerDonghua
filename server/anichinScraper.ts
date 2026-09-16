@@ -299,9 +299,12 @@ export class AnichinScraper extends DonghubScraper {
     });
 
     if (mirrors.length === 0 && defaultIframe) {
+      // Anichin's page-default player. NOTE: anichin-player.web.id referer-gates
+      // to anichin.moe only (403 cross-site), so this is a last resort, not a
+      // first mirror.
       mirrors.push({
-        name: 'Default Server',
-        embedCode: `<iframe src="${defaultIframe}" allowfullscreen frameborder="0"></iframe>`,
+        name: 'Player Anichin',
+        embedCode: `<iframe src="${defaultIframe}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>`,
         streamUrl: defaultIframe,
       });
     }

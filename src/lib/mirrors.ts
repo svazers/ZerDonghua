@@ -41,12 +41,15 @@ export function normalizeMirrors<T extends MirrorLike>(mirrors: T[]): T[] {
     return { ...m, streamUrl };
   });
 
-  // Sort ad-free mirrors first. Anichin labels ad-bearing servers with "[Ads]".
-  normalized.sort((a, b) => {
-    const aHasAds = /\[ads\]/i.test((a.name || '').toString());
-    const bHasAds = /\[ads\]/i.test((b.name || '').toString());
-    return (aHasAds ? 1 : -1) - (bHasAds ? 1 : -1);
-  });
+  // Sort: clean non-Dailymotion servers first, Dailymotion-branded next
+  // (anichin rehosts to DM -> visible DM watermark), '[Ads]' servers last.
+  const tier = (m: any): number => {
+    const hay = `${m.name || ''} ${m.streamUrl || ''}`;
+    if (/\[ads?\]/i.test(String(m.name || ''))) return 2;
+    if (/dailymotion|dai\.ly|anichin-player/i.test(hay)) return 1;
+    return 0;
+  };
+  normalized.sort((a, b) => tier(a) - tier(b));
 
   return normalized;
 }
