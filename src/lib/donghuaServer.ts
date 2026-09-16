@@ -218,15 +218,21 @@ export async function getDonghua(
         result = await anichin.getAnichinStream(cleanSlug);
         if (!result.mirrors || result.mirrors.length === 0) throw new Error('anichin stream empty');
       } catch (anichinErr) {
-        console.warn('anichin stream failed, trying series detail for episode resolution:', anichinErr);
+        // Episode slug 404 or a SERIES slug was passed (its page has no
+        // player). Resolve via the series episode list: match the requested
+        // number if present, else take the newest (list is newest-first).
+        console.warn('anichin stream failed, resolving via series episode list:', anichinErr);
         try {
           const seriesSlug = toSeriesSlug(cleanSlug);
-          if (seriesSlug && seriesSlug !== cleanSlug) {
-            result = await anichin.getAnichinStream(`${seriesSlug}-episode-${cleanSlug.match(/episode-(\d+)/i)?.[1] || 1}-subtitle-indonesia`);
-            if (!result.mirrors || result.mirrors.length === 0) throw new Error('anichin stream empty');
-          } else {
-            throw new Error('Cannot resolve series from episode slug');
-          }
+          const detail = await anichin.getAnichinDetail(seriesSlug);
+          const eps = (detail.episodes || []).filter((e: any) => e.url);
+          const wantNum = cleanSlug.match(/episode-(\d+)/i)?.[1];
+          const target = wantNum
+            ? eps.find((e: any) => new RegExp(`-episode-0*${Number(wantNum)}(?:[^0-9]|$)`, 'i').test(e.url)) || eps[0]
+            : eps[0];
+          if (!target) throw new Error('series has no episodes');
+          result = await anichin.getAnichinStream(target.url);
+          if (!result.mirrors || result.mirrors.length === 0) throw new Error('anichin stream empty');
         } catch (resolveErr) {
           console.warn('Could not resolve episode, using fallback:', resolveErr);
           result = getFallbackEpisode(cleanSlug);
