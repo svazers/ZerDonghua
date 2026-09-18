@@ -9,9 +9,37 @@ export interface AnichinHome {
   leaderboard: { weekly: any[]; monthly: any[]; alltime: any[] };
 }
 
-const BASE_URL = 'https://anichin.moe';
+const SOURCES = ['https://anichin.moe', 'https://anichin.tv'];
 const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+
+// ponytail: candidate rotation — anichin.moe sits behind Cloudflare and starts
+// 403-challenging any IP after enough hits (Vercel's egress pool trips it within
+// minutes); .tv mirrors the same DB/theme unchallenged. Probe both per request,
+// keep whichever answered; a dead source costs one failed 9s fetch, not the page.
+function candidatesFor(host: string, path: string): string[] {
+  const idx = SOURCES.findIndex((s) => s === host);
+  if (idx < 0) return [SOURCES[0] + path];
+  return [SOURCES[idx], ...SOURCES.slice(0, idx), ...SOURCES.slice(idx + 1)].map(
+    (origin) => origin + path,
+  );
+}
+
+// ponytail: .moe sits behind Cloudflare (403 "Just a moment") AND soft-redirects
+// unknown slugs to the homepage with HTTP 200 — so res.ok is meaningless there.
+// Both failure modes must look like a miss to the rotation loop above, or the
+// homepage gets parsed as a detail page and the frontend shows dead data.
+function isChallengeOrSoftRedirect(html: string, url: string): boolean {
+  const head = html.slice(0, 4000);
+  if (/Just a moment\.\.\.|cf-challenge|challenges\.cloudflare\.com/i.test(head)) return true;
+  // .moe soft-redirects unknown /series/<slug>/ and /<episode-slug>/ to its
+  // homepage with HTTP 200. Only detail/episode pages carry <h1 class=
+  // "entry-title">, so the missing h1 is the signal we landed on the wrong page.
+  // Listing pages (home/search/schedule/genres) never have it — they must be
+  // excluded here or every listing rotation would falsely fail.
+  if (!/\/series\/|-episode-\d/i.test(url)) return false;
+  return !/<h1[^>]*class="entry-title"/i.test(html);
+}
 
 function decodeBase64(str: string): string {
   try {
@@ -21,8 +49,10 @@ function decodeBase64(str: string): string {
   }
 }
 
-// Reuses the same header/proxy fallback strategy as DonghubScraper by
-// extending it — anichin needs identical spoofing logic.
+// ponytail: BASE_URL is the *preferred* source; fetchAnichinHtml rotates to a
+// mirror when it Cloudflare-challenges the caller IP. Two sources share one
+// theme/DB, so the same selectors work on either.
+const BASE_URL = SOURCES[0];
 export class AnichinScraper extends DonghubScraper {
   constructor() {
     super();
@@ -40,16 +70,44 @@ export class AnichinScraper extends DonghubScraper {
   private async fetchAnichinHtml(url: string): Promise<string> {
     // Reuse DonghubScraper's spoofing + proxy-fallback via fetchHtml,
     // but with Anichin-specific headers already set above.
-    const html = await this.fetchHtml(url);
+    // ponytail: try the preferred source first; on a Cloudflare challenge
+    // (403 "Just a moment") rotate to the mirror. Probing both costs at most
+    // one extra 9s fetch on the cold path, and the successful source becomes
+    // the new preferred one so subsequent requests pay nothing.
+    // ponytail: the CF challenge page can arrive with res.ok true — so we
+    // accept it here and let fetchAnichinHtml's body sniffer reject it, which
+    // then rotates to the mirror. Without the sniffer we'd cache a challenge
+    // page as if it were content.
+    let html: string | null = null;
+    let servedBy = '';
+    for (const candidate of candidatesFor(new URL(url).origin, new URL(url).pathname + new URL(url).search)) {
+      try {
+        const tried = await this.fetchHtml(candidate);
+        if (isChallengeOrSoftRedirect(tried, candidate)) {
+          console.warn(`anichin source ${candidate} unusable (challenge or soft-redirect), rotating`);
+          continue;
+        }
+        html = tried;
+        servedBy = new URL(candidate).origin;
+        break;
+        console.warn(`anichin source ${candidate} Cloudflare-challenged, rotating`);
+      } catch (e) {
+        console.warn(`anichin source ${candidate} failed, rotating`, e);
+      }
+    }
+    if (html == null) {
+      throw new Error('Semua sumber anichin tidak dapat diakses (Cloudflare)');
+    }
     // Strip the cbox.ws chat widget ("Diskusi dan lapor Error disini") that
     // anichin injects into every page's sidebar. It must never reach our
     // frontend, where its iframe can be mistaken for a player mirror.
     const $ = cheerio.load(html);
     $('h3:contains("Diskusi dan lapor Error disini")').closest('.section').remove();
     $('iframe[src*="cbox.ws"]').remove();
-    // anichin.moe emits root-relative href/src ("/slug/") — absolutize them at
-    // the single fetch chokepoint so every downstream link/URL is absolute.
-    return $.html().replace(/(href|src)="\/(?!\/)/g, `$1="${BASE_URL}/`);
+    // anichin emits root-relative href/src ("/slug/") — absolutize them at
+    // the single fetch chokepoint so every downstream link/URL is absolute,
+    // and pin them to the source that actually served the page.
+    return $.html().replace(/(href|src)="\/(?!\/)/g, `$1="${servedBy}/`);
   }
 
   private parseCard($: any, el: any) {
@@ -205,7 +263,7 @@ export class AnichinScraper extends DonghubScraper {
     }
     const cleanUrl = urlOrSlug.startsWith('http')
       ? urlOrSlug.trim()
-      : `${BASE_URL}/${urlOrSlug.replace(/^\/+|\/+$/g, '')}/`;
+      : `${BASE_URL}/series/${urlOrSlug.replace(/^\/+|\/+$/g, '')}/`;
 
     const html = await this.fetchAnichinHtml(cleanUrl);
     const $ = cheerio.load(html);
