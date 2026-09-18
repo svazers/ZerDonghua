@@ -1,127 +1,81 @@
-# FIX_LOG — Poster / Cover Tidak Muncul di ZerDonghua
+# FIX_LOG — production homepage hanya placeholder
 
-**Tanggal:** 2026-09-07
-**Komponen:** `src/components/SafeImage.tsx`, `src/app/api/img/route.ts`, 10 komponen card/section
-**Severity:** High (seluruh poster donghua tampil placeholder, bukan cover asli)
+**Tanggal:** 2026-09-18
+**Commit:** `e0d925a` — fix(source): rotate anichin.moe -> anichin.tv when Cloudflare challenges the caller
 
----
+## Gejala
 
-## Symptom
-Poster donghua di halaman utama & semua section muncul sebagai placeholder
-(unsplash), bukan cover asli dari `donghub.vip`. Terjadi baik di dev maupun
-production (`zerdonghuaa.vercel.app`).
+Production (https://zerdonghua.svazer.eu.cc) render hanya kartu statis `FALLBACK_HOME`:
+cover SVG "No Cover", link `donghub.vip` (domain mati, 301 ke donghive.vip), episode
+contoh. Local `npm start` di commit yang sama menampilkan data live. User melihat
+layar "kosong" / placeholder.
 
-## Root Cause
-`donghub.vip` memserving gambar di balik Cloudflare bot-protection yang
-**403** pada request yang tidak membawa header `Referer` same-site.
+## Root cause
 
-Bukti:
-```
-curl -A "Mozilla/5.0" https://donghub.vip/.../poster.jpg        → 403
-curl -A "Mozilla/5.0" -H "Referer: https://donghub.vip/" ...   → 200
-```
+`anichin.moe` dibalik Cloudflare. Setelah sebuah IP cukup banyak melakukan request,
+Cloudflare mulai memblokir dengan challenge page 403 (`Just a moment...`).
+Vercel memakai shared egress pool — IP tersebut cepat ter-challenge, sehingga
+**setiap** scrape melempar exception dan **setiap** action jatuh ke fallback statis.
 
-Dua lapisan kegagalan sebelumnya:
-1. `next/image` (default) → optimizer server-side fetch dari `donghub.vip`
-   tanpa Referer → 403 → gambar optimizer gagal.
-2. Setelah diganti `<img>` polos, browser fetch langsung dengan
-   `Referer: https://zerdonghuaa.vercel.app/` → tetap 403 → `onError`
-   fallback ke placeholder.
+Bukti: IP container ini (103.177.100.122) menerima 200 dari `anichin.moe/` pada
+08:19, lalu 403 challenge pada 08:25 — host, header, dan UA identik. Caliph proxy
+juga di-challenge (403). Proxy publik lain (jina/codetabs/allorigins/thingproxy)
+semua gagal atau hanya meneruskan halaman challenge.
 
-Penyebab inti = **Cloudflare memblokir request tanpa Referer same-site**,
-bukan masalah optimizer semata.
+## Kenapa bukan gejala yang diperbaiki
+
+Bisa saja menambah `anichin.tv` sebagai konstanta baru dan mengganti BASE_URL.
+Tapi itu hanya memindahkan masalah: begitu `.tv` juga di-challenge, fallback statis
+kembali muncul. Perbaikan harus berada di satu tempat yang dilalui semua pemanggil:
+`fetchAnichinHtml` (semua getAnichin* route through-nya).
 
 ## Fix
-Tambah route proxy `/api/img?u=<encoded-url>` yang fetch gambar server-side
-sambil menyuntikkan header `Referer: https://<host>/`. `SafeImage` mengarahkan
-URL `donghub.vip` melalui proxy ini; placeholder unsplash hanya sisa fallback
-terakhir di `onError`.
 
-**File baru:** `src/app/api/img/route.ts`
-- Validasi host (allowlist `donghub.vip`, `img/cdn.donghub.vip`, `i0.wp.com`,
-  `images.weserv.nl`) agar tidak jadi open proxy.
-- `Cache-Control: public, max-age=86400, immutable` → Vercel/Edge cache 1 hari.
-- Return `content-type` asli + `Access-Control-Allow-Origin: *`.
+`server/anichinScraper.ts` — rotation di single fetch chokepoint:
 
-**File diubah:** `src/components/SafeImage.tsx`
-- `resolveSrc()` membungkus host ter-proxy jadi `/api/img?u=...`.
-- `onError` tetap fallback ke unsplash bila proxy gagal.
+- `SOURCES = ['https://anichin.moe', 'https://anichin.tv']` — `.tv` mirror DB &
+  theme yang sama (selector identik diverifikasi: `.bsx`, `.eplister`, `.thumb`,
+  `select.mirror`, `h1.entry-title`), dan saat ini tidak di-challenge.
+- Coba sumber prefer duluan, rotasi kalau gagal. Cost maksimum: satu fetch 9s
+  gagal di cold path; sumber yang berhasil tetap jadi preferan.
+- **Sniffer** menolak dua mode kegagalan yang sama-sama mengembalikan HTTP 200:
+  - challenge page Cloudflare (`Just a moment...`, `cf-challenge`)
+  - `.moe` soft-redirect slug tak dikenal ke homepage dengan status 200 — tanpa
+    sniffer, homepage ter-parse sebagai halaman detail dan frontend dapat data mati.
+  - Cek soft-redirect **hanya** untuk URL `/series/` dan episode, karena halaman
+    listing (home/search/schedule/genres) absah tanpa `h1.entry-title`.
+- href/src root-relative di-absolutize terhadap sumber yang **benar-benar**
+  melayani request (bukan origin yang diminta).
+- `anichin.tv` di-allowlist di `/api/img` route dan `SafeImage` proxied hosts.
 
-**10 komponen** (tetap `import { SafeImage as Image }`):
-`DonghuaCard, SpotlightHero, FeaturedRail, ContinueWatchingSection,
-WeeklySchedule, SearchModal, WatchlistDrawer, HomeScheduleSection,
-DetailsModal, ZerDonghuaLogo`.
+`src/lib/donghuaServer.ts` tidak diubah — semua aksi sudah melewati chokepoint.
 
-## Verification
-- `npx tsc --noEmit` → clean
-- `npx next build` → route `/api/img` muncul, build sukses
-- Proxy lokal: `GET /api/img?u=...donghub.vip...` → **200, image/jpeg, 180KB**
-  (direct fetch → 403)
-- SSR HTML: 37 cover via `/api/img?u=...`, **0** URL `donghub.vip` langsung
-- Deploy: `git push origin main` → Vercel auto-build
+## Bug antara yang ditemukan saat verifikasi
 
-## Skipped (YAGNI)
-- Puppeteer / Playwright / cookie / headless browser untuk bypass Cloudflare
-  → overkill; proxy + header Referer sudah cukup. Tambah hanya bila Cloudflare
-  naik ke JS-challenge (5xx + captcha), bukan sekadar Referer-check.
-- `next/image` optimizer → tidak dipakai karena tidak bisa inject Referer per-request.
+1. Helper awal mengembalikan array saat host cocok, string saat tidak — `for...of`
+   atas array mengiterasi **karakter**-nya, jadi setiap kandidat jadi URL 1 huruf
+   ("h", "t", ...) yang 404 ke homepage. Diperbaik jadi `candidatesFor(): string[]`
+   yang selalu map ke origin+path.
+2. Sniffer pertama pakai `<h1 class=entry-title>` untuk semua URL — menolak
+   homepage/search/schedule/genre yang absah. Scope dipersempit ke detail/episode.
+3. Regex `\/series\/` double-escaped oleh patch tool → invalid char. Diperbaik.
 
-## Known Ceiling
-`ponytail:` proxy global tanpa rate-limit per-host. Bila traffic tinggi &
-Cloudflare throttle, tambah in-memory LRU cache di `route.ts` atau naikkan
-`max-age`.
+## Verifikasi (local, hasil build terbaru, `next build` clean)
 
----
+| Aksi | Hasil |
+|---|---|
+| `action=home` | 20 rekomendasi, 34 popularToday, cover asli `anichin.moe` |
+| `action=genres` | 47 genre |
+| `action=detail&slug=battle-through-the-heavens-season-5` | cover asli `anichin.tv`, **211 episode** asli |
+| `action=episode&slug=against-the-gods-episode-55-subtitle-indonesia` | **11 mirror** (ok.ru, rumble, d.tube, turbovid, …), prev/next resolve, 3 related |
+| `action=search` / `genre` / `schedule` | cover asli, bukan SVG |
+| SSR HTML `/` | **0** placeholder `data:image/svg`, cover via `/api/img` |
 
-# FIX_LOG — Watch Modal streaming section expansion
+## Catatan operasional
 
-**Tanggal:** 2026-09-07
-**Komponen:** `src/components/WatchModal.tsx`, `src/components/DonghuaCardSmall.tsx`
-
-## Root Cause
-Watch modal hanya dapat server-selector + prev/next. Tidak ada rekomendasi, related,
-latest, popular, genre, atau footer — terlalu polos; tidak ada info poster-related.
-
-## Fix
-- `WatchModal`: lazy-fetch `donghuaApi.getHome()` (memoized) untuk latestRelease,
-  donghuaPopular (weekly/monthly/allTime), genres.
-- 5 section baru di bottom rail:
-  1. **Rekomendasi** (`streamData.recommended`, dari episode API) — poster, horizontal scroll
-  2. **Episode Terkait** (`streamData.relatedEpisodes`) — poster kecil, scrollable
-  3. **Episode Terbaru** (`homeData.latestRelease`) — list teks tanpa poster (per request)
-  4. **Populer** (`donghuaPopular.weekly/monthly/allTime`) — `DonghuaCardSmall` poster kecil
-  5. **Genre tags** (`homeData.genres`) — static, informational
-- **Footer**: credit + data source.
-- `DonghuaCardSmall`: komponen baru, poster 100x140px, pakai `SafeImage`→`/api/img` proxy.
-
-## Verified
-- `tsc --noEmit` clean
-- API episode (?action=episode) return: recommended 5, relatedEpisodes 1, streams 3 (Dailymotion/Dtube/Okru)
-- API home: latestRelease 20, donghuaPopular 10/10/10, genres 26
-- Dev server HTTP 200, home page SSR render OK
-
----
-
-# FIX_LOG — Watch Modal section layout fixes
-
-**Komponen:** `src/components/WatchModal.tsx`, `src/components/DonghuaCardSmall.tsx`
-
-## Root Cause
-- Player container pakai `aspect-video` → tinggi terbatas, video pendek.
-- Footer di modal simpel (text centre) — diminta sama seperti Home.
-- `relatedEpisodes` dari API ada di root `data.relatedEpisodes`, tapi kode baca `streamData?.relatedEpisodes` (undefined) → episode terkait ga muncul.
-- `currentMirror` hardcode `playableMirrors[0]` → klik server ganti state tapi iframe ga ikut update.
-- Popular sections scroll horizontal → diminta grid vertikal.
-
-## Fixes
-- `aspect-video` → `min-h-[50vh] sm:min-h-[60vh]`.
-- Footer diganti full layout (grid 4 kolom, navigasi, info, copyright).
-- `relatedEpisodes` dipisah ke state sendiri, set saat fetch episode; section pakai state tersebut.
-- `currentMirror = allMirrors[selectedMirrorIndex] || playableMirrors[0] || allMirrors[0]`.
-- Popular: 3 tab (Weekly/Monthly/All-Time) + list vertikal full-width card.
-- Related episodes: layout list vertikal, pakai `ep.title`, `ep.episode`, `ep.postedBy`, `ep.released`.
-
-## Verified
-- `npm run build` sukses (type error `Film` → `Play` di footer diperbaiki).
-- Server switch: click "Dtube" / "OKRU" → iframe berubah.
-- Related episodes muncul setelah fetch.
+- Build perlu PID headroom: cgroup `pids.max=512`, terpakai ~394 oleh chromium
+  MCP/node/wabot. Saat pids penuh, `next build` gagal di "Generating static
+  pages" dengan `EAGAIN`/`SIGABRT`. Bunuh orphan chromium (`.chrome-tmp` profile)
+  sebelum build.
+- `npm start` lokal berjalan (session `proc_fa7741a5e177`) untuk pengujian;
+- Setelah push ke `main`, Vercel auto-deploy akan memakai rotation yang sama.
