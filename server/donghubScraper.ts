@@ -98,11 +98,9 @@ export class DonghubScraper {
       console.warn(`Primary fetch to ${url} failed, trying fallback proxy...`, e);
     }
 
-    // Fallback proxy attempt
-    const proxyUrls = [
-      `https://cors.caliph.my.id/${url}`,
-      `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
-    ];
+    // Fallback proxy attempt — caliph is fast (~0.5s). allorigins.win was
+    // removed: it times out (>12s, 000) and only added latency + log noise.
+    const proxyUrls = [`https://cors.caliph.my.id/${url}`];
 
     for (const pUrl of proxyUrls) {
       try {
