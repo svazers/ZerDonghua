@@ -30,7 +30,24 @@ import {
 } from './types';
 import { Sparkles, Film, Flame, AlertCircle, RefreshCw } from 'lucide-react';
 
-export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | null }) {
+type OverlayRoute = { type: 'detail' | 'watch'; slug: string; title?: string };
+const ROUTE_STATE_KEY = 'zerdonghuaRoutes';
+
+function routePath(route: OverlayRoute): string {
+  return `/${route.type}/${encodeURIComponent(route.slug).replaceAll('%2F', '/')}`;
+}
+
+function routeFromPath(pathname: string): OverlayRoute | null {
+  const match = pathname.match(/^\/(detail|watch)\/(.+?)\/?$/);
+  if (!match) return null;
+  try {
+    return { type: match[1] as OverlayRoute['type'], slug: decodeURIComponent(match[2]) };
+  } catch {
+    return null;
+  }
+}
+
+export function App({ initialHomeData, initialRoute }: { initialHomeData?: DonghuaHomeData | null; initialRoute?: OverlayRoute | null }) {
   // Home Data State
   const [homeData, setHomeData] = useState<DonghuaHomeData | null>(initialHomeData ?? null);
   const [loading, setLoading] = useState<boolean>(!initialHomeData);
@@ -47,9 +64,13 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
   const [watchlistOpen, setWatchlistOpen] = useState<boolean>(false);
   const [scheduleOpen, setScheduleOpen] = useState<boolean>(false);
 
-  const [detailSlug, setDetailSlug] = useState<string | null>(null);
-  const [watchSlug, setWatchSlug] = useState<string | null>(null);
-  const [watchTitle, setWatchTitle] = useState<string | undefined>(undefined);
+  const [detailSlug, setDetailSlug] = useState<string | null>(initialRoute?.type === 'detail' ? initialRoute.slug : null);
+  const [watchSlug, setWatchSlug] = useState<string | null>(initialRoute?.type === 'watch' ? initialRoute.slug : null);
+  const [watchTitle, setWatchTitle] = useState<string | undefined>(initialRoute?.title);
+  const [routeEntries, setRouteEntries] = useState<Array<OverlayRoute | null>>([null]);
+  const [routeIndex, setRouteIndex] = useState(0);
+  const routeIndexRef = useRef(0);
+  const routeReadyRef = useRef(false);
 
   const [activeSection, setActiveSection] = useState<string>('spotlight');
 
@@ -125,7 +146,71 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
     };
   }, [fetchHomeData, initialHomeData]);
 
-  // Handle Genre selection & scraping
+  // Keep route snapshots in history.state so Back restores the prior view and modal/player state.
+  useEffect(() => {
+    const initial = routeFromPath(window.location.pathname) ?? initialRoute ?? null;
+    const state = window.history.state || {};
+    const pathRoute = routeFromPath(window.location.pathname);
+    const stack = Array.isArray(state[ROUTE_STATE_KEY])
+      ? state[ROUTE_STATE_KEY] as Array<OverlayRoute | null>
+      : pathRoute ? [null, pathRoute] : [null];
+    const storedIndex = Number(state[`${ROUTE_STATE_KEY}Index`]);
+    routeIndexRef.current = Number.isInteger(storedIndex) && storedIndex >= 0 && storedIndex < stack.length
+      ? storedIndex
+      : stack.length - 1;
+    setRouteEntries(stack);
+    setRouteIndex(routeIndexRef.current);
+    const syncRoute = (route: OverlayRoute | null) => {
+      setDetailSlug(route?.type === 'detail' ? route.slug : null);
+      setWatchSlug(route?.type === 'watch' ? route.slug : null);
+      setWatchTitle(route?.type === 'watch' ? route.title : undefined);
+    };
+    if (initial && !routeFromPath(window.location.pathname)) {
+      const nextStack = [...stack.slice(0, routeIndexRef.current + 1), initial];
+      const nextIndex = routeIndexRef.current + 1;
+      window.history.pushState({ ...state, [ROUTE_STATE_KEY]: nextStack, [`${ROUTE_STATE_KEY}Index`]: nextIndex, scrollY: Number(state.scrollY) || window.scrollY }, '', routePath(initial));
+      setRouteEntries(nextStack);
+      setRouteIndex(nextIndex);
+      routeIndexRef.current = nextIndex;
+    } else {
+      syncRoute(initial);
+    }
+    routeReadyRef.current = true;
+    const onPopState = (event: PopStateEvent) => {
+      const saved = event.state?.[ROUTE_STATE_KEY] as Array<OverlayRoute | null> | undefined;
+      const index = Number(event.state?.[`${ROUTE_STATE_KEY}Index`]);
+      if (saved && Number.isInteger(index)) {
+        setRouteEntries(saved);
+        setRouteIndex(index);
+        routeIndexRef.current = index;
+        syncRoute(saved[index] ?? null);
+      } else {
+        const route = routeFromPath(window.location.pathname);
+        setRouteEntries(route ? [null, route] : [null]);
+        setRouteIndex(route ? 1 : 0);
+        syncRoute(route);
+      }
+      requestAnimationFrame(() => window.scrollTo(0, Number(event.state?.scrollY) || 0));
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [initialRoute]);
+
+  const navigateOverlay = useCallback((route: OverlayRoute | null) => {
+    if (!routeReadyRef.current) return;
+    const currentStack = routeEntries;
+    const nextStack = [...currentStack.slice(0, routeIndex + 1), route];
+    const nextIndex = routeIndex + 1;
+    const state = { ...(window.history.state || {}), [ROUTE_STATE_KEY]: nextStack, [`${ROUTE_STATE_KEY}Index`]: nextIndex, scrollY: window.scrollY };
+    window.history.pushState(state, '', route ? routePath(route) : '/');
+    setRouteEntries(nextStack);
+    setRouteIndex(nextIndex);
+    routeIndexRef.current = nextIndex;
+    setDetailSlug(route?.type === 'detail' ? route.slug : null);
+    setWatchSlug(route?.type === 'watch' ? route.slug : null);
+    setWatchTitle(route?.type === 'watch' ? route.title : undefined);
+  }, [routeEntries, routeIndex]);
+
   const handleSelectGenre = (genreSlug: string | null) => {
     setSelectedGenre(genreSlug);
     if (!genreSlug) {
@@ -208,19 +293,14 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
 
   // Navigation & Watch triggers
   const handleOpenDetail = (slug: string) => {
-    setDetailSlug(slug);
+    navigateOverlay({ type: 'detail', slug });
   };
 
   const handleWatch = (itemOrSlug: DonghuaCardItem | string, title?: string) => {
     if (typeof itemOrSlug === 'string') {
-      setWatchSlug(itemOrSlug);
-      setWatchTitle(title);
+      navigateOverlay({ type: 'watch', slug: itemOrSlug, title });
     } else {
-      // Use item.link (episode URL) for direct watch, NOT item.slug which is
-      // the series slug (used for detail modal). Episode links let the watch
-      // modal resolve the correct stream + prev/next navigation.
-      setWatchSlug(itemOrSlug.link || itemOrSlug.slug);
-      setWatchTitle(itemOrSlug.title);
+      navigateOverlay({ type: 'watch', slug: itemOrSlug.link || itemOrSlug.slug, title: itemOrSlug.title });
     }
   };
 
@@ -441,26 +521,28 @@ export function App({ initialHomeData }: { initialHomeData?: DonghuaHomeData | n
           onClearHistory={handleClearHistory}
         />
 
-        {detailSlug && (
-          <DetailsModal
-            slug={detailSlug}
-            onClose={() => setDetailSlug(null)}
-            onWatchEpisode={(epSlug, title) => handleWatch(epSlug, title)}
-            onToggleBookmark={handleToggleBookmark}
-            isBookmarked={isBookmarked}
-          />
-        )}
-
-        {watchSlug && (
-          <WatchModal
-            slug={watchSlug}
-            initialTitle={watchTitle}
-            onClose={() => setWatchSlug(null)}
-            onOpenDetail={handleOpenDetail}
-            onPlayEpisode={(epSlug, title) => handleWatch(epSlug, title)}
-            onSaveHistory={handleSaveHistory}
-          />
-        )}
+        {routeEntries.map((route, index) => route && (
+          <div key={`${route.type}:${route.slug}:${index}`} style={{ display: index === routeIndex ? 'contents' : 'none' }} aria-hidden={index !== routeIndex} inert={index !== routeIndex}>
+            {route.type === 'detail' ? (
+              <DetailsModal
+                slug={route.slug}
+                onClose={() => navigateOverlay(null)}
+                onWatchEpisode={(epSlug, title) => handleWatch(epSlug, title)}
+                onToggleBookmark={handleToggleBookmark}
+                isBookmarked={isBookmarked}
+              />
+            ) : (
+              <WatchModal
+                slug={route.slug}
+                initialTitle={route.title}
+                onClose={() => navigateOverlay(null)}
+                onOpenDetail={handleOpenDetail}
+                onPlayEpisode={(epSlug, title) => handleWatch(epSlug, title)}
+                onSaveHistory={handleSaveHistory}
+              />
+            )}
+          </div>
+        ))}
       </Suspense>
 
       {/* Floating Mobile Bottom Navigation Bar */}
