@@ -535,6 +535,7 @@ export function App({ initialHomeData, initialRoute }: { initialHomeData?: Dongh
               <WatchModal
                 slug={route.slug}
                 initialTitle={route.title}
+                isActive={index === routeIndex}
                 onClose={() => navigateOverlay(null)}
                 onOpenDetail={handleOpenDetail}
                 onPlayEpisode={(epSlug, title) => handleWatch(epSlug, title)}

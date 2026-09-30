@@ -28,6 +28,7 @@ const isMirrorDead = (m?: MirrorLike | null): boolean =>
 interface WatchModalProps {
   slug: string;
   initialTitle?: string;
+  isActive?: boolean;
   onClose: () => void;
   onOpenDetail: (seriesSlug: string) => void;
   onPlayEpisode: (episodeSlug: string, title?: string) => void;
@@ -44,6 +45,7 @@ interface WatchModalProps {
 export const WatchModal: React.FC<WatchModalProps> = ({
   slug,
   initialTitle,
+  isActive = true,
   onClose,
   onOpenDetail,
   onPlayEpisode,
@@ -200,6 +202,8 @@ export const WatchModal: React.FC<WatchModalProps> = ({
                 Coba Lagi
               </button>
             </div>
+          ) : !isActive ? (
+            null
           ) : currentMirror?.streamUrl ? (
             <iframe
               key={`${currentMirror.streamUrl}-${selectedMirrorIndex}`}
@@ -209,7 +213,7 @@ export const WatchModal: React.FC<WatchModalProps> = ({
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               title={streamData?.title || 'Donghua Stream'}
             />
-          ) : currentMirror?.embedCode ? (
+          ) : isActive && currentMirror?.embedCode ? (
             <div
               key={selectedMirrorIndex}
               className="w-full h-full [&>iframe]:w-full [&>iframe]:h-full [&>iframe]:border-0"
