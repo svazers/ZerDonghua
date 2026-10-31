@@ -474,7 +474,10 @@ export class AnichinScraper extends DonghubScraper {
     const html = await this.fetchAnichinHtml(`${BASE_URL}/genres/`);
     const $ = cheerio.load(html);
     const seen = new Map<string, any>();
-    $('a[href*="/genres/"]').each((_, el) => {
+    // ponytail: ul.genre is gone; search main content area to avoid nav/breadcrumb dupes
+    const mainContent = $('main, .content, article, .page-content').first();
+    const container = mainContent.length > 0 ? mainContent : $('body');
+    container.find('a[href*="/genres/"]').each((_, el) => {
       const href = $(el).attr('href') || '';
       const slug = href.replace(/.*\/genres\//, '').replace(/\/+$/, '');
       const name = $(el).text().trim();
